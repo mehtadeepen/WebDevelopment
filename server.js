@@ -41,6 +41,7 @@ function handleSayHello(req, res) {
     // html: '<b>Hello world ✔</b>' // You can choose to send an HTML body instead
 };
 
+
 transporter.sendMail(mailOptions, function(error, info){
     if(error){
         console.log(error);
