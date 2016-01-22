@@ -21,6 +21,7 @@ var nodemailer = require('nodemailer');
 var mg = require('nodemailer-mailgun-transport');
 
 function mailMe(req, res) {
+    
     var auth = {
       auth: {
           api_key: 'key-c677dcdd00575919169154f293704b47',
