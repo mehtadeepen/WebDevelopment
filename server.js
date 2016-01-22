@@ -56,7 +56,7 @@ transporter.sendMail(mailOptions, function(error, info){
 
 
 app.get('/sayHello', handleSayHello);
-router.post('/', handleSayHello); // handle the route at yourdomain.com/sayHello
+//router.post('/', handleSayHello); // handle the route at yourdomain.com/sayHello
 
 //var text = 'Hello world from \n\n' + req.body.name;
 
