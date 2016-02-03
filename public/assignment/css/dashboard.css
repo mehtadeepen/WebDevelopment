@@ -104,4 +104,36 @@ body {
   border-radius: 50%;
 }
 
+.form-action{
+    width: 100px;
+}
+
+.form-table-container {
+    border: 1px solid #DDD;
+    padding: 15px 15px 0px 15px;
+}
+
+.no-visibility {
+    visibility: hidden;
+}
+
+
+.formtab {
+    width: 101%;
+}
+
+.field-container {
+    border: 1px solid #DDDDDD;
+    overflow: auto;
+    padding-bottom: 10px;
+}
+
+.form-row{
+    margin-top: 5px;
+}
+
+.form-horizontal .control-label.text-left{
+    text-align: left!important;
+}
+
 
