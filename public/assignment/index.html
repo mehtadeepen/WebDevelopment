@@ -1,7 +1,42 @@
 <!DOCTYPE HTML>
-<html>
-<head></head>
-<body>
-<h1>You are in Assignment Section</h1>
+<html ng-app="FormBuilderApp">
+<head>
+<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Form Maker</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/dashboard.css" rel="stylesheet">
+	<link rel="shortcut icon" href="../images/fav.ico" type="image/x-icon">
+	<link rel="icon" href="../images/fav.ico" type="image/x-icon">
+</head>
+<body ng-controller="MainController">
+    <ng-include src="'views/header/header.view.html'"></ng-include>
+
+    <div class="container-fluid">
+        <div class="row">
+            <ng-include src="'views/sidebar/sidebar.view.html'"></ng-include>
+
+            <!-- Content goes here-->
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <div ng-view></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.js"></script>
+    <script src="app/app.js"></script>
+    <script src="config/config.js"></script>
+    <script src="views/main/main.controller.js"></script>
+    <script src="views/header/header.controller.js"></script>
+    <script src="views/sidebar/sidebar.controller.js"></script>
+    <script src="views/users/login.controller.js"></script>
+    <script src="views/users/register.controller.js"></script>
+    <script src="views/users/profile.controller.js"></script>
+    <script src="views/forms/forms.controller.js"></script>
 </body>
 </html>
