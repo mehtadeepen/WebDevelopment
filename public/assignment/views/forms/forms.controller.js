@@ -4,10 +4,15 @@
         .module("FormBuilderApp")
         .controller("FormController", FormController);
 
-    function FormController($scope, $rootScope, FormService){
+    function FormController($scope, $location, $rootScope, FormService){
 
         var loggedInUser = $rootScope.user;
         var userId = -1;
+        $scope.hideplus = false;
+
+         if($rootScope.user === undefined) {
+             $location.url("/")
+        }
 
         if(loggedInUser != undefined) {
             userId = loggedInUser._id;
@@ -41,6 +46,7 @@
                 $scope.forms[$scope.selected] = newForm;
                 $scope.selected = -1;
                 $scope.form = {};
+                $scope.hideplus = false;
             });
         }
 
@@ -60,6 +66,7 @@
             };
             $scope.form = editForm;
             $scope.selected = index;
+            $scope.hideplus = true;
         }
 
         function updateFormsForCurrentUser() {

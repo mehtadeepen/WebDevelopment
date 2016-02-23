@@ -1,0 +1,39 @@
+ <h1 class="page-header">Forms</h1>
+
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="forms.html">Forms</a></li>
+                <li><a>Fields</a></li>
+            </ul>
+
+            <div class="form-div" ng-controller="FormController">
+                <div class="form-div-inner">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr class="theadrow">
+                                <th><span class="caret"></span> Form Name</th>
+                                <th class="th-action">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <input ng-model="form.title" type="text" class="form-control" id="formname" placeholder="name">
+                                </td>
+                                <td>
+                                    <a ng-hide="hideplus" ng-click="addForm(form)"><span class="glyphicon glyphicon-plus plusicon pull-left text-warning" aria-hidden="true"></span></a>
+                                    <a ng-click="updateForm(form)"><span class="glyphicon glyphicon-ok okicon pull-right text-success" aria-hidden="true"></span></a>
+                                </td>
+                            </tr>
+                            <tr ng-repeat="form in forms" ng-class="{'selected-form': $index == selected}">
+                                <td><a href="">{{form.title}}</a></td>
+                                <td>
+                                    <a ng-click="deleteForm(form._id)"><span class="glyphicon glyphicon-remove removeicon pull-left text-danger" aria-hidden="true"></span></a>
+                                    <a ng-click="selectForm($index)"><span class="glyphicon glyphicon-pencil pencilicon pull-right" aria-hidden="true"></span></a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>

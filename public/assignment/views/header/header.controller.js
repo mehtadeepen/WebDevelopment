@@ -17,6 +17,7 @@
         function logout(user) {
 
         	delete $rootScope.user;
+        	$location.url("/")
         }
 
     }

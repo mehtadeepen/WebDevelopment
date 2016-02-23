@@ -2,15 +2,15 @@
 (function() {
 
     angular
-        .module("FormBuilderApp")
-        .factory("FormService", FormService);
+    .module("FormBuilderApp")
+    .factory("FormService", FormService);
 
     function FormService() {
 
         var forms = [
-            {"_id": "000", "title": "Contacts", "userId": 123},
-            {"_id": "010", "title": "ToDo",     "userId": 123},
-            {"_id": "020", "title": "CDs",      "userId": 234}
+        {"_id": "000", "title": "Contacts", "userId": 123},
+        {"_id": "010", "title": "ToDo",     "userId": 123},
+        {"_id": "020", "title": "CDs",      "userId": 234}
         ];
 
         var api = {
@@ -45,29 +45,44 @@
         }
 
         function deleteFormById(formId, callback) {
-            var index = getFormIndexById (formId);
-            forms.splice(index, 1);
-            callback(forms);
-        }
-
-        function updateFormById(formId, newForm, callback) {
-            var index = getFormIndexById (formId);
-            forms[index] = {
-                "_id" : newForm._id,
-                "title" : newForm.title,
-                "userId" : newForm.userId
-            }
-            callback(forms[index]);
-        }
-
-        function getFormIndexById (formId) {
+         
             var index = 0;
+            var formIndex = -1;
             for (var i = 0; i < forms.length; i++) {
                 if(forms[i]._id === formId){
-                    return index;
+                    formIndex = index;
                 }
                 index++;
             }
+            if(formIndex != -1) {
+                forms.splice(index, 1);
+                callback(forms);
+            }
+            
+        }
+
+        function updateFormById(formId, newForm, callback) {
+            var index = 0;
+            var formIndex = -1;
+            for (var i = 0; i < forms.length; i++) {
+                if(forms[i]._id === formId){
+                    formIndex = index;
+                }
+                index++;
+            }
+
+            if(formIndex != -1) {
+                forms[index] = {
+                    "_id" : newForm._id,
+                    "title" : newForm.title,
+                    "userId" : newForm.userId
+                }
+                callback(forms[index]);
+            }
+        }
+
+        function getFormIndexById (formId) {
+            
         }
     }
 
