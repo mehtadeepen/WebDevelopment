@@ -36,16 +36,15 @@
         }
 
         function findAllFormsForUser(userId, callback) {
-            console.log(userId);
+            
             var formsById = forms.filter(function(form, index, arr){
                 return (form.userId === userId);
             });
-            console.log(formsById);
             callback(formsById);
         }
 
         function deleteFormById(formId, callback) {
-         
+
             var index = 0;
             var formIndex = -1;
             for (var i = 0; i < forms.length; i++) {
@@ -55,7 +54,7 @@
                 index++;
             }
             if(formIndex != -1) {
-                forms.splice(index, 1);
+                forms.splice(formIndex, 1);
                 callback(forms);
             }
             
@@ -81,9 +80,6 @@
             }
         }
 
-        function getFormIndexById (formId) {
-            
-        }
     }
 
 

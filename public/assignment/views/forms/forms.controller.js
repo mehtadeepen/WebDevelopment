@@ -31,8 +31,7 @@
                 return;
             }
             FormService.createFormForUser(userId, form, function(newForm) {
-                console.log("Form added:");
-                console.log(form);
+                
                 $scope.selected = -1;
                 $scope.form = {};
                 updateFormsForCurrentUser()
@@ -54,6 +53,8 @@
             FormService.deleteFormById(formId, function(udpatedForms) {
                 console.log("Form Deleted:");
                 console.log(formId);
+                $scope.form.title="";
+                $scope.hideplus = false;
                 updateFormsForCurrentUser();
             });
         }
