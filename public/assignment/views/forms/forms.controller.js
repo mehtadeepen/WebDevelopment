@@ -39,6 +39,17 @@
         }
 
         function updateForm(form) {
+            
+            
+            if(form.title === "" || form.title == null || form.title === undefined) {
+                
+                console.log("Do Nothing");
+                $scope.selected = -1;
+                $scope.form = {};
+                $scope.hideplus = false;
+
+            }
+            else {
             FormService.updateFormById(form._id, form, function(newForm) {
                 console.log("Form Updated:");
                 console.log(form);
@@ -47,6 +58,8 @@
                 $scope.form = {};
                 $scope.hideplus = false;
             });
+
+        }
         }
 
         function deleteForm(formId) {
