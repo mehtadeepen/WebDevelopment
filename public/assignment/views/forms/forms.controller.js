@@ -26,6 +26,7 @@
         $scope.selected = -1;
 
 
+        
         function addForm(form) {
             if(form == undefined || !form.hasOwnProperty("title") || form.title.trim() === "") {
                 return;
