@@ -19,15 +19,17 @@
                 controller: "CollectionController"
                 
             })
-            .when("/admin", {
-                templateUrl: "views/admin/admin.view.html"
-            })
-            .when("/login", {
-                templateUrl: "views/users/login.view.html"
+            .when("/collection", {
+                templateUrl: "views/collection/collection.view.html",
+                controller: "CollectionController"
                 
             })
-            .when("/forms", {
-                templateUrl: "views/forms/forms.view.html"
+            .when("/addDocument", {
+                templateUrl: "views/document/document.add.view.html"
+                
+            })
+            .when("/editDocument", {
+                templateUrl: "views/document/document.edit.view.html"
                 
             })
             .otherwise({

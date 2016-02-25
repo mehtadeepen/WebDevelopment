@@ -1,0 +1,23 @@
+
+
+.formtab {
+    width: 101%;
+}
+
+.field-container {
+    border: 1px solid #DDDDDD;
+    overflow: auto;
+    padding-bottom: 10px;
+}
+
+.form-row{
+    margin-top: 10px;
+}
+
+.form-horizontal .control-label.text-left{
+    text-align: left!important;
+}
+
+
+
+
