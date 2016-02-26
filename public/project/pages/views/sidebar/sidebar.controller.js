@@ -5,7 +5,7 @@
 
 	function SideBarController() {
 		$("#side-menu").metisMenu();
-
-		
 	}
+
+	
 })();

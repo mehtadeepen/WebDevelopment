@@ -66,17 +66,21 @@
             for (var i = 0; i < forms.length; i++) {
                 if(forms[i]._id === formId){
                     formIndex = index;
+                    
                 }
                 index++;
             }
 
             if(formIndex != -1) {
-                forms[index] = {
+
+                console.log("Index Number : "+formIndex);
+                forms[formIndex] = {
                     "_id" : newForm._id,
                     "title" : newForm.title,
                     "userId" : newForm.userId
                 }
-                callback(forms[index]);
+                console.log(forms);
+                callback(forms[formIndex]);
             }
         }
 
