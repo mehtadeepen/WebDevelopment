@@ -17,7 +17,8 @@
             createFormForUser : createFormForUser,
             findAllFormsForUser : findAllFormsForUser,
             deleteFormById : deleteFormById,
-            updateFormById : updateFormById
+            updateFormById : updateFormById,
+            findAllFormsForUserByName : findAllFormsForUserByName
         };
 
         return api;
@@ -43,6 +44,23 @@
             callback(formsById);
         }
 
+        function findAllFormsForUserByName(userId, form1) {
+            
+            var name = form1.title;
+            var formsByName = forms.filter(function(form, index, arr){
+                return (form.userId === userId && form.title === name);
+            });
+
+            console.log(formsByName);
+            if(formsByName.length != 0) { 
+                console.log("Form already exists");
+                return -1;
+            } else {
+                return 1;
+            }
+            
+        }
+
         function deleteFormById(formId, callback) {
 
             var index = 0;
@@ -66,7 +84,7 @@
             for (var i = 0; i < forms.length; i++) {
                 if(forms[i]._id === formId){
                     formIndex = index;
-                    
+
                 }
                 index++;
             }

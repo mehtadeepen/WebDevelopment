@@ -8,9 +8,21 @@
 
         $scope.register = register;
 
+        
         function register(user) {
-        	console.log(user);
+            console.log(user);
+            UserService.findUserByUsername(user, doRegister);
+        }
+
+        function doRegister(user) {
+        	if (user != null) {
+                 console.log(user);
             UserService.createUser(user, goToProfile);
+        } else {
+           
+            console.log("User Already Exists");
+                alert("User Already Exists");    
+        }
         }
 
         function goToProfile(user) {

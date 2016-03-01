@@ -31,12 +31,24 @@
             if(form == undefined || !form.hasOwnProperty("title") || form.title.trim() === "") {
                 return;
             }
-            FormService.createFormForUser(userId, form, function(newForm) {
+
+            var check = FormService.findAllFormsForUserByName(userId, form);
+
+            
+            if (check === -1) {
+                alert("Form already exits");
+            }  else {
+                
+                FormService.createFormForUser(userId, form, function(newForm) {
+                
                 
                 $scope.selected = -1;
                 $scope.form = {};
-                updateFormsForCurrentUser()
+                updateFormsForCurrentUser() 
+            
             });
+            }
+            
         }
 
         function updateForm(form) {
