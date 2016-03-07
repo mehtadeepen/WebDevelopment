@@ -14,6 +14,21 @@
                 controller: "DatabaseViewController"
                 
             })
+            .when("/connections", {
+                templateUrl: "views/connection/connections.view.html",
+                controller: "CollectionController"
+                
+            })
+            .when("/addConnection", {
+                templateUrl: "views/connection/connection.add.view.html",
+                controller: "CollectionController"
+                
+            })
+            .when("/editConnection", {
+                templateUrl: "views/connection/connection.edit.view.html",
+                controller: "CollectionController"
+                
+            })
             .when("/collections", {
                 templateUrl: "views/collection/collections.view.html",
                 controller: "CollectionController"
