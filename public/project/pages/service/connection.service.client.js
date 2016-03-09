@@ -158,10 +158,11 @@
 
         function findConnectionById(connectionId, callback) {
 
-            console.log(connectionId);
+            console.log("I am in findConnectionById "+connectionId);
             var connectionsById = connections.filter(function(connection, index, arr){
-                return (connection._id === connectionId);
+                return (connection._id == connectionId);
             });
+            console.log(connectionsById);
             callback(connectionsById);
         }
 

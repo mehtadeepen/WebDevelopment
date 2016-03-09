@@ -26,6 +26,7 @@
         }
         init();
         getConnectionForUser();
+
         editConnection(connectionID);
         getEnabledConnectionForUser();
 
@@ -52,6 +53,8 @@
                 
                 ConnectionService.createConnectionForUserId("guest", connection, function(newConnection) {               
                 
+                console.log("Added Succesfully "+ newConnection);
+                console.log(newConnection);
                 $location.url('/connections');
             
             });
