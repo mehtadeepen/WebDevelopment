@@ -1,9 +1,22 @@
 (function(){
 	angular
 		.module("SpiderMongo")
-		.controller("DatabaseViewController", DatabaseViewController);
+		.controller("DatabaseController", DatabaseController);
 
-	function DatabaseViewController() {
+	function DatabaseController() {
 		
+		var vm = this
+
+		vm.renderSiderbar = renderSiderbar;
+
+		function renderSiderbar() {
+            $("#side-menu").metisMenu();
+        }
+
+		function init() {
+
+		}
+
+		init();
 	}
 })();

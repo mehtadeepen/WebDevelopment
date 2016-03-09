@@ -7,26 +7,31 @@
         $routeProvider
             .when("/dashboard", {
                 templateUrl: "views/dashboard/dashboard.view.html",
-                controller: "DashBoardController"
+                controller: "DashBoardController",
+                controllerAs: "model"
             })
             .when("/database", {
                 templateUrl: "views/database/database.view.html",
-                controller: "DatabaseViewController"
+                controller: "DatabaseController",
+                controllerAs: "model"
                 
             })
             .when("/connections", {
                 templateUrl: "views/connection/connections.view.html",
-                controller: "CollectionController"
+                controller: "ConnectionController",
+                controllerAs: "model"
                 
             })
             .when("/addConnection", {
                 templateUrl: "views/connection/connection.add.view.html",
-                controller: "CollectionController"
+                controller: "ConnectionController",
+                controllerAs: "model"
                 
             })
-            .when("/editConnection", {
+            .when("/editConnection/:ID", {
                 templateUrl: "views/connection/connection.edit.view.html",
-                controller: "CollectionController"
+                controller: "ConnectionController",
+                controllerAs: "model"
                 
             })
             .when("/collections", {

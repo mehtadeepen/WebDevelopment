@@ -240,52 +240,18 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <!--<tr>
-                        <td>
-                            <input type="text" class="form-control text" placeholder="http://">
-                        </td>
-                        <td>
-                            <input type="text" class="form-control text" placeholder="hostname">
-                        </td>
-                        <td>
-                            <input type="text" class="form-control" placeholder="username">
-                        </td>
-                        <td>
-                            <input type="password" class="form-control" placeholder="password">
-                        </td>
-                        <td>
-                            <a href="#">
-                                <span class="fa fa-plus-circle fa-2x" aria-hidden="true"></span>
-                            </a>
-                        </td>
-                    </tr> -->
-                    <tr>
+                    
+                    <tr ng-repeat="connection in model.connections">
                        <td>1</td>
-                        <td>Development</td>
+                        <td>{{connection.name}}</td>
                         
                         <td>
-                            <a href="#">
-                                <span class="fa fa-toggle-on fa-lg text-success" aria-hidden="true"> On </span>
-                            </a>
-                            <a href="#/database" class="btn btn-info btn-xs">
+                            <a href="" class="btn btn-info btn-xs" ng-click="model.doConnect(connection._id)">
                                 <span class="fa fa-bolt" aria-hidden="true"> Connect</span>
                             </a>
                         </td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Production</td>
-                        
-                        <td>
-                            <a href="#">
-                                <span class="fa fa-toggle-off fa-lg text-danger" aria-hidden="true"> Off </span>
-                            </a>
-                            <a href="#" class="btn btn-info btn-xs" disabled="disabled">
-                                <span class="fa fa-bolt" aria-hidden="true"> Connect</span>
-                            </a>
-                            
-                        </td>
-                    </tr>
+                    
                     </tbody>
                 </table>
             </div>
