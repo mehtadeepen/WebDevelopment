@@ -27,8 +27,14 @@
         init();
         getConnectionForUser();
         editConnection(connectionID);
-        
+        getEnabledConnectionForUser();
 
+        function getEnabledConnectionForUser() {
+            ConnectionService.findAllEnabledConnectionForUserId("guest", function (connectionsById) {
+                $rootScope.enabledConnections = connectionsById;
+            });
+
+        }
 
         function addConnection(connection) {
 
@@ -107,6 +113,7 @@
                 console.log(connections);
                 console.log("deleteConnection successful");              
                 vm.connections = connections;
+                getEnabledConnectionForUser();
             });
 
         }
@@ -117,6 +124,7 @@
                 console.log(connections);
                 console.log("disableConnection successful");              
                 vm.connections = connections;
+                getEnabledConnectionForUser();
             });
 
         }
@@ -127,6 +135,7 @@
                 console.log(connections);
                 console.log("enableConnection successful");              
                 vm.connections = connections;
+                getEnabledConnectionForUser();
             });
 
         }

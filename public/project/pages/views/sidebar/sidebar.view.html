@@ -11,11 +11,8 @@
             <li>
                 <a href="#"><i class="fa fa-plug fa-fw"></i> My Connections<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    <li>
-                        <a href="#">Development</a>
-                    </li>
-                    <li>
-                        <a href="#">Production</a>
+                    <li ng-repeat="connection in enabledConnections">
+                        <a href="" ng-click="doConnect(connection._id)">{{connection.name}}</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->

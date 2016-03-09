@@ -16,12 +16,13 @@
         	 
         }
         init();
-		getConnectionForUser();
+		getEnabledConnectionForUser();
 
-        function getConnectionForUser() {
+        function getEnabledConnectionForUser() {
             console.log("Get all connection for user");
             ConnectionService.findAllEnabledConnectionForUserId("guest", function (connectionsById) {
                 vm.connections = connectionsById;
+                $rootScope.enabledConnections = connectionsById;
             });
 
         }
