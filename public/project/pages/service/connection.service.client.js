@@ -212,6 +212,7 @@
                     connectionIndex = index;
 
                 }
+                
                 index++;
             }
 
