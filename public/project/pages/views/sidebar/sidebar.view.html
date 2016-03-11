@@ -1,18 +1,26 @@
-<div id="my-bar" class="navbar-default sidebar" role="navigation" ng-controller="SideBarController">
+<div id="my-bar" class="navbar-default sidebar" role="navigation" ng-controller="SideBarController as model">
     <div class="sidebar-nav navbar-collapse">
         <ul class="nav" id="side-menu">
-            <li>
+            <li ng-if="user" class="hidden-md hidden-lg">
+                <a href="javascript:void(0)"><i class="fa fa-user fa-fw"></i> Welcome {{user.username}}</a>
+            </li >
+            <li ng-if="user">
                 <a href="#/dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-            </li>
-            <li class="hidden-md hidden-lg">
-                <a href="index.html"><i class="fa fa-user fa-fw"></i> My Profile</a>
+            </li >
+            <li class="hidden-md hidden-lg" ng-if="user">
+                <a href="#/profile"><i class="fa fa-user fa-fw"></i> My Profile</a>
             </li>
 
-            <li>
+            <li ng-if="user">
+                <a href="#/addConnection"><i class="fa fa-plus fa-fw"></i> New Connection</a>
+                <!-- /.nav-second-level -->
+            </li>
+
+            <li ng-if="user">
                 <a href="#"><i class="fa fa-plug fa-fw"></i> My Connections<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li ng-repeat="connection in enabledConnections">
-                        <a href="" ng-click="doConnect(connection._id)">{{connection.name}}</a>
+                        <a href="" ng-click="model.doConnect(connection._id)">{{connection.name}}</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
@@ -59,8 +67,8 @@
                 <!-- /.nav-second-level -->
             </li>
         </li>
-        <li class="hidden-md hidden-lg">
-            <a href="index.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+        <li class="hidden-md hidden-lg" ng-if="user">
+            <a href="javascript:void(0)" ng-click="model.logout(user)"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
         </li>
     </ul>
 </div>

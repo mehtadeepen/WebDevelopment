@@ -25,6 +25,9 @@
         	 vm.$location = $location;
         }
         init();
+        if($rootScope.user === undefined) {
+            $location.url("/")
+        }
         getConnectionForUser();
 
         editConnection(connectionID);

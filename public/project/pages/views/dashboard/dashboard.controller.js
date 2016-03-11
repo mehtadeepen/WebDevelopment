@@ -7,6 +7,7 @@
 
 		console.log("In Dashboard Controller");
 		var vm = this;
+        vm.renderSiderbar = renderSiderbar;
 
 		vm.doConnect = doConnect;
 
@@ -16,6 +17,9 @@
         	 
         }
         init();
+        if($rootScope.user === undefined) {
+            $location.url("/")
+        }
 		getEnabledConnectionForUser();
 
         function getEnabledConnectionForUser() {
@@ -38,6 +42,10 @@
                 $location.url('/database');
 
             });
+        }
+
+        function renderSiderbar() {
+            $("#side-menu").metisMenu();
         }
 		
 	}

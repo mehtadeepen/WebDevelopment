@@ -3,12 +3,27 @@
 		.module("SpiderMongo")
 		.controller("SideBarController", SideBarController);
 
-	function SideBarController($scope, ConnectionService, $location, $rootScope) {
-		$("#side-menu").metisMenu();
+	function SideBarController(ConnectionService, $location, $rootScope) {
 
-		 $scope.doConnect = doConnect;
+        console.log("In Sidebar Controller");
+        var vm = this;
 
-		 $scope.$location = $location;
+
+        vm.logout = logout;
+        vm.doConnect = doConnect;
+
+        function init() {
+
+            vm.$location = $location;
+
+        }
+        init();
+
+        $("#side-menu").metisMenu();
+
+
+
+
 
 		function doConnect(connectionID) {
 
@@ -21,6 +36,13 @@
                 $location.url('/database');
 
             });
+        }
+
+
+        function logout(user) {
+
+            delete $rootScope.user;
+            $location.url("/")
         }
 
 	}

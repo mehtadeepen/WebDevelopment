@@ -3,7 +3,7 @@
 		.module("SpiderMongo")
 		.controller("DatabaseController", DatabaseController);
 
-	function DatabaseController() {
+	function DatabaseController($rootScope) {
 		
 		var vm = this
 
@@ -17,6 +17,12 @@
 
 		}
 
+
+
 		init();
+
+		if($rootScope.user === undefined) {
+			$location.url("/")
+		}
 	}
 })();
