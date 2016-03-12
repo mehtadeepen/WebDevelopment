@@ -28,6 +28,8 @@
         function logout(user) {
 
         	delete $rootScope.user;
+            delete $rootScope.isConnected;
+            delete $rootScope.connectedTo;
         	$location.url("/")
         }
 

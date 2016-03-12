@@ -249,10 +249,14 @@
                             <a ng-if="connection.connected === false" href="" class="btn btn-info btn-xs" ng-click="model.doConnect(connection._id)">
                                 <span class="fa fa-bolt" aria-hidden="true"> Connect</span>
                             </a>
-                            <a ng-if="connection.connected === true" href="" class="btn btn-danger btn-xs" ng-click="model.doConnect(connection._id)">
+                            <a ng-if="connection.connected === true" href="" class="btn btn-danger btn-xs" ng-click="model.doDisonnect(connection._id)">
                                 <span class="fa fa-bolt" aria-hidden="true"> Disconnect</span>
                             </a>
                         </td>
+                    </tr>
+                    <tr ng-if="model.connections.length == 0">
+                        <td colspan="3">No Connection found</td>
+
                     </tr>
                     
                     </tbody>

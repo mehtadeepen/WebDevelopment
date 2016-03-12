@@ -16,8 +16,8 @@
                 <!-- /.nav-second-level -->
             </li>
 
-            <li ng-if="user">
-                <a href="#"><i class="fa fa-plug fa-fw"></i> My Connections<span class="fa arrow"></span></a>
+            <li ng-if="user" ng-show="enabledConnections.length > 0">
+                <a href=""><i class="fa fa-plug fa-fw"></i> My Connections<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li ng-repeat="connection in enabledConnections">
                         <a href="" ng-click="model.doConnect(connection._id)">{{connection.name}}</a>
@@ -74,4 +74,3 @@
 </div>
 <!-- /.sidebar-collapse -->
 </div>
-<script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>

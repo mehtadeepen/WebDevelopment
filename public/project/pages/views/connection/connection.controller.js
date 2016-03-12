@@ -28,13 +28,15 @@
         if($rootScope.user === undefined) {
             $location.url("/")
         }
+
+        var loggedInUser = $rootScope.user;
         getConnectionForUser();
 
         editConnection(connectionID);
         getEnabledConnectionForUser();
 
         function getEnabledConnectionForUser() {
-            ConnectionService.findAllEnabledConnectionForUserId("guest", function (connectionsById) {
+            ConnectionService.findAllEnabledConnectionForUserId(loggedInUser.username, function (connectionsById) {
                 $rootScope.enabledConnections = connectionsById;
             });
 
@@ -48,13 +50,13 @@
             
         	console.log(connection);
 
-        	var exist = ConnectionService.findAllConnectionsForUserIdByName("guest",connection);
+        	var exist = ConnectionService.findAllConnectionsForUserIdByName(loggedInUser.username,connection);
 
             if (exist === -1) {
                 alert("Connection already exits");
             }  else {
                 
-                ConnectionService.createConnectionForUserId("guest", connection, function(newConnection) {               
+                ConnectionService.createConnectionForUserId(loggedInUser.username, connection, function(newConnection) {
                 
                 console.log("Added Succesfully "+ newConnection);
                 console.log(newConnection);
@@ -90,7 +92,7 @@
         function doConnect(connectionID) {
 
             console.log(connectionID);
-            ConnectionService.doConnectById("guest",connectionID , function(connection) {
+            ConnectionService.doConnectById(loggedInUser.username,connectionID , function(connection) {
                 console.log(connection);
                 $rootScope.isConnected = true;
                 $rootScope.connectedTo = connection;
@@ -102,7 +104,7 @@
 
         function doDisonnect(connectionID) {
             console.log(connectionID);
-            ConnectionService.doDisConnectById("guest",connectionID , function(connection) {
+            ConnectionService.doDisConnectById(loggedInUser.username,connectionID , function(connection) {
                 console.log(connection);
                 $rootScope.isConnected = false;
                 $rootScope.connectedTo = null;
@@ -126,7 +128,7 @@
 
         function disableConnection(connectionID) {
             console.log(connectionID);
-            ConnectionService.disableConnectionById("guest",connectionID , function(connections) {
+            ConnectionService.disableConnectionById(loggedInUser.username,connectionID , function(connections) {
                 console.log(connections);
                 console.log("disableConnection successful");              
                 vm.connections = connections;
@@ -137,7 +139,7 @@
 
         function enableConnection(connectionID) {
             console.log(connectionID);
-            ConnectionService.enableConnectionById("guest",connectionID , function(connections) {
+            ConnectionService.enableConnectionById(loggedInUser.username,connectionID , function(connections) {
                 console.log(connections);
                 console.log("enableConnection successful");              
                 vm.connections = connections;
@@ -149,7 +151,7 @@
 
         function getConnectionForUser() {
             console.log("Get all connection for user");
-            ConnectionService.findAllConnectionForUserId("guest", function (connectionsById) {
+            ConnectionService.findAllConnectionForUserId(loggedInUser.username, function (connectionsById) {
                 vm.connections = connectionsById;
             });
 
