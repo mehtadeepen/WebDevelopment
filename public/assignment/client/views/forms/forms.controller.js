@@ -4,102 +4,134 @@
         .module("FormBuilderApp")
         .controller("FormController", FormController);
 
-    function FormController($scope, $location, $rootScope, FormService){
+    function FormController($location, $rootScope, FormService){
 
-        var loggedInUser = $rootScope.user;
+        var vm = this;
+
+        function init() {
+
+            vm.hideplus = false;
+            vm.selected = -1;
+
+        }
+        init();
+
         var userId = -1;
-        $scope.hideplus = false;
+        var loggedInUser = $rootScope.user;
 
-         if($rootScope.user === undefined) {
-             $location.url("/")
+        if($rootScope.user === undefined) {
+            $location.url("/")
         }
 
         if(loggedInUser != undefined) {
+            console.log()
             userId = loggedInUser._id;
+            console.log(userId);
             updateFormsForCurrentUser();
         }
 
-        $scope.addForm = addForm;
-        $scope.updateForm = updateForm;
-        $scope.deleteForm = deleteForm;
-        $scope.selectForm = selectForm;
-        $scope.selected = -1;
+        vm.addForm = addForm;
+        vm.updateForm = updateForm;
+        vm.deleteForm = deleteForm;
+        vm.selectForm = selectForm;
+        vm.goToForm = goToForm;
 
 
-        
+
+
         function addForm(form) {
             if(form == undefined || !form.hasOwnProperty("title") || form.title.trim() === "") {
+                console.log("In bug");
                 return;
             }
 
-            var check = FormService.findAllFormsForUserByName(userId, form);
-
-            
-            if (check === -1) {
-                alert("Form already exits");
-            }  else {
-                
-                FormService.createFormForUser(userId, form, function(newForm) {
-                
-                
-                $scope.selected = -1;
-                $scope.form = {};
-                updateFormsForCurrentUser() 
-            
+            FormService.findAllFormsForUserByName(userId, form).then(function(response){
+                if(response.data) {
+                    alert("Form already exits");
+                } else {
+                    FormService.createFormForUser(userId,form).then(function(response){
+                        if(response.data) {
+                            vm.selected = -1;
+                            vm.form = {};
+                            FormService.findAllFormsForUser(userId).then(function(res){
+                                if(res.data) {
+                                    vm.forms = res.data;
+                                }
+                            });
+                        }
+                    });
+                }
             });
-            }
-            
         }
 
         function updateForm(form) {
-            
-            
+
             if(form.title === "" || form.title == null || form.title === undefined) {
-                
+
                 console.log("Do Nothing");
-                $scope.selected = -1;
-                $scope.form = {};
-                $scope.hideplus = false;
+                vm.selected = -1;
+                vm.form = {};
+                vm.hideplus = false;
 
             }
             else {
-            FormService.updateFormById(form._id, form, function(newForm) {
-                console.log("Form Updated:");
-                console.log(form);
-                $scope.forms[$scope.selected] = newForm;
-                $scope.selected = -1;
-                $scope.form = {};
-                $scope.hideplus = false;
-            });
+                FormService.updateFormById(form._id, form).then(function(response){
+                    if(response.data) {
+                        console.log("Form Updated:");
+                        FormService.findAllFormsForUser(userId).then(function(res) {
+                            if(res.data) {
+                                vm.forms = res.data;
 
-        }
+                            }
+                        });
+                        vm.forms = response.data;
+                        vm.selected = -1;
+                        vm.form = {};
+                        vm.hideplus = false;
+                    }
+                });
+            }
         }
 
         function deleteForm(formId) {
-            FormService.deleteFormById(formId, function(udpatedForms) {
-                console.log("Form Deleted:");
-                console.log(formId);
-                $scope.form.title="";
-                $scope.hideplus = false;
-                updateFormsForCurrentUser();
+            FormService.deleteFormById(formId).then(function(response){
+                if(response.data) {
+                    FormService.findAllFormsForUser(userId).then(function(response) {
+                        if(response.data) {
+                            vm.forms = response.data;
+
+                        }
+                    });
+                    vm.hideplus = false;
+                }
             });
         }
 
         function selectForm(index) {
             var editForm = {
-                "_id" : $scope.forms[index]["_id"],
-                "userId" : $scope.forms[index]["userId"],
-                "title" : $scope.forms[index]["title"]
+                "_id" : vm.forms[index]["_id"],
+                "userId" : vm.forms[index]["userId"],
+                "title" : vm.forms[index]["title"]
             };
-            $scope.form = editForm;
-            $scope.selected = index;
-            $scope.hideplus = true;
+            vm.form = editForm;
+            vm.selected = index;
+            vm.hideplus = true;
         }
 
         function updateFormsForCurrentUser() {
-            FormService.findAllFormsForUser(userId, function (formsByUserId) {
-                $scope.forms = formsByUserId;
+            FormService.findAllFormsForUser(userId).then(function(response) {
+                if(response.data) {
+                    vm.forms = response.data;
+
+                }
             });
+
+        }
+
+        function goToForm(form)  {
+            if(form) {
+                $location
+            }
         }
 
     }

@@ -3,6 +3,7 @@
 
 var express = require('express');
 var app = express();
+var uuid = require('node-uuid');
 var bodyParser    = require('body-parser');
 var multer        = require('multer');
 var cookieParser  = require('cookie-parser');
@@ -69,6 +70,6 @@ function mailMe(req, res) {
  app.get('/sayHello', mailMe);
 
 
-require("./public/assignment/server/app.js")(app);
+require("./public/assignment/server/app.js")(app,uuid);
 
 app.listen(port, ipaddress);

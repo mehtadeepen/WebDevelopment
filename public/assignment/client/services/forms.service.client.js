@@ -5,103 +5,48 @@
     .module("FormBuilderApp")
     .factory("FormService", FormService);
 
-    function FormService() {
-
-        var forms = [
-        {"_id": "000", "title": "Contacts", "userId": 123},
-        {"_id": "010", "title": "ToDo",     "userId": 123},
-        {"_id": "020", "title": "CDs",      "userId": 234}
-        ];
+    function FormService($http) {
 
         var api = {
             createFormForUser : createFormForUser,
             findAllFormsForUser : findAllFormsForUser,
             deleteFormById : deleteFormById,
             updateFormById : updateFormById,
-            findAllFormsForUserByName : findAllFormsForUserByName
+            findAllFormsForUserByName : findAllFormsForUserByName,
+            findFormById: findFormById
         };
 
         return api;
 
-        function createFormForUser(userId, form, callback) {
-            var id = (new Date).getTime();
-
-            var newForm = {
-                "_id" : id,
-                "title" : form.title,
-                "userId" : userId
-            };
-
-            forms.push(newForm);
-            callback(newForm);
+        function createFormForUser(userId, form) {
+            console.log("In createFormForUser");
+            return $http.post("/api/assignment/user/"+userId+"/form",form);
         }
 
-        function findAllFormsForUser(userId, callback) {
-            
-            var formsById = forms.filter(function(form, index, arr){
-                return (form.userId === userId);
-            });
-            callback(formsById);
+        function findAllFormsForUser(userId) {
+            console.log("In findAllFormsForUser");
+            return $http.get("/api/assignment/user/"+userId+"/form");
         }
 
         function findAllFormsForUserByName(userId, form1) {
-            
-            var name = form1.title;
-            var formsByName = forms.filter(function(form, index, arr){
-                return (form.userId === userId && form.title === name);
-            });
-
-            console.log(formsByName);
-            if(formsByName.length != 0) { 
-                console.log("Form already exists");
-                return -1;
-            } else {
-                return 1;
-            }
-            
+          console.log("In findAllFormsForUserByName");
+            return $http.get("/api/assignment/user/"+userId+"/form/title/"+form1.title);
         }
 
-        function deleteFormById(formId, callback) {
-
-            var index = 0;
-            var formIndex = -1;
-            for (var i = 0; i < forms.length; i++) {
-                if(forms[i]._id === formId){
-                    formIndex = index;
-                }
-                index++;
-            }
-            if(formIndex != -1) {
-                forms.splice(formIndex, 1);
-                callback(forms);
-            }
-            
+        function deleteFormById(formId) {
+            console.log("In deleteFormById");
+            return $http.delete("/api/assignment/form/"+formId);
         }
 
-        function updateFormById(formId, newForm, callback) {
-            var index = 0;
-            var formIndex = -1;
-            for (var i = 0; i < forms.length; i++) {
-                if(forms[i]._id === formId){
-                    formIndex = index;
-
-                }
-                index++;
-            }
-
-            if(formIndex != -1) {
-
-                console.log("Index Number : "+formIndex);
-                forms[formIndex] = {
-                    "_id" : newForm._id,
-                    "title" : newForm.title,
-                    "userId" : newForm.userId
-                }
-                console.log(forms);
-                callback(forms[formIndex]);
-            }
+        function updateFormById(formId, form) {
+            console.log("In updateFormById");
+            return $http.put("/api/assignment/form/"+formId,form);
         }
 
+        function findFormById(formId) {
+            console.log("In findFormById");
+            return $http.get("/api/assignment/form/"+formId);
+        }
     }
 
 

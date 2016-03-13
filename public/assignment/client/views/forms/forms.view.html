@@ -5,7 +5,7 @@
                 <li><a>Fields</a></li>
             </ul>
 
-            <div class="form-div" ng-controller="FormController">
+            <div class="form-div">
                 <div class="form-div-inner">
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
@@ -18,18 +18,18 @@
                             <tbody>
                             <tr>
                                 <td>
-                                    <input ng-model="form.title" type="text" class="form-control" id="formname" placeholder="name" required>
+                                    <input ng-model="model.form.title" type="text" class="form-control" id="formname" placeholder="name" required>
                                 </td>
                                 <td>
-                                    <a ng-hide="hideplus" ng-click="addForm(form)"><span class="glyphicon glyphicon-plus plusicon pull-left text-warning" aria-hidden="true"></span></a>
-                                    <a ng-click="updateForm(form)"><span class="glyphicon glyphicon-ok okicon pull-right text-success" aria-hidden="true"></span></a>
+                                    <a ng-hide="model.hideplus" ng-click="model.addForm(model.form)"><span class="glyphicon glyphicon-plus plusicon pull-left text-warning" aria-hidden="true"></span></a>
+                                    <a ng-click="model.updateForm(model.form)"><span class="glyphicon glyphicon-ok okicon pull-right text-success" aria-hidden="true"></span></a>
                                 </td>
                             </tr>
-                            <tr ng-repeat="form in forms" ng-class="{'selected-form': $index == selected}">
-                                <td><a href="">{{form.title}}</a></td>
+                            <tr ng-repeat="form in model.forms" ng-class="{'selected-form': $index == model.selected}">
+                                <td><a href="#/fields/{{form._id}}" >{{form.title}}</a></td>
                                 <td>
-                                    <a ng-click="deleteForm(form._id)"><span class="glyphicon glyphicon-remove removeicon pull-left text-danger" aria-hidden="true"></span></a>
-                                    <a ng-click="selectForm($index)"><span class="glyphicon glyphicon-pencil pencilicon pull-right" aria-hidden="true"></span></a>
+                                    <a ng-click="model.deleteForm(form._id)"><span class="glyphicon glyphicon-remove removeicon pull-left text-danger" aria-hidden="true"></span></a>
+                                    <a ng-click="model.selectForm($index)"><span class="glyphicon glyphicon-pencil pencilicon pull-right" aria-hidden="true"></span></a>
                                 </td>
                             </tr>
                             </tbody>
