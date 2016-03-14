@@ -5,7 +5,7 @@
         .module("FormBuilderApp")
         .controller("HeaderController", HeaderController);
 
-    function HeaderController($scope, $location, $rootScope){
+    function HeaderController($scope, $location, $rootScope, UserService){
 
         $scope.isLoggedIn = isLoggedIn;
         $scope.logout = logout;
@@ -17,7 +17,12 @@
         function logout(user) {
 
         	delete $rootScope.user;
-        	$location.url("/")
+            UserService.logout().then(function(response){
+                if(response) {
+                    $location.url("/");
+                }
+            });
+
         }
 
     }

@@ -14,17 +14,37 @@
     </div>
     <div class="row" ng-switch on="field.type">
         <div class="col-xs-6 col-sm-7" ng-switch-when="OPTIONS">
-            <select class="form-control" ng-model="field.option" ng-options="option.value as option.label for option in field.options">
+            <select class="form-control">
                 <option value="">-- choose --</option>
+                <option ng-repeat="option in field.options" value="{{option.value}}">{{option.label}}</option>
             </select>
         </div>
+        <div class="col-xs-6 col-sm-7" ng-switch-when="TEXT">
+            <input type="text" id="" class="form-control" placeholder="{{field.placeholder}}">
+        </div>
+        <div class="col-xs-6 col-sm-7" ng-switch-when="DATE">
+            <input type="date" id="" class="form-control" placeholder="{{field.placeholder}}">
+        </div>
+        <div class="col-xs-6 col-sm-7" ng-switch-when="RADIOS">
+            <div class="radio" ng-repeat="option in field.options">
+                <label><input type="radio" value="{{option.value}}" name="{{field.label}}">{{option.label}}</label>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-7" ng-switch-when="CHECKBOXES">
+            <div class="checkbox" ng-repeat="option in field.options">
+                <label><input type="checkbox" value="{{option.value}}">{{option.label}}</label>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-7" ng-switch-when="TEXTAREA">
+            <textarea class="form-control" rows="2" placeholder="{{field.placeholder}}"></textarea>
+        </div>
         <div class="col-xs-6 col-sm-7" ng-switch-default>
-            <input type="{{field.type}}" id="" class="form-control" placeholder="{{field.placeholder}}">
+            <input type="text" id="" class="form-control" placeholder="{{field.placeholder}}">
         </div>
         <div class="col-xs-6 col-sm-5">
             <a href="#"><i class="glyphicon glyphicon-pencil tableicon-lg"></i></a>
             <a href="#"><i class="glyphicon glyphicon-plus tableicon-lg text-warning"></i></a>
-            <a href="#"><i class="glyphicon glyphicon-remove tableicon-lg text-danger"></i></a>
+            <a href="" ng-click="model.deleteField(field._id)"><i class="glyphicon glyphicon-remove tableicon-lg text-danger"></i></a>
             <a href="#"><i class="glyphicon glyphicon-align-justify tableicon-lg text-success"></i></a>
         </div>
     </div>
@@ -40,18 +60,18 @@
     </div>
     <div class="row">
         <div class="col-xs-6 col-sm-7">
-            <select class="form-control" id="newField">
-                <option>Single Line Text</option>
-                <option>Date</option>
-                <option>Dropdown</option>
-                <option>Checkboxes</option>
-                <option>Radio Buttons</option>
-                <option>Paragraph Text Field</option>
+            <select class="form-control" id="newField" ng-model="model.fieldType">
+                <option value="0">Single Line Text</option>
+                <option value="2">Date</option>
+                <option value="3">Dropdown</option>
+                <option value="4">Checkboxes</option>
+                <option value="5">Radio Buttons</option>
+                <option value="1">Paragraph Text Field</option>
             </select>
         </div>
         <div class="col-xs-6 col-sm-5">
-            <a href="#" class="no-visibility"><i class="glyphicon glyphicon-pencil tableicon-lg"></i></a>
-            <a href="#"><i class="glyphicon glyphicon-plus tableicon-lg text-warning"></i></a>
+            <a href="" class="no-visibility"><i class="glyphicon glyphicon-pencil tableicon-lg"></i></a>
+            <a href="" ng-click="model.addField(model.fieldType)"><i class="glyphicon glyphicon-plus tableicon-lg text-warning"></i></a>
         </div>
     </div>
 

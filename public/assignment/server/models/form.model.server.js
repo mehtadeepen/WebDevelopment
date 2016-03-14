@@ -1,4 +1,5 @@
 var mock = require("./form.mock.json");
+var fieldFactory = require("./field.body.mock.json");
 module.exports = function() {
 
     var api = {
@@ -115,7 +116,7 @@ module.exports = function() {
     function findAllFormsForUserByName(title,userId){
 
         for(u in mock) {
-            if(mock[u].title === title && mock[u].userId === userId) {
+            if(mock[u].title == title && mock[u].userId == userId) {
                 return mock[u];
             }
         }
@@ -209,25 +210,8 @@ module.exports = function() {
     function createFieldForForm(formId, fieldId, field) {
         var newFieldId = fieldId;
         var fields = findAllFieldsForForm(formId);
-
-        if(field.hasOwnProperty("options") || field.type === "OPTIONS") {
-            var newField = {
-                "_id" : newFieldId,
-                "lable" : field.lable,
-                "type" : field.type,
-                "placeholder": field.placeholder,
-                "options" : field.options
-            };
-        } else {
-            var newField = {
-                "_id" : newFieldId,
-                "lable" : field.lable,
-                "type" : field.type,
-                "placeholder": field.placeholder
-            };
-        }
-
-
+        var newField = fieldFactory[field.fieldType];
+        newField._id = newFieldId;
         fields.push(newField);
 
         for(m in mock) {
@@ -239,5 +223,7 @@ module.exports = function() {
         return fields;
 
     }
+
+
 
 }

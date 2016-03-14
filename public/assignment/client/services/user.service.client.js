@@ -14,10 +14,17 @@
             deleteUserById : deleteUserById,
             updateUser : updateUser,
             findUserByUsername : findUserByUsername,
-            setCurrentUser: setCurrentUser
+            setCurrentUser: setCurrentUser,
+            getCurrentUser: getCurrentUser,
+            logout: logout
         };
 
         return api;
+
+        function getCurrentUser() {
+            console.log("In service client getCurrentUser");
+            return $http.get("/api/assignment/user/loggedin");
+        }
 
 
         function setCurrentUser(user) {
@@ -56,8 +63,13 @@
         }
 
 
+        function logout() {
+
+            return $http.get("/api/assignment/user/logout");
+        }
 
 
-}
+
+    }
 
 })();

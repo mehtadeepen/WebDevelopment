@@ -8,16 +8,22 @@
 
         var vm = this;
         function init() {
+
             vm.$location = $location;
-            vm.user = $rootScope.user;
+
+            UserService.getCurrentUser().then(function(response){
+                if(response.data){
+                    var user = response.data;
+                    console.log(user);
+                    vm.user = user;
+                }
+            });
+
         }
         init();
-
+        console.log("IN profilecontroller INIT"+ vm.user);
+        console.log(vm.user);
         vm.update = update;
-
-        if($rootScope.user === undefined) {
-             $location.url("/")
-        }
 
         function update(user) {
             if(!user) {

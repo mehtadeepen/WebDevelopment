@@ -1,8 +1,9 @@
 module.exports = function(app, formModel, userModel) {
     app.post("/api/assignment/user", register);
     app.get("/api/assignment/user", findAllUsers);
+    app.get("/api/assignment/user/logout", logout);
+    app.get("/api/assignment/user/loggedin",loggedin);
     app.get("/api/assignment/user/:id", profile);
-    app.get("/api/assignment/user?", login);
     app.put("/api/assignment/user/:id", updateUser);
     app.delete("/api/assignment/user/:id", deleteUser);
 
@@ -67,25 +68,15 @@ module.exports = function(app, formModel, userModel) {
         res.json(users);
     }
 
-    function login(req, res) {
-        console.log("In login");
+    function logout(req, res) {
+        console.log("In logout");
+        req.session.destroy();
+        res.send(200);
 
-        var username = req.query.username;
-        var password = req.query.password;
+    }
 
-        if(username != undefined && password != undefined) {
-
-            var credentials = {
-                "username": username,
-                "password": password
-            };
-            var user = userModel.findUserByCredentials(credentials);
-            req.session.currentUser = user;
-            res.json(user);
-        } else if (username != undefined && password == undefined) {
-            var user = userModel.findUserByUsername(username);
-            res.json(user);
-        }
-
+    function loggedin(req, res) {
+        console.log("In logged In");
+        res.json(req.session.currentUser);
     }
 }
