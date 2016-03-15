@@ -34,21 +34,21 @@
                     vm.user = currentUser;
                 });
 
-            $("#sortable" ).sortable({
-                placeholder: "ui-sortable-placeholder",
-                update: function( event, ui ) {
-                    console.log(vm.fields);
-                    var start = ui.item.data('start'),
-                        end = ui.item.index();
-                    vm.fields.splice(end, 0,
-                        vm.fields.splice(start, 1)[0]);
-                    FieldService.reorderFields(vm.fields,vm.form._id).then(function(response){
-                        if(response.data) {
-                            vm.fields = response.data;
-                        }
-                    });
-                }
-            });
+            //$("#sortable" ).sortable({
+            //    placeholder: "ui-sortable-placeholder",
+            //    update: function( event, ui ) {
+            //        console.log(vm.fields);
+            //        var start = ui.item.data('start'),
+            //            end = ui.item.index();
+            //        vm.fields.splice(end, 0,
+            //            vm.fields.splice(start, 1)[0]);
+            //        FieldService.reorderFields(vm.fields,vm.form._id).then(function(response){
+            //            if(response.data) {
+            //                vm.fields = response.data;
+            //            }
+            //        });
+            //    }
+            //});
 
 
         }

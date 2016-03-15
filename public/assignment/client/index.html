@@ -26,9 +26,9 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.js"></script>
-    <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
     <script src="app.js"></script>
     <script src="config.js"></script>
     <script src="views/main/main.controller.js"></script>
@@ -42,12 +42,6 @@
     <script src="services/user.service.client.js"></script>
      <script src="services/forms.service.client.js"></script>
     <script src="services/fields.service.client.js"></script>
-    <script>
-        $(function() {
-            $( "#sortable" ).sortable({
-                placeholder: "ui-sortable-placeholder"
-            });
-        });
-    </script>
+    <script src="directives/divSortable.js"></script>
 </body>
 </html>
