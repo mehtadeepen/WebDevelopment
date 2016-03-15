@@ -1,4 +1,5 @@
 module.exports = function(app, formModel, userModel, uuid) {
+    app.post("/api/assignment/form/:formId/fields", reorderFields);
     app.post("/api/assignment/form/:formId/clone/field", cloneFieldForForm);
     app.get("/api/assignment/form/:formId/field", findAllFieldsForForm);
     app.delete("/api/assignment/form/:formId/field/:fieldId", deleteFieldForFormById);
@@ -23,6 +24,14 @@ module.exports = function(app, formModel, userModel, uuid) {
         var fieldId = req.params.fieldId;
         var newfields = formModel.deleteFieldById(fieldId,fields,formId);
         res.json(newfields);
+    }
+
+    function reorderFields(req, res) {
+        console.log("In server :: Field Service :: reorderFields");
+        var formId = req.params.formId;
+        var fields = req.body;
+        var newFields = formModel.reorderFieldsForForm(formId,fields);
+        res.json(newFields);
     }
 
     function createFieldForForm(req, res) {

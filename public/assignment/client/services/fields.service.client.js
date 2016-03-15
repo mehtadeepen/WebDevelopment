@@ -16,7 +16,8 @@
             addField: addField,
             deleteField: deleteField,
             cloneField: cloneField,
-            updateField: updateField
+            updateField: updateField,
+            reorderFields: reorderFields
         }
 
         return api;
@@ -49,6 +50,12 @@
         function updateField(field,formId) {
             console.log("In client :: FieldService :: updateField :: "+formId);
             return $http.put("/api/assignment/form/"+formId+"/field/"+field._id, field);
+        }
+
+        function reorderFields(fields,formId) {
+            console.log("In client :: FieldService :: reorderFields :: "+formId);
+            console.log(fields);
+            return $http.post("/api/assignment/form/"+formId+"/fields", fields);
         }
 
 

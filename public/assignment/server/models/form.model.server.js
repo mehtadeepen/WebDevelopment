@@ -15,7 +15,8 @@ module.exports = function() {
         deleteFieldById: deleteFieldById,
         createFieldForForm: createFieldForForm,
         updateFieldForFormById: updateFieldForFormById,
-        cloneFieldForForm: cloneFieldForForm
+        cloneFieldForForm: cloneFieldForForm,
+        reorderFieldsForForm: reorderFieldsForForm
     };
     return api;
 
@@ -32,7 +33,7 @@ module.exports = function() {
 
     function findFormById(formId) {
 
-        for(u in mock) {
+        for(var u in mock) {
             if(mock[u]._id == formId) {
                 return mock[u];
             }
@@ -220,6 +221,28 @@ module.exports = function() {
             }
         }
         return fields;
+
+    }
+
+    function reorderFieldsForForm(formId,fields) {
+
+        console.log("In server :: FormModel :: reorderFieldsForForm :: "+formId);
+        console.log(fields);
+        var index = -1;
+
+        for(var u in mock) {
+            if(mock[u]._id == formId) {
+                index = u;
+                console.log("Form Found");
+                break;
+            }
+        }
+
+        if(index != -1) {
+            mock[index].fields = fields;
+        }
+
+        return  mock[index].fields;
 
     }
 
