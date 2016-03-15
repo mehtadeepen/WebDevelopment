@@ -14,7 +14,8 @@ module.exports = function() {
         findFieldById: findFieldById,
         deleteFieldById: deleteFieldById,
         createFieldForForm: createFieldForForm,
-        updateFieldForFormById: updateFieldForFormById
+        updateFieldForFormById: updateFieldForFormById,
+        cloneFieldForForm: cloneFieldForForm
     };
     return api;
 
@@ -103,7 +104,7 @@ module.exports = function() {
 
     function findFormByTitle(title){
 
-        for(u in mock) {
+        for(var u in mock) {
             if(mock[u].title === title) {
                 return mock[u];
             }
@@ -115,7 +116,7 @@ module.exports = function() {
 
     function findAllFormsForUserByName(title,userId){
 
-        for(u in mock) {
+        for(var u in mock) {
             if(mock[u].title == title && mock[u].userId == userId) {
                 return mock[u];
             }
@@ -159,7 +160,7 @@ module.exports = function() {
         if(index != -1) {
             fields.splice(index,1);
 
-            for(m in mock) {
+            for(var m in mock) {
                 if(mock[m]._id == formId) {
                     mock[m].fields = fields;
                 }
@@ -178,27 +179,10 @@ module.exports = function() {
             }
         }
 
-
         if(index != -1) {
             console.log("Index Number : "+index);
-            if(field.hasOwnProperty("options") || field.type === "OPTIONS") {
-                fields[index] = {
-                    "_id" : field._id,
-                    "lable" : field.lable,
-                    "type" : field.type,
-                    "placeholder": field.placeholder,
-                    "options" : field.options
-                };
-            } else {
-                fields[index] = {
-                    "_id" : field._id,
-                    "lable" : field.lable,
-                    "type" : field.type,
-                    "placeholder": field.placeholder
-                };
-            }
-
-            for(m in mock) {
+            fields[index] = field;
+            for(var m in mock) {
                 if(mock[m]._id == formId) {
                     mock[m].fields = fields;
                 }
@@ -214,15 +198,32 @@ module.exports = function() {
         newField._id = newFieldId;
         fields.push(newField);
 
-        for(m in mock) {
+        for(var m in mock) {
             if(mock[m]._id == formId) {
                 mock[m].fields = fields;
             }
         }
-
         return fields;
 
     }
+
+    function cloneFieldForForm(formId, fieldId, field) {
+        var newFieldId = fieldId;
+        var fields = findAllFieldsForForm(formId);
+        var newField = field;
+        newField._id = newFieldId;
+        fields.push(newField);
+
+        for(var m in mock) {
+            if(mock[m]._id == formId) {
+                mock[m].fields = fields;
+            }
+        }
+        return fields;
+
+    }
+
+
 
 
 

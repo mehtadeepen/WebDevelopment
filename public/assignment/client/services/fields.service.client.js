@@ -14,7 +14,9 @@
         var api = {
             findAllFieldsForForm: findAllFieldsForForm,
             addField: addField,
-            deleteField: deleteField
+            deleteField: deleteField,
+            cloneField: cloneField,
+            updateField: updateField
         }
 
         return api;
@@ -38,6 +40,17 @@
             console.log("In client :: FieldService :: deleteField :: "+fieldId);
             return $http.delete("/api/assignment/form/"+formId+"/field/"+fieldId);
         }
+
+        function cloneField(field,formId) {
+            console.log("In client :: FieldService :: cloneField :: "+formId);
+            return $http.post("/api/assignment/form/"+formId+"/clone/field", field);
+        }
+
+        function updateField(field,formId) {
+            console.log("In client :: FieldService :: updateField :: "+formId);
+            return $http.put("/api/assignment/form/"+formId+"/field/"+field._id, field);
+        }
+
 
     }
 })();

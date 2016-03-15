@@ -1,5 +1,5 @@
 module.exports = function(app, formModel, userModel, uuid) {
-
+    app.post("/api/assignment/form/:formId/clone/field", cloneFieldForForm);
     app.get("/api/assignment/form/:formId/field", findAllFieldsForForm);
     app.delete("/api/assignment/form/:formId/field/:fieldId", deleteFieldForFormById);
     app.post("/api/assignment/form/:formId/field", createFieldForForm);
@@ -31,6 +31,15 @@ module.exports = function(app, formModel, userModel, uuid) {
         var newFieldId = uuid.v4();
         var field = req.body;
         var fields = formModel.createFieldForForm(formId,newFieldId,field);
+        res.json(fields);
+    }
+
+    function cloneFieldForForm(req, res) {
+        console.log("In server :: Field Service :: cloneFieldForForm");
+        var formId = req.params.formId;
+        var newFieldId = uuid.v4();
+        var field = req.body;
+        var fields = formModel.cloneFieldForForm(formId,newFieldId,field);
         res.json(fields);
     }
 
