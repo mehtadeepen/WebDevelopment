@@ -1,6 +1,6 @@
 var mock = require("./form.mock.json");
 var fieldFactory = require("./field.body.mock.json");
-module.exports = function() {
+module.exports = function(db,mongoose) {
 
     var api = {
         findAllFormsForUser: findAllFormsForUser,

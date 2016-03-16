@@ -25,7 +25,8 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
         process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
         process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
         process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
-        process.env.OPENSHIFT_APP_NAME;
+        "assignment";
+    //process.env.OPENSHIFT_APP_NAME;
 }
 
 // connect to the database
@@ -37,7 +38,6 @@ var colls = {};
 //var db = mongoose.connection;
 dbase.on('open',function(ref){
     console.log('Connected to mongo server.');
-    console.log(dbase.db.listCollections());
     dbase.db.listCollections().toArray(function(err, names) {
         if (err) {
             console.log(err);
@@ -54,6 +54,21 @@ dbase.on('open',function(ref){
 app.get("/api/check", function(req,res){
     res.json(colls);
 });
+
+//var connection1 = mongoose.createConnection('mongodb://localhost:27017/project');
+//connection1.on('open',function(ref){
+//    console.log('Connected to mongo server.');
+//    connection1.db.listCollections().toArray(function(err, names) {
+//        if (err) {
+//            console.log(err);
+//        }
+//        else {
+//            names.forEach(function(e,i,a) {
+//                console.log("--->>", e.name);
+//            });
+//        }
+//    });
+//});
 //var MongoClient = require('mongodb').MongoClient,
 //    test = require('assert');
 //
@@ -154,6 +169,6 @@ function mailMe(req, res) {
  app.get('/sayHello', mailMe);
 
 
-require("./public/assignment/server/app.js")(app,uuid);
+require("./public/assignment/server/app.js")(app,uuid,db,mongoose);
 
 app.listen(port, ipaddress);
