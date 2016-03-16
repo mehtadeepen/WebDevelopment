@@ -16,14 +16,13 @@
                 },
                 stop: function(event, ui) {
                     end = ui.item.index();
-                    var temp = scope.model.fields[start];
-                    scope.model.fields[start] = scope.model.fields[end];
-                    scope.model.fields[end] = temp;
-                    scope.$apply();
+                    scope.model.fields.splice(end, 0,
+                        scope.model.fields.splice(start, 1)[0]);
                     FieldService.reorderFields(scope.model.fields,scope.model.form._id).then(function(response){
                         if(response.data) {
                                 console.log("Reordering Successful ...");
                                 console.log(response.data);
+                            scope.model.fields = response.data;
                         }
                     });
                 }

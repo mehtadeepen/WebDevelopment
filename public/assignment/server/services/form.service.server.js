@@ -10,29 +10,28 @@ module.exports = function(app, formModel, userModel, uuid) {
 
 
     function findAllFormsForUser(req, res) {
-        console.log("In findAllFormsForUser");
+        console.log("In server :: Form Service :: findAllFormsForUser");
         var userId = req.params.userId;
         var forms = formModel.findAllFormsForUser(userId);
-        console.log(forms);
         res.json(forms);
     }
 
     function findFormById(req, res) {
-        console.log("In findFormById");
+        console.log("In server :: Form Service :: findFormById");
         var formId = req.params.formId;
         var form = formModel.findFormById(formId);
         res.json(form);
     }
 
     function deleteFormById(req, res) {
-        console.log("In deleteFormById");
+        console.log("In server :: Form Service :: deleteFormById");
         var formId = req.params.formId;
         var forms = formModel.deleteFormById(formId);
         res.json(forms);
     }
 
     function createFormForUser(req, res) {
-        console.log("In createFormForUser");
+        console.log("In server :: Form Service :: createFormForUser");
         var userId = req.params.userId;
         var newFormId = uuid.v4();
         var form = req.body;
@@ -43,7 +42,7 @@ module.exports = function(app, formModel, userModel, uuid) {
     }
 
     function updateFormById(req, res) {
-        console.log("In updateFormById");
+        console.log("In server :: Form Service :: updateFormById");
         var formId = req.params.formId;
         var form = req.body;
         var forms = formModel.updateFormById(formId,form);
@@ -51,7 +50,7 @@ module.exports = function(app, formModel, userModel, uuid) {
     }
 
     function findAllFormsForUserByName(req, res) {
-        console.log("In findAllFormsForUserByName");
+        console.log("In server :: Form Service :: findAllFormsForUserByName");
         var title = req.params.title;
         var userId = req.params.userId;
         var form = formModel.findAllFormsForUserByName(title,userId);

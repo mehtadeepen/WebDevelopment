@@ -33,7 +33,6 @@
                 "fieldType" : fieldType,
                 "userId": userId
             }
-            console.log(field);
             return $http.post("/api/assignment/form/"+formId+"/field", field);
         }
 
@@ -54,7 +53,6 @@
 
         function reorderFields(fields,formId) {
             console.log("In client :: FieldService :: reorderFields :: "+formId);
-            console.log(fields);
             return $http.post("/api/assignment/form/"+formId+"/fields", fields);
         }
 

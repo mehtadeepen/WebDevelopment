@@ -12,6 +12,90 @@ var mongoose      = require('mongoose');
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 
+//mongoose.connect('mongodb://localhost:27017/project');
+//mongoose.connect('mongodb://admin:DgRE9-h3cXvy@127.8.193.130:27017/webdevelopment');
+
+// create a default connection string
+var connectionString = 'mongodb://127.0.0.1:27017/webdevelopment';
+
+// use remote connection string
+// if running in remote server
+if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
+    connectionString = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
+        process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
+        process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
+        process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
+        process.env.OPENSHIFT_APP_NAME;
+}
+
+// connect to the database
+var db = mongoose.connect(connectionString);
+
+var dbase = mongoose.connection;
+
+var colls = {};
+//var db = mongoose.connection;
+dbase.on('open',function(ref){
+    console.log('Connected to mongo server.');
+    console.log(dbase.db.listCollections());
+    dbase.db.listCollections().toArray(function(err, names) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            colls = names;
+            names.forEach(function(e,i,a) {
+                console.log("--->>", e.name);
+            });
+        }
+    });
+});
+
+app.get("/api/check", function(req,res){
+    res.json(colls);
+});
+//var MongoClient = require('mongodb').MongoClient,
+//    test = require('assert');
+//
+//
+//mongoose.connect('mongodb://localhost:27017/afan-test');
+//
+//
+//mongoose.connection.on('open', function (ref) {
+//    console.log('Connected to mongo server.');
+//    //trying to get collection names
+//    mongoose.connection.db.collectionNames(function (err, names) {
+//        console.log(names); // [{ name: 'dbname.myCollection' }]
+//        module.exports.Collection = names;
+//    });
+//});
+//
+//// Connection url
+//var url = 'mongodb://localhost:27017/afan-test';
+//var db = mongoose.connect(url);
+//db.on('open', function(){
+//    mongoose.connection.db.collectionNames(function(error, names) {
+//        if (error) {
+//            throw new Error(error);
+//        } else {
+//            names.map(function(cname) {
+//                console.log(cname.name);
+//            });
+//        }
+//    });
+//});
+//// Connect using MongoClient
+////MongoClient.connect(url, function(err, db) {
+////    // Use the admin database for the operation
+////    var adminDb = db.admin();
+////    // List all the available databases
+////    adminDb.listDatabases(function(err, dbs) {
+////        console.log(dbs.databases);
+////        test.equal(null, err);
+////        test.ok(dbs.databases.length > 0);
+////        db.close();
+////    });
+////});
 
 
 app.use(bodyParser.json());

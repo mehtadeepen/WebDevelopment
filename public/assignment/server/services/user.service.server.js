@@ -9,14 +9,14 @@ module.exports = function(app, formModel, userModel) {
 
 
     function profile(req,res) {
-        console.log("In profile");
+        console.log("In server :: User Service :: profile");
         var id = req.params.id;
         var user = userModel.findUserById(id);
         res.json(user);
     }
 
     function register(req, res) {
-        console.log("In register");
+        console.log("In server :: User Service :: register");
         var user = req.body;
         user = userModel.createUser(user);
         req.session.currentUser = user;
@@ -36,7 +36,6 @@ module.exports = function(app, formModel, userModel) {
                 "password": password
             };
             var user = userModel.findUserByCredentials(credentials);
-            console.log(user);
             req.session.currentUser = user;
             res.json(user);
         } else if (username != undefined && password == undefined) {
@@ -48,35 +47,32 @@ module.exports = function(app, formModel, userModel) {
             var users = userModel.findAllUsers();
             res.json(users);
         }
-
     }
 
     function updateUser(req, res) {
-        console.log("In updateUser");
+        console.log("In server :: User Service :: updateUser");
         var user = req.body;
         var id = req.params.id;
-        console.log(user);
-        console.log(id);
         var users = userModel.updateUserById(id,user);
         res.json(users);
     }
 
     function deleteUser(req, res) {
-        console.log("In deleteUser");
+        console.log("In server :: User Service :: deleteUser");
         var id = req.params.id;
         var users = userModel.deleteUserById(id);
         res.json(users);
     }
 
     function logout(req, res) {
-        console.log("In logout");
+        console.log("In server :: User Service :: logout");
         req.session.destroy();
         res.send(200);
 
     }
 
     function loggedin(req, res) {
-        console.log("In logged In");
+        console.log("In server :: User Service :: loggedin");
         res.json(req.session.currentUser);
     }
 }

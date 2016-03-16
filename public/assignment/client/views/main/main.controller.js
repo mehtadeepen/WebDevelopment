@@ -6,11 +6,14 @@
 	.controller("MainController", MainController);
 
 
+	function MainController($location){
+		var vm = this;
 
-	function MainController($scope, $location, $rootScope){
-		$scope.$location = $location;
+		function init(){
+			vm.$location = $location;
+		}
 
-
+		init();
 	}
 
 	

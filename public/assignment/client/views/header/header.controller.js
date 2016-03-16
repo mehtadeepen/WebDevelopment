@@ -1,22 +1,25 @@
 "use strict";
 (function() {
-
     angular
         .module("FormBuilderApp")
         .controller("HeaderController", HeaderController);
 
-    function HeaderController($scope, $location, $rootScope, UserService){
+    function HeaderController($location,UserService) {
 
-        $scope.isLoggedIn = isLoggedIn;
-        $scope.logout = logout;
+        var vm = this;
+        vm.isLoggedIn = isLoggedIn;
+        vm.logout = logout;
+        function init() {
+            vm.$location = $location;
+
+        }
+        init();
 
         function isLoggedIn() {
             return ($location.url() != '/home' && $location.url() != '/login' && $location.url() != '/register');
         }
 
         function logout(user) {
-
-        	delete $rootScope.user;
             UserService.logout().then(function(response){
                 if(response) {
                     $location.url("/");
@@ -26,5 +29,6 @@
         }
 
     }
+
 
 })();

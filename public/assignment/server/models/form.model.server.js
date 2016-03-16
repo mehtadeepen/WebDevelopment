@@ -23,8 +23,7 @@ module.exports = function() {
 
 
     function findAllFormsForUser(userId) {
-        console.log("In model findAllFormsForUser "+userId);
-        console.log(mock);
+        console.log("In server :: Form Model ::  findAllFormsForUser "+userId);
         var formsById = mock.filter(function(form, index, arr){
             return (form.userId == userId);
         });
@@ -32,18 +31,17 @@ module.exports = function() {
     }
 
     function findFormById(formId) {
-
+        console.log("In server :: Form Model ::  findFormById "+formId);
         for(var u in mock) {
             if(mock[u]._id == formId) {
                 return mock[u];
             }
         }
-
         return null;
     }
 
-
     function deleteFormById(id) {
+        console.log("In server :: Form Model ::  deleteFormById "+id);
         var index = -1;
         for(var u in mock) {
             if( mock[u]._id === id ) {
@@ -51,46 +49,36 @@ module.exports = function() {
                 break;
             }
         }
-
         if(index != -1) {
             mock.splice(index,1);
         }
-
         return mock;
     }
 
     function createFormForUser(userId, formId, form) {
+        console.log("In server :: Form Model ::  createFormForUser "+userId);
         var id = formId;
-
         var newForm = {
             "_id" : id,
             "title" : form.title,
             "userId" : userId,
             "fields": []
         };
-
         mock.push(newForm);
         return mock;
-
     }
 
     function updateFormById(id,newForm) {
-        console.log("In updateFormById");
-        console.log(newForm);
-        console.log(id);
-
+        console.log("In server :: Form Model ::  updateFormById "+id);
         var index = 0;
         var formIndex = -1;
         for (var i = 0; i < mock.length; i++) {
             if(mock[i]._id === id){
                 formIndex = index;
-
             }
             index++;
         }
-
         if(formIndex != -1) {
-
             console.log("Index Number : "+formIndex);
             mock[formIndex] = {
                 "_id" : newForm._id,
@@ -99,36 +87,32 @@ module.exports = function() {
             }
             console.log(mock);
         }
-
         return mock;
     }
 
     function findFormByTitle(title){
-
+        console.log("In server :: Form Model ::  findFormByTitle "+title);
         for(var u in mock) {
             if(mock[u].title === title) {
                 return mock[u];
             }
         }
-
         return null;
-
     }
 
     function findAllFormsForUserByName(title,userId){
-
+        console.log("In server :: Form Model ::  findAllFormsForUserByName "+userId);
         for(var u in mock) {
             if(mock[u].title == title && mock[u].userId == userId) {
                 return mock[u];
             }
         }
-
         return null;
     }
 
     function findAllFieldsForForm(formId){
         console.log("In server :: Form Model :: findAllFieldsForForm");
-        for(u in mock) {
+        for(var u in mock) {
             if(mock[u]._id == formId) {
                 return mock[u].fields;
             }
@@ -139,7 +123,7 @@ module.exports = function() {
 
     function findFieldById(fieldId,fields) {
         console.log("In server :: Form Model :: findFieldById");
-        for(u in fields) {
+        for(var u in fields) {
             if(fields[u]._id == fieldId) {
                 return fields[u];
             }
@@ -156,8 +140,6 @@ module.exports = function() {
                 break;
             }
         }
-
-
         if(index != -1) {
             fields.splice(index,1);
 
@@ -179,7 +161,6 @@ module.exports = function() {
                 break;
             }
         }
-
         if(index != -1) {
             console.log("Index Number : "+index);
             fields[index] = field;
@@ -193,12 +174,12 @@ module.exports = function() {
     }
 
     function createFieldForForm(formId, fieldId, field) {
+        console.log("In server :: FormModel :: createFieldForForm :: "+formId);
         var newFieldId = fieldId;
         var fields = findAllFieldsForForm(formId);
         var newField = fieldFactory[field.fieldType];
         newField._id = newFieldId;
         fields.push(newField);
-
         for(var m in mock) {
             if(mock[m]._id == formId) {
                 mock[m].fields = fields;
@@ -209,6 +190,7 @@ module.exports = function() {
     }
 
     function cloneFieldForForm(formId, fieldId, field) {
+        console.log("In server :: FormModel :: cloneFieldForForm :: "+formId);
         var newFieldId = fieldId;
         var fields = findAllFieldsForForm(formId);
         var newField = field;
@@ -225,11 +207,8 @@ module.exports = function() {
     }
 
     function reorderFieldsForForm(formId,fields) {
-
         console.log("In server :: FormModel :: reorderFieldsForForm :: "+formId);
-        console.log(fields);
         var index = -1;
-
         for(var u in mock) {
             if(mock[u]._id == formId) {
                 index = u;
@@ -237,17 +216,9 @@ module.exports = function() {
                 break;
             }
         }
-
         if(index != -1) {
             mock[index].fields = fields;
         }
-
         return  mock[index].fields;
-
     }
-
-
-
-
-
 }

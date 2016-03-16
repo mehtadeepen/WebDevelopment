@@ -62,9 +62,8 @@
             return $http.put("/api/assignment/user/"+userId,user);
         }
 
-
         function logout() {
-
+            delete $rootScope.user;
             return $http.get("/api/assignment/user/logout");
         }
 

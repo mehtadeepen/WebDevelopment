@@ -7,13 +7,10 @@ module.exports = function(app, formModel, userModel, uuid) {
     app.put("/api/assignment/form/:formId/field/:fieldId", updateFieldForFormById);
     app.get("/api/assignment/form/:formId/field/:fieldId",findFieldForForm);
 
-
-
     function findAllFieldsForForm(req, res) {
         console.log("In server :: Field Service :: findAllFieldsForForm");
         var formId = req.params.formId;
         var fields = formModel.findAllFieldsForForm(formId);
-        console.log(fields);
         res.json(fields);
     }
 
@@ -71,6 +68,4 @@ module.exports = function(app, formModel, userModel, uuid) {
         res.json(field);
 
     }
-
-
 }

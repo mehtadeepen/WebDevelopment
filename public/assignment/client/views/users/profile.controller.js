@@ -4,7 +4,7 @@
         .module("FormBuilderApp")
         .controller("ProfileController", ProfileController);
 
-    function ProfileController($scope, $rootScope, $location, UserService) {
+    function ProfileController($location, UserService) {
 
         var vm = this;
         function init() {
@@ -13,16 +13,22 @@
 
             UserService.getCurrentUser().then(function(response){
                 if(response.data){
-                    var user = response.data;
-                    console.log(user);
-                    vm.user = user;
+                    var currentUser = response.data;
+                    UserService.findUserByUsername(currentUser.username).then(function(res){
+                        if(res.data) {
+                            vm.puser = res.data;
+                            console.log(vm.puser);
+                            console.log("IN profilecontroller INIT"+ vm.puser);
+                            console.log(vm.puser);
+                        }
+                    });
+
                 }
             });
 
         }
         init();
-        console.log("IN profilecontroller INIT"+ vm.user);
-        console.log(vm.user);
+
         vm.update = update;
 
         function update(user) {
@@ -31,9 +37,9 @@
             }
             UserService.updateUser(user._id, user).then(function(response) {
                if(response.data) {
-                   UserService.findUserByUsername(vm.user.username).then(function(res){
+                   UserService.findUserByUsername(vm.puser.username).then(function(res){
                        if(res.data) {
-                           vm.user = res.data;
+                           vm.puser = res.data;
                            UserService.setCurrentUser(res.data);
                        }
                    });
