@@ -16,6 +16,7 @@
 						ng-hide="user"><a href="#/login">Login</a></li>
 					<li><a href="#/profile" ng-class="{'not-active' : model.$location.url() == '/profile'}"
 					  ng-show="user">{{user.username}}</a></li>
+					<li ng-show="user" class="visible-xs"><a href="#/forms">Forms</a></li>
 					<li><a ng-show="user" ng-click="model.logout(user)">Logout</a></li>
 				</ul>
 			</div>
