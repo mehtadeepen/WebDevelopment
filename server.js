@@ -12,48 +12,48 @@ var mongoose      = require('mongoose');
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 
-//mongoose.connect('mongodb://localhost:27017/project');
-//mongoose.connect('mongodb://admin:DgRE9-h3cXvy@127.8.193.130:27017/webdevelopment');
+
 
 // create a default connection string
-var connectionString = 'mongodb://127.0.0.1:27017/webdevelopment';
+//var connectionString = 'mongodb://admin:DgRE9-h3cXvy@localhost:27017/webdevelopment';
+//var connectionString = 'mongodb:/localhost:27017/webdevelopment';
+//
+//// use remote connection string
+//// if running in remote server
+//if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
+//    connectionString = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
+//        process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
+//        process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
+//        process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
+//        process.env.OPENSHIFT_APP_NAME;
+//}
+//
+//// connect to the database
+//var db = mongoose.connect(connectionString);
+//
+//var dbase = mongoose.connection;
+//
+//var colls = {};
+////var db = mongoose.connection;
+//dbase.on('open',function(ref){
+//    console.log('Connected to mongo server.');
+//    dbase.db.listCollections().toArray(function(err, names) {
+//        if (err) {
+//            console.log(err);
+//        }
+//        else {
+//            colls = names;
+//            names.forEach(function(e,i,a) {
+//                console.log("--->>", e.name);
+//            });
+//        }
+//    });
+//});
+//
+//app.get("/api/check", function(req,res){
+//    res.json(colls);
+//});
 
-// use remote connection string
-// if running in remote server
-if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
-    connectionString = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
-        process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
-        process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
-        process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
-        //"assignment";
-    process.env.OPENSHIFT_APP_NAME;
-}
-
-// connect to the database
-var db = mongoose.connect(connectionString);
-
-var dbase = mongoose.connection;
-
-var colls = {};
-//var db = mongoose.connection;
-dbase.on('open',function(ref){
-    console.log('Connected to mongo server.');
-    dbase.db.listCollections().toArray(function(err, names) {
-        if (err) {
-            console.log(err);
-        }
-        else {
-            colls = names;
-            names.forEach(function(e,i,a) {
-                console.log("--->>", e.name);
-            });
-        }
-    });
-});
-
-app.get("/api/check", function(req,res){
-    res.json(colls);
-});
 
 //var connection1 = mongoose.createConnection('mongodb://localhost:27017/project');
 //connection1.on('open',function(ref){
@@ -168,7 +168,7 @@ function mailMe(req, res) {
 
  app.get('/sayHello', mailMe);
 
-
+var db = {};
 require("./public/assignment/server/app.js")(app,uuid,db,mongoose);
 
 app.listen(port, ipaddress);
