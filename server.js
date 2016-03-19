@@ -27,22 +27,22 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
 // connect to the database
 var db = mongoose.connect(connectionString);
 
-var dbase = mongoose.connection;
-var colls = {};
-dbase.on('open',function(ref){
-    console.log('Connected to mongo server.');
-    dbase.db.listCollections().toArray(function(err, names) {
-        if (err) {
-            console.log(err);
-        }
-        else {
-            colls = names;
-            names.forEach(function(e,i,a) {
-                console.log("--->>", e.name);
-            });
-        }
-    });
-});
+//var dbase = mongoose.connection;
+//var colls = {};
+//dbase.on('open',function(ref){
+//    console.log('Connected to mongo server.');
+//    dbase.db.listCollections().toArray(function(err, names) {
+//        if (err) {
+//            console.log(err);
+//        }
+//        else {
+//            colls = names;
+//            names.forEach(function(e,i,a) {
+//                console.log("--->>", e.name);
+//            });
+//        }
+//    });
+//});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -99,6 +99,7 @@ app.get("/api/check", function(req,res){
     res.json(colls);
 });
 
-require("./public/assignment2/server/app.js")(app,uuid,db,mongoose);
+require("./public/assignment/server/app.js")(app,uuid,db,mongoose);
+//require("./public/project/server/app.js")(app,db,mongoose,mongojs);
 
 app.listen(port, ipaddress);

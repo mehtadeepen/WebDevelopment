@@ -33,7 +33,8 @@
     "multer": "^1.1.0",
     "node-uuid": "^1.4.7",
     "nodemailer": "^2.0.0",
-    "nodemailer-mailgun-transport": "git+https://github.com/orliesaurus/nodemailer-mailgun-transport.git"
+    "nodemailer-mailgun-transport": "git+https://github.com/orliesaurus/nodemailer-mailgun-transport.git",
+    "q": "^1.4.1"
   },
   "devDependencies": {},
   "bundleDependencies": [],
