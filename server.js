@@ -100,6 +100,6 @@ app.get("/api/check", function(req,res){
 });
 
 require("./public/assignment/server/app.js")(app,uuid,db,mongoose);
-//require("./public/project/server/app.js")(app,db,mongoose,mongojs);
+require("./public/project/server/app.js")(app,db,mongoose,mongojs);
 
 app.listen(port, ipaddress);
