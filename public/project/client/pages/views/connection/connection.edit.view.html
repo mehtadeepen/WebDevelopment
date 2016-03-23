@@ -1,7 +1,7 @@
     <div class="row" style="padding-top: 7px;">
         <div class="col-lg-12">
             <ol class="breadcrumb">
-                <li><a href="#/connection">Connection</a></li>
+                <li><a href="#/connections">Connection</a></li>
                 <li class="active hidden-xs hidden-sm">Edit Connection</li>
             </ol>
 
@@ -20,13 +20,25 @@
                 <div class="form-group">
                     <label for="connectionName" class="col-sm-2 control-label">Connection Name:</label>
                     <div class="col-sm-10">
-                        <input ng-model="model.connection.name" type="text" class="form-control" id="connectionName" placeholder="Connection Name">
+                        <input ng-model="model.connection.name" type="text" class="form-control" id="connectionName" placeholder="Connection Name" readonly>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="host" class="col-sm-2 control-label">Host:</label>
                     <div class="col-sm-10">
                         <input ng-model="model.connection.host" type="text" class="form-control" id="host" placeholder="Host Address">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="port" class="col-sm-2 control-label">Port:</label>
+                    <div class="col-sm-10">
+                        <input ng-model="model.connection.port" type="text" class="form-control" id="port" placeholder="Port Number">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="database" class="col-sm-2 control-label">Database:</label>
+                    <div class="col-sm-10">
+                        <input ng-model="model.connection.database" type="text" class="form-control" id="database" placeholder="Database Name">
                     </div>
                 </div>
                 <div class="form-group">

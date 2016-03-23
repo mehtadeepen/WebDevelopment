@@ -25,7 +25,7 @@
         }
 
         function setCurrentUser(user) {
-            $rootScope.user = user;
+            $rootScope.projectUser = user;
         }
 
         function findUserByCredentials(username, password) {

@@ -1,17 +1,77 @@
 (function(){
 	angular
 		.module("SpiderMongo")
-		.controller("ConnectionController", ConnectionController);
+		.controller("ConnectionController", ConnectionController)
+        .controller("ConnectionAddController", ConnectionAddController)
+        .controller("ConnectionEditController", ConnectionEditController);
 
-	function ConnectionController($location, ConnectionService, $routeParams, $rootScope) {
+    function ConnectionEditController ($location, ConnectionService, $routeParams) {
 
-         console.log("In Connection Controller");
-		var vm = this;
-        var connectionID = $routeParams.ID;
-
-        vm.addConnection = addConnection;
-        vm.editConnection = editConnection;
+        console.log("In Edit Connection Controller");
+        var vm = this;
         vm.updateConnection = updateConnection;
+        function init() {
+
+            vm.$location = $location;
+            getConnectionById($routeParams.ID);
+        }
+        init();
+
+        function getConnectionById(connectionID) {
+            console.log(connectionID);
+            ConnectionService.findConnectionById(connectionID).then(
+                function (response) {
+                    vm.connection = response.data;
+                }, function (error) {
+                    console.log(error);
+                }
+            );
+        }
+
+        function updateConnection(connection) {
+            console.log(connection);
+            ConnectionService.updateConnectionById(connection).then(
+                function (response) {
+                    console.log("Edited Succesfully",response.data);
+                    $location.url("/connections");
+                }, function (error) {
+                    console.log(error);
+                }
+            );
+        }
+    }
+
+    function ConnectionAddController ($location, ConnectionService) {
+
+        console.log("In Add Connection Controller");
+        var vm = this;
+        vm.addConnection = addConnection;
+        function init() {
+            vm.$location = $location;
+        }
+        init();
+
+        function addConnection(connection,username) {
+            console.log(connection,username);
+            ConnectionService.addConnectionMeta(username,connection).then(
+                function (response) {
+                    console.log("Added Succesfully",response.data);
+                    $location.url("/connections");
+                }, function (error) {
+                    console.log(error);
+                    vm.error = true;
+                }
+            );
+        }
+    }
+
+	function ConnectionController($location, ConnectionService, UserService, $rootScope) {
+
+        console.log("In Connection Controller");
+		var vm = this;
+        vm.enabledConnection = enabledConnection;
+
+
         vm.doConnect = doConnect;
         vm.doDisonnect = doDisonnect;
         vm.deleteConnection = deleteConnection;
@@ -21,145 +81,112 @@
         
 
         function init() {
-
         	 vm.$location = $location;
+             getConnectionsForUser();
         }
         init();
-        if($rootScope.user === undefined) {
-            $location.url("/")
-        }
 
-        var loggedInUser = $rootScope.user;
-        getConnectionForUser();
-
-        editConnection(connectionID);
-        getEnabledConnectionForUser();
-
-        function getEnabledConnectionForUser() {
-            ConnectionService.findAllEnabledConnectionForUserId(loggedInUser.username, function (connectionsById) {
-                $rootScope.enabledConnections = connectionsById;
-            });
-
-        }
-
-        function addConnection(connection) {
-
-        	if(connection == undefined || !connection.hasOwnProperty("name") || connection.name.trim() === "") {
-                return;
-            }
-            
-        	console.log(connection);
-
-        	var exist = ConnectionService.findAllConnectionsForUserIdByName(loggedInUser.username,connection);
-
-            if (exist === -1) {
-                alert("Connection already exits");
-            }  else {
-                
-                ConnectionService.createConnectionForUserId(loggedInUser.username, connection, function(newConnection) {
-                
-                console.log("Added Succesfully "+ newConnection);
-                console.log(newConnection);
-                $location.url('/connections');
-            
-            });
-            }
-            
-        }
-
-        function editConnection(connectionID) {
-
-                console.log(connectionID);
-                ConnectionService.findConnectionById(connectionID, function (newConnection) {
-                console.log(newConnection[0]);
-                vm.connection = newConnection[0];
-
-            });
-        }
-
-
-        function updateConnection(connection) {
-
-                console.log(connection);
-                ConnectionService.updateConnectionById(connection._id,connection, function (newConnection) {
-
-                    console.log(newConnection);
-                    $location.url('/connections');
+        function getConnectionsForUser() {
+            UserService.getCurrentUser().then(
+                function(response){
+                    var currentUser = response.data;
+                    ConnectionService.findAllConnectionForUserId(currentUser.username).then(
+                        function(response) {
+                            //ConnectionService.setConnections(response.data);
+                            vm.allConnections = response.data;
+                        }, function (error) {
+                            console.log(error);
+                        });
+                    }, function(error){
+                        console.log(error);
                 });
-            
+        }
+
+        function enabledConnection (connection) {
+            return connection.enabled;
         }
 
         function doConnect(connectionID) {
-
             console.log(connectionID);
-            ConnectionService.doConnectById(loggedInUser.username,connectionID , function(connection) {
-                console.log(connection);
-                $rootScope.isConnected = true;
-                $rootScope.connectedTo = connection;
-                console.log("connection successful");              
-                $location.url('/connections');
+            ConnectionService.doConnectionById(connectionID).then(
+                function(response) {
+                    if(response.data) {
+                        $rootScope.isConnected = true;
+                        $rootScope.connectedTo = response.data;
+                        console.log("connection successful");
+                        getConnectionsForUser();
+                    }
+                }, function (error) {
+                    console.log(error);
+                }
+            );
 
-            });
+
         }
 
         function doDisonnect(connectionID) {
             console.log(connectionID);
-            ConnectionService.doDisConnectById(loggedInUser.username,connectionID , function(connection) {
-                console.log(connection);
-                $rootScope.isConnected = false;
-                $rootScope.connectedTo = null;
-                console.log("dis connection successful");              
-                $location.url('/connections');
-            });
-
+            ConnectionService.doDisConnectById(connectionID).then(
+                function (response) {
+                    if(response.data) {
+                        $rootScope.isConnected = false;
+                        $rootScope.connectedTo = null;
+                        console.log("dis connection successful");
+                        getConnectionsForUser();
+                    }
+                }, function (error) {
+                    console.log(error);
+                }
+            );
         }
-
 
         function deleteConnection(connectionID) {
             console.log(connectionID);
-            ConnectionService.deleteConnectionById(connectionID , function(connections) {
-                console.log(connections);
-                console.log("deleteConnection successful");              
-                vm.connections = connections;
-                getEnabledConnectionForUser();
-            });
-
+            ConnectionService.deleteConnectionById(connectionID).then(
+                function (response) {
+                    if(response.data) {
+                        console.log(response.data);
+                        console.log("deleting successful");
+                        getConnectionsForUser();
+                    }
+                }, function (error) {
+                    console.log(error);
+                }
+            );
         }
 
         function disableConnection(connectionID) {
             console.log(connectionID);
-            ConnectionService.disableConnectionById(loggedInUser.username,connectionID , function(connections) {
-                console.log(connections);
-                console.log("disableConnection successful");              
-                vm.connections = connections;
-                getEnabledConnectionForUser();
-            });
-
+            ConnectionService.disableConnectionById(connectionID).then(
+                function (response) {
+                    if(response.data) {
+                        console.log(response.data);
+                        console.log("disableConnection successful");
+                        getConnectionsForUser();
+                    }
+                }, function (error) {
+                    console.log(error);
+                }
+            );
         }
 
         function enableConnection(connectionID) {
             console.log(connectionID);
-            ConnectionService.enableConnectionById(loggedInUser.username,connectionID , function(connections) {
-                console.log(connections);
-                console.log("enableConnection successful");              
-                vm.connections = connections;
-                getEnabledConnectionForUser();
-            });
-
-        }
-        
-
-        function getConnectionForUser() {
-            console.log("Get all connection for user");
-            ConnectionService.findAllConnectionForUserId(loggedInUser.username, function (connectionsById) {
-                vm.connections = connectionsById;
-            });
-
+            ConnectionService.enableConnectionById(connectionID).then(
+                function (response) {
+                    if(response.data) {
+                        console.log(response.data);
+                        console.log("enable successful");
+                        getConnectionsForUser();
+                    }
+                }, function (error) {
+                    console.log(error);
+                }
+            );
         }
 
         function renderSiderbar() {
             $("#side-menu").metisMenu();
         }
-		
 	}
 })();

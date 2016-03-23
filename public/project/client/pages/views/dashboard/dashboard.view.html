@@ -241,7 +241,7 @@
                     </thead>
                     <tbody>
                     
-                    <tr ng-repeat="connection in model.connections">
+                    <tr ng-repeat="connection in model.allConnections | filter : model.enabledConnection">
                        <td>{{$index + 1}}</td>
                         <td>{{connection.name}}</td>
                         

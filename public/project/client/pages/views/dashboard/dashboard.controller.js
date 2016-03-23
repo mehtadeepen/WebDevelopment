@@ -3,11 +3,11 @@
 		.module("SpiderMongo")
 		.controller("DashBoardController", DashBoardController);
 
-	function DashBoardController(ConnectionService, $location, $rootScope) {
+	function DashBoardController(ConnectionService, $location, $rootScope, UserService) {
 
 		console.log("In Dashboard Controller");
 		var vm = this;
-
+        vm.enabledConnection = enabledConnection;
 
 
         vm.renderSiderbar = renderSiderbar;
@@ -18,22 +18,30 @@
 		function init() {
 
 			vm.$location = $location;
-        	 
+            getConnectionsForUser();
         }
         init();
-        if($rootScope.user === undefined) {
-            $location.url("/")
+
+        var loggedInUser = $rootScope.projectUser;
+
+        function getConnectionsForUser() {
+            UserService.getCurrentUser().then(
+                function(response){
+                    var currentUser = response.data;
+                    ConnectionService.findAllConnectionForUserId(currentUser.username).then(
+                        function(response) {
+                            //ConnectionService.setConnections(response.data);
+                            vm.allConnections = response.data;
+                        }, function (error) {
+                            console.log(error);
+                        });
+                }, function(error){
+                    console.log(error);
+                });
         }
-        var loggedInUser = $rootScope.user;
-		getEnabledConnectionForUser();
 
-        function getEnabledConnectionForUser() {
-            console.log("Get all connection for user");
-            ConnectionService.findAllEnabledConnectionForUserId(loggedInUser.username, function (connectionsById) {
-                vm.connections = connectionsById;
-                $rootScope.enabledConnections = connectionsById;
-            });
-
+        function enabledConnection (connection) {
+            return connection.enabled;
         }
 
         function doConnect(connectionID) {

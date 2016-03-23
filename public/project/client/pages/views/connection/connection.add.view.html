@@ -30,9 +30,15 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="host" class="col-sm-2 control-label">Port:</label>
+                    <label for="port" class="col-sm-2 control-label">Port:</label>
                     <div class="col-sm-10">
-                        <input ng-model="model.connection.port" type="text" class="form-control" id="host" placeholder="Port Number">
+                        <input ng-model="model.connection.port" type="text" class="form-control" id="port" placeholder="Port Number">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="database" class="col-sm-2 control-label">Database:</label>
+                    <div class="col-sm-10">
+                        <input ng-model="model.connection.database" type="text" class="form-control" id="database" placeholder="Database Name">
                     </div>
                 </div>
                 <div class="form-group">
@@ -49,7 +55,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <a href="" ng-click="model.addConnection(model.connection)" class="btn btn-success btn-block"><i class="fa fa-save"></i> Save</a>
+                        <a href="" ng-click="model.addConnection(model.connection,projectUser.username)" class="btn btn-success btn-block"><i class="fa fa-save"></i> Save</a>
                     </div>
 
                 </div>

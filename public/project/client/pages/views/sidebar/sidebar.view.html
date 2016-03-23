@@ -1,22 +1,22 @@
 <div id="my-bar" class="navbar-default sidebar" role="navigation" ng-controller="SideBarController as model">
     <div class="sidebar-nav navbar-collapse">
         <ul class="nav" id="side-menu">
-            <li ng-if="user" class="hidden-md hidden-lg">
-                <a href="javascript:void(0)"><i class="fa fa-user fa-fw"></i> Welcome {{user.username}}</a>
+            <li ng-if="projectUser" class="hidden-md hidden-lg">
+                <a href="javascript:void(0)"><i class="fa fa-user fa-fw"></i> Welcome {{projectUser.username}}</a>
             </li >
-            <li ng-if="user">
+            <li ng-if="projectUser">
                 <a href="#/dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li >
-            <li class="hidden-md hidden-lg" ng-if="user">
+            <li class="hidden-md hidden-lg" ng-if="projectUser">
                 <a href="#/profile"><i class="fa fa-user fa-fw"></i> My Profile</a>
             </li>
 
-            <li ng-if="user">
+            <li ng-if="projectUser">
                 <a href="#/addConnection"><i class="fa fa-plus fa-fw"></i> New Connection</a>
                 <!-- /.nav-second-level -->
             </li>
 
-            <li ng-if="user" ng-show="enabledConnections.length > 0">
+            <li ng-if="projectUser" ng-show="enabledConnections.length > 0">
                 <a href=""><i class="fa fa-plug fa-fw"></i> My Connections<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li ng-repeat="connection in enabledConnections">
@@ -67,7 +67,7 @@
                 <!-- /.nav-second-level -->
             </li>
         </li>
-        <li class="hidden-md hidden-lg" ng-if="user">
+        <li class="hidden-md hidden-lg" ng-if="projectUser">
             <a href="javascript:void(0)" ng-click="model.logout(user)"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
         </li>
     </ul>

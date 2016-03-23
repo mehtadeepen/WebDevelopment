@@ -18,57 +18,121 @@
             .when("/profile", {
                 templateUrl: "views/profile/profile.view.html",
                 controller: "ProfileController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    checkLoggedIn: checkLoggedIn
+                }
             })
             .when("/dashboard", {
                 templateUrl: "views/dashboard/dashboard.view.html",
                 controller: "DashBoardController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    checkLoggedIn: checkLoggedIn
+                }
             })
             .when("/database", {
                 templateUrl: "views/database/database.view.html",
                 controller: "DatabaseController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    checkLoggedIn: checkLoggedIn
+                }
                 
             })
             .when("/connections", {
                 templateUrl: "views/connection/connections.view.html",
                 controller: "ConnectionController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    checkLoggedIn: checkLoggedIn
+                }
                 
             })
             .when("/addConnection", {
                 templateUrl: "views/connection/connection.add.view.html",
-                controller: "ConnectionController",
-                controllerAs: "model"
+                controller: "ConnectionAddController",
+                controllerAs: "model",
+                resolve: {
+                    checkLoggedIn: checkLoggedIn
+                }
                 
             })
             .when("/editConnection/:ID", {
                 templateUrl: "views/connection/connection.edit.view.html",
-                controller: "ConnectionController",
-                controllerAs: "model"
+                controller: "ConnectionEditController",
+                controllerAs: "model",
+                resolve: {
+                    checkLoggedIn: checkLoggedIn
+                }
                 
             })
             .when("/collections", {
                 templateUrl: "views/collection/collections.view.html",
-                controller: "CollectionController"
+                controller: "CollectionController",
+                resolve: {
+                    checkLoggedIn: checkLoggedIn
+                }
                 
             })
             .when("/collection", {
                 templateUrl: "views/collection/collection.view.html",
-                controller: "CollectionController"
+                controller: "CollectionController",
+                resolve: {
+                    checkLoggedIn: checkLoggedIn
+                }
                 
             })
             .when("/addDocument", {
-                templateUrl: "views/document/document.add.view.html"
+                templateUrl: "views/document/document.add.view.html",
+                resolve: {
+                    checkLoggedIn: checkLoggedIn
+                }
                 
             })
             .when("/editDocument", {
-                templateUrl: "views/document/document.edit.view.html"
+                templateUrl: "views/document/document.edit.view.html",
+                resolve: {
+                    checkLoggedIn: checkLoggedIn
+                }
                 
             })
             .otherwise({
-                redirectTo: "/login"
+                redirectTo: "/dashboard"
             });
+    }
+
+    function getLoggedIn(UserService, $q) {
+        var deferred = $q.defer();
+
+        UserService
+            .getCurrentUser()
+            .then(function(response){
+                var currentUser = response.data;
+                UserService.setCurrentUser(currentUser);
+                deferred.resolve();
+            });
+
+        return deferred.promise;
+    }
+
+    function checkLoggedIn(UserService, $q, $location) {
+
+        var deferred = $q.defer();
+
+        UserService
+            .getCurrentUser()
+            .then(function(response) {
+                var currentUser = response.data;
+                if(currentUser) {
+                    UserService.setCurrentUser(currentUser);
+                    deferred.resolve();
+                } else {
+                    deferred.reject();
+                    $location.url("/login");
+                }
+            });
+
+        return deferred.promise;
     }
 })();

@@ -5,234 +5,72 @@
     .module("SpiderMongo")
     .factory("ConnectionService", ConnectionService);
 
-    function ConnectionService() {
+    function ConnectionService($http, $rootScope) {
 
-        var connections = [
-        {
-            "_id": "000", 
-            "name": "Development", 
-            "username": "dev", 
-            "password" : "dev", 
-            "host": "www.dev.com",
-            "enabled" : true,
-            "connected" : false,
-            "userId" : "guest"
-        },
-        {
-            "_id": "001", 
-            "name": "Production", 
-            "username": "prod", 
-            "password" : "prod", 
-            "host": "www.prod.com",
-            "enabled" : true,
-            "connected" : false,
-            "userId" : "guest"
-        },
-        {
-            "_id": "002", 
-            "name": "Proxy", 
-            "username": "proxy", 
-            "password" : "proxy", 
-            "host": "www.proxy.com",
-            "enabled" : false,
-            "connected" : false,
-            "userId" : "guest"
-        }];
 
         var api = {
-            createConnectionForUserId : createConnectionForUserId,
+
             findAllConnectionForUserId : findAllConnectionForUserId,
             deleteConnectionById : deleteConnectionById,
+            addConnectionMeta: addConnectionMeta,
+            setConnections: setConnections,
+            findConnectionById: findConnectionById,
             updateConnectionById : updateConnectionById,
-            findAllConnectionsForUserIdByName : findAllConnectionsForUserIdByName,
-            findConnectionById : findConnectionById,
-            disconnectAll : disconnectAll,
-            doConnectById : doConnectById,
-            doDisConnectById : doDisConnectById,
-            disableConnectionById : disableConnectionById,
-            enableConnectionById : enableConnectionById,
-            findAllEnabledConnectionForUserId : findAllEnabledConnectionForUserId
+            doConnectionById : doConnectionById,
+            doDisConnectById: doDisConnectById,
+            disableConnectionById: disableConnectionById,
+            enableConnectionById: enableConnectionById
         };
 
         return api;
 
-        function disconnectAll(userId) {
-
-              for (var i = 0; i < connections.length; i++) {
-                if(connections[i].userId === userId){
-                    connections[i].connected = false;
-                }
-            }
+        function deleteConnectionById(connectionId) {
+            console.log("In client :: Connection Service :: deleteConnectionById",connectionId);
+            return $http.get("/api/spidermongo/connectionmeta/connection/delete/"+connectionId);
         }
 
-
-        function doConnectById(userId, connectionId, callback) {
-
-            disconnectAll(userId);
-            for (var i = 0; i < connections.length; i++) {
-                if(connections[i].userId === userId && connections[i]._id === connectionId){
-                    connections[i].connected = true;
-                    break;
-                }
-            }
-
-            callback(connections[i]);
+        function enableConnectionById(connectionId) {
+            console.log("In client :: Connection Service :: enableConnectionById",connectionId);
+            return $http.get("/api/spidermongo/connectionmeta/connection/enable/"+connectionId);
         }
 
-        function doDisConnectById(userId, connectionId, callback) {
-
-            
-            for (var i = 0; i < connections.length; i++) {
-                if(connections[i].userId === userId && connections[i]._id === connectionId){
-                    connections[i].connected = false;
-                    break;
-                }
-            }
-
-            callback(connections[i]);
-        }
-        
-
-        function enableConnectionById(userId, connectionId, callback) {
-
-            
-            for (var i = 0; i < connections.length; i++) {
-                if(connections[i].userId === userId && connections[i]._id === connectionId){
-                    connections[i].enabled = true;
-                    break;
-                }
-            }
-
-            callback(connections);
+        function disableConnectionById(connectionId) {
+            console.log("In client :: Connection Service :: disableConnectionById",connectionId);
+            return $http.get("/api/spidermongo/connectionmeta/connection/disable/"+connectionId);
         }
 
-
-        function disableConnectionById(userId, connectionId, callback) {
-
-            
-            for (var i = 0; i < connections.length; i++) {
-                if(connections[i].userId === userId && connections[i]._id === connectionId){
-                    connections[i].enabled = false;
-                    break;
-                }
-            }
-
-            callback(connections);
+        function doDisConnectById(connectionId) {
+            console.log("In client :: Connection Service :: doDisConnectById",connectionId);
+            return $http.get("/api/spidermongo/connectionmeta/connection/disconnect/"+connectionId);
         }
 
-        function createConnectionForUserId(userId, connection, callback) {
-            var id = (new Date).getTime();
-
-            var newConnection = {
-                "_id": id, 
-                "name": connection.name,
-                "username": connection.username, 
-                "password" : connection.password, 
-                "host": connection.host,
-                "enabled" : true,
-                "connected" : false,
-                "userId" : userId
-            };
-
-            connections.push(newConnection);
-            callback(newConnection);
+        function doConnectionById(connectionId) {
+            console.log("In client :: Connection Service :: doConnectionById",connectionId);
+            return $http.get("/api/spidermongo/connectionmeta/connection/connect/"+connectionId);
         }
 
-        function findAllConnectionForUserId(userId, callback) {
-
-            var connectionsById = connections.filter(function(connection, index, arr){
-                return (connection.userId === userId);
-            });
-            callback(connectionsById);
+        function updateConnectionById(newConnection) {
+            console.log("In client :: Connection Service :: updateConnectionById",newConnection);
+            return $http.put("/api/spidermongo/connectionmeta/connections/update/",newConnection);
         }
 
-        function findAllEnabledConnectionForUserId(userId, callback) {
-
-            var connectionsById = connections.filter(function(connection, index, arr){
-                return (connection.userId === userId && connection.enabled == true);
-            });
-            callback(connectionsById);
+        function findConnectionById(connectionId) {
+            console.log("In client :: Connection Service :: findConnectionById",connectionId);
+            return $http.get("/api/spidermongo/connectionmeta/connection/"+connectionId);
         }
 
-        
-
-        function findConnectionById(connectionId, callback) {
-
-            console.log("I am in findConnectionById "+connectionId);
-            var connectionsById = connections.filter(function(connection, index, arr){
-                return (connection._id == connectionId);
-            });
-            console.log(connectionsById);
-            callback(connectionsById);
+        function findAllConnectionForUserId(username) {
+            console.log("In client :: Connection Service :: findAllConnectionForUserId",username);
+            return $http.get("/api/spidermongo/connectionmeta/connections/user/"+username);
         }
 
-
-        
-
-        function findAllConnectionsForUserIdByName(userId, newConnection) {
-
-            var name = newConnection.name;
-            var host = newConnection.host;
-            var connectionsByName = connections.filter(function(connection, index, arr){
-                return (connection.userId === userId && 
-                    (connection.name === name || connection.host === host));
-            });
-
-            console.log(connectionsByName);
-            if(connectionsByName.length != 0) { 
-                console.log("Connection already exists");
-                return -1;
-            } else {
-                return 1;
-            }
-            
+        function setConnections(connections) {
+            $rootScope.connections = connections;
         }
 
-        function deleteConnectionById(connectionId, callback) {
-
-            var index = 0;
-            var connectionIndex = -1;
-            for (var i = 0; i < connections.length; i++) {
-                if(connections[i]._id === connectionId){
-                    connectionIndex = index;
-                }
-                index++;
-            }
-            if(connectionIndex != -1) {
-                connections.splice(connectionIndex, 1);
-                callback(connections);
-            }
-            
-        }
-
-        function updateConnectionById(connectionId, newConnection, callback) {
-            var index = 0;
-            var connectionIndex = -1;
-            for (var i = 0; i < connections.length; i++) {
-                if(connections[i]._id === connectionId){
-                    connectionIndex = index;
-
-                }
-                
-                index++;
-            }
-
-            if(connectionIndex != -1) {
-
-                console.log("Index Number : "+connectionIndex);
-                connections[connectionIndex] = {
-                    "_id" : newConnection._id,
-                    "name": newConnection.name,
-                    "username": newConnection.username, 
-                    "password" : newConnection.password, 
-                    "host": newConnection.host,
-                    "enabled" : true,
-                    "connected" : false,
-                    "userId" : newConnection.userId
-                }
-                console.log(connections);
-                callback(connections[connectionIndex]);
-            }
+        function addConnectionMeta(username,connection) {
+            console.log("In client :: Connection Service :: addConnectionMeta",username,connection);
+            return $http.post("/api/spidermongo/connectionmeta/connections/add/"+username,connection);
         }
 
     }

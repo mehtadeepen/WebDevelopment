@@ -5,7 +5,7 @@
 
 	function CollectionController($rootScope) {
 
-		if($rootScope.user === undefined) {
+		if($rootScope.projectUser === undefined) {
 			$location.url("/")
 		}
 

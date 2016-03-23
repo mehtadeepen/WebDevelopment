@@ -24,7 +24,8 @@
             UserService.findUserByCredentials(username, password).then(function(response){
                 if(response.data) {
                     UserService.setCurrentUser(response.data);
-                    $location.url("/profile");
+
+                    $location.url("/dashboard");
                 }
             },function(error){
                 console.log(error);
