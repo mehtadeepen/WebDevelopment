@@ -29,43 +29,28 @@
                     </thead>
                     <tbody>   
                     <tr>
-                        <td>
-                            <input type="text" class="form-control text" placeholder="Key">
+                        <td colspan="2">
+                            <input type="text" ng-model="model.add.key" class="form-control text" placeholder="New Field">
                         </td>
                         <td>
-                            <input type="text" class="form-control text" placeholder="Value">
-                        </td>
-                        <td>
-                            <a class="btn btn-warning"><i class="fa fa-plus"></i></a>
+                            <a class="btn btn-warning" ng-click="model.localAdd(model.add)"><i class="fa fa-plus"></i></a>
                         </td>
                         </tr>  
-                    <tr>
+                    <tr ng-repeat="key in model.searchKeys">
 
-                        <td>First Name</td>
+                        <td>{{key}}</td>
                         <td>
-                            <input type="text" class="form-control text" placeholder="First Name">
+                            <input type="text" ng-model="model.document[key]" class="form-control text" placeholder="{{key}}">
                         </td>
                         <td>
-                            <a class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                            <a class="btn btn-danger" ng-click="model.localDelete($index)"><i class="fa fa-trash"></i></a>
                         </td>
                         
-                    </tr>
-                    <tr>
-                        
-                        <td>Last Name</td>
-                        
-                        <td>
-                            <input type="text" class="form-control text" placeholder="Last Name">
-                            
-                        </td>
-                        <td>
-                            <a class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                        </td>
                     </tr>
                     <tr>
                         
                         <td colspan="3">
-                        	<a class="btn btn-success btn-block" href="#/collection"><i class="fa fa-save"></i> Save</a>
+                        	<a class="btn btn-success btn-block" ng-click="model.commit(model.document)"><i class="fa fa-save"></i> Commit</a>
                         </td>
                         
                         

@@ -19,57 +19,39 @@
 </div>
     <div class="row">
 		<div class="col-lg-12">
-			<div class="table-responsive">
+            <div class="table-responsive">
                 <table class="table">
                     <thead>
                     <tr class="theadrow">
-                        <th>Key</th>   
+                        <th>Key</th>
                         <th>Value</th>
                         <th>Action</th>
                     </tr>
                     </thead>
-                    <tbody>   
+                    <tbody>
                     <tr>
-                        <td>
-                            <input type="text" class="form-control text" placeholder="Key">
+                        <td colspan="2">
+                            <input type="text" ng-model="model.add.key" class="form-control text" placeholder="New Field">
                         </td>
                         <td>
-                            <input type="text" class="form-control text" placeholder="Value">
+                            <a class="btn btn-warning" ng-click="model.localAdd(model.add)"><i class="fa fa-plus"></i></a>
                         </td>
-                        <td>
-                            <a class="btn btn-warning"><i class="fa fa-plus"></i></a>
-                        </td>
-                        </tr>  
-                    <tr>
+                    </tr>
+                    <tr ng-repeat="(key, value) in model.document">
 
-                        <td>First Name</td>
+                        <td>{{key}}</td>
                         <td>
-                            <input value="Deepen" type="text" class="form-control text" placeholder="First Name">
+                            <input type="text" ng-model="model.document[key]" class="form-control text" placeholder="{{key}}">
                         </td>
                         <td>
-                            <a class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                            <a class="btn btn-danger" ng-click="model.localDelete(key)"><i class="fa fa-trash"></i></a>
                         </td>
-                        
+
                     </tr>
                     <tr>
-                        
-                        <td>Last Name</td>
-                        
-                        <td>
-                            <input value="Mehta" type="text" class="form-control text" placeholder="Last Name">
-                            
-                        </td>
-                        <td>
-                            <a class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        
                         <td colspan="3">
-                        	<a class="btn btn-success btn-block" href="#/collection"><i class="fa fa-pencil"></i> Update</a>
+                            <a class="btn btn-success btn-block" ng-click="model.update(model.document,model.documentId)"><i class="fa fa-save"></i> Commit</a>
                         </td>
-                        
-                        
                     </tr>
                     </tbody>
                 </table>

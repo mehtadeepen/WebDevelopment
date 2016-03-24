@@ -85,15 +85,19 @@
                 }
                 
             })
-            .when("/addDocument", {
+            .when("/addDocument/:collectionName", {
                 templateUrl: "views/document/document.add.view.html",
+                controller: "DocumentAddController",
+                controllerAs: "model",
                 resolve: {
                     checkLoggedIn: checkLoggedIn
                 }
                 
             })
-            .when("/editDocument", {
+            .when("/editDocument/:collectionName/document/:id", {
                 templateUrl: "views/document/document.edit.view.html",
+                controller: "DocumentEditController",
+                controllerAs: "model",
                 resolve: {
                     checkLoggedIn: checkLoggedIn
                 }

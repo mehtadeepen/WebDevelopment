@@ -16,7 +16,6 @@
 		<div class="col-lg-12">
 			<form class="form-inline">
 				<div class="form-group">
-					<label class="sr-only">Email address</label>
 					<select class="form-control" ng-model="model.search.key">
 						<option ng-repeat="key in model.searchKeys" value="{{key}}">{{key}}</option>
 						<option value="all">Get all</option>
@@ -31,8 +30,8 @@
 				<button ng-click="model.find(model.search,model.collectionName)" class="form-control btn btn-success btn-block hidden-lg hidden-md hidden-sm">Search</button>
 			</div>
 				<div class="form-group">
-				<a  href="#/addDocument" class="form-control btn btn-primary hidden-xs">Add Document</a>
-				<a  href="#/addDocument" class="form-control btn btn-primary btn-block hidden-lg hidden-md hidden-sm">Add Document</a>
+				<a  href="#/addDocument/{{model.collectionName}}" class="form-control btn btn-primary hidden-xs">Add Document</a>
+				<a  href="#/addDocument/{{model.collectionName}}" class="form-control btn btn-primary btn-block hidden-lg hidden-md hidden-sm">Add Document</a>
 			</div>
 			</form>
 		</div>
@@ -43,10 +42,10 @@
 					<pretty-json json="document"></pretty-json>
 			</div>
 			<div class="panel-footer">
-				<a href="#/editDocument" class="btn btn-warning btn-xs">
+				<a href="#/editDocument/{{model.collectionName}}/document/{{document._id}}" class="btn btn-warning btn-xs">
 					<span class="fa fa-pencil" aria-hidden="true"> Edit&nbsp;</span>
 				</a>
-				<a href="#/collection" class="btn btn-danger btn-xs">
+				<a ng-click="model.deleteDocument(document._id)" class="btn btn-danger btn-xs">
 					<span class="fa fa-trash" aria-hidden="true">&nbsp;Delete</span>
 				</a>
 			</div>
@@ -54,7 +53,6 @@
 	</div>
 		<div class="col-lg-12" style="padding-top: 7px;">
 			<uib-pager boundary-links="true"
-
 				   items-per-page="model.itemsPerPage"
 				   total-items="model.documents.length"
 				   ng-model="model.currentPage"

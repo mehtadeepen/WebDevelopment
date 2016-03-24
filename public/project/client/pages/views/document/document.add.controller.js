@@ -1,36 +1,34 @@
 (function(){
     angular
         .module("SpiderMongo")
-        .controller("CollectionViewController", CollectionViewController);
+        .controller("DocumentAddController", DocumentAddController);
 
-    function CollectionViewController(CollectionService, $routeParams, $location, UserService) {
+    function DocumentAddController(CollectionService, $routeParams, $location, UserService) {
 
         var vm = this;
-        vm.find = find;
-        vm.deleteDocument = deleteDocument;
-        vm.filteredDocuments = [];
-        vm.itemsPerPage = 3;
-        vm.currentPage = 4;
-
-        console.log("In CollectionViewController ");
+        vm.localAdd = localAdd;
+        vm.localDelete = localDelete;
+        vm.commit = commit;
+        console.log("In DocumentAddController ");
 
         function init() {
             vm.$location = $location;
-            console.log($routeParams.name);
-            vm.collectionName = $routeParams.name;
-            getAllDocumentsForDatabase($routeParams.name);
+            console.log($routeParams.collectionName);
+            vm.collectionName = $routeParams.collectionName;
+            getAllDocumentsForDatabase($routeParams.collectionName);
 
         }
         init();
 
-        function deleteDocument(documentId) {
+        function commit(document) {
+            console.log(document);
             UserService.getCurrentUser().then(
                 function(response){
                     var currentUser = response.data;
-                    CollectionService.deleteDocumentFromCollectionForUser(currentUser.username,vm.collectionName,documentId).then(
+                    CollectionService.insertDocumentInCollectionForUser(currentUser.username,vm.collectionName,document).then(
                         function (response) {
                             if(response.data) {
-                                getAllDocumentsForDatabase(vm.collectionName);
+                                $location.url("/collection/"+vm.collectionName);
                             }
                         }, function (error) {
                             console.log(error);
@@ -41,32 +39,15 @@
                 });
         }
 
-        function find(search,collectionName) {
-            UserService.getCurrentUser().then(
-                function(response){
-                    var currentUser = response.data;
-                    CollectionService.findDocumentsFromCollectionForUser(currentUser.username,collectionName,search).then(
-                        function (response) {
-                            if(response.data) {
-                                vm.documents = response.data;
-                                console.log(response.data);
-                                figureOutTodosToDisplay(response.data);
-                                vm.searchKeys = getSearchKeys(response.data);
-                            }
-                        }, function (error) {
-                            console.log(error);
-                        }
-                    );
-                }, function(error){
-                    console.log(error);
-                });
+        function localAdd(pair) {
+            if(pair && pair["key"]) {
+                vm.searchKeys.push(pair["key"]);
+            }
+            vm.add.key = "";
         }
 
-
-        function figureOutTodosToDisplay(documents) {
-            var begin = ((vm.currentPage - 1) * vm.itemsPerPage);
-            var end = begin + vm.itemsPerPage;
-            vm.filteredDocuments = documents.slice(begin, end);
+        function localDelete(index) {
+           vm.searchKeys.splice(index,1);
         }
 
         function getAllDocumentsForDatabase(collectionName) {
@@ -78,7 +59,6 @@
                             if(response.data) {
                                 vm.documents = response.data;
                                 console.log(response.data);
-                                figureOutTodosToDisplay(response.data);
                                 vm.searchKeys = getSearchKeys(response.data);
                             }
                         }, function (error) {
@@ -89,11 +69,6 @@
                     console.log(error);
                 });
         }
-
-        vm.pageChanged = function() {
-            figureOutTodosToDisplay(vm.documents);
-        };
-
 
         function getSearchKeys(documents){
             var searchKeys = [];
@@ -115,7 +90,5 @@
                 return list;
             }, []);
         }
-
-
     }
 })();

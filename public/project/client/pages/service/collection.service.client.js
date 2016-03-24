@@ -13,11 +13,14 @@
             findAllCollectionsForUser : findAllCollectionsForUser,
             createCollectionForUSer: createCollectionForUSer,
             getAllDocumentsForDatabase: getAllDocumentsForDatabase,
-            findDocumentsFromCollectionForUser: findDocumentsFromCollectionForUser
+            findDocumentsFromCollectionForUser: findDocumentsFromCollectionForUser,
+            insertDocumentInCollectionForUser: insertDocumentInCollectionForUser,
+            getDocumentFromCollectionForUser: getDocumentFromCollectionForUser,
+            updateDocumentInCollectionForUser: updateDocumentInCollectionForUser,
+            deleteDocumentFromCollectionForUser: deleteDocumentFromCollectionForUser
         };
 
         return api;
-
 
         function findAllCollectionsForUser(username) {
             console.log("In client :: Collection Service :: findAllCollectionsForUser",username);
@@ -60,6 +63,39 @@
             }
 
 
+        }
+
+        function insertDocumentInCollectionForUser(username,collectionName,document) {
+            console.log("In client :: Collection Service :: getAllDocumentsForDatabase",username,collectionName,document);
+            return $http.post("/api/spidermongo/cloud/addDocument/"+collectionName+"/collection/"+username,document);
+        }
+
+        function getDocumentFromCollectionForUser(username,collectionName,documentId) {
+            console.log("In client :: Collection Service :: getDocumentFromCollectionForUser",username,collectionName,documentId);
+            var documentID = {
+                _id : documentId
+            };
+            return $http.post("/api/spidermongo/cloud/getDocument/"+collectionName+"/collection/"+username,documentID);
+        }
+
+
+        function updateDocumentInCollectionForUser(username,collectionName,document,documentId) {
+            console.log("In client :: Collection Service :: updateDocumentInCollectionForUser",username,collectionName,documentId);
+            var meta = {
+                oid : {
+                    _id : documentId
+                },
+                document : document
+            };
+            return $http.post("/api/spidermongo/cloud/updateDocument/"+collectionName+"/collection/"+username,meta);
+        }
+
+        function deleteDocumentFromCollectionForUser(username,collectionName,documentId) {
+            console.log("In client :: Collection Service :: deleteDocumentFromCollectionForUser",username,collectionName,documentId);
+            var documentID = {
+                _id : documentId
+            };
+            return $http.post("/api/spidermongo/cloud/deleteDocument/"+collectionName+"/collection/"+username,documentID);
         }
     }
 
