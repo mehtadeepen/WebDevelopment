@@ -7,6 +7,9 @@
             <li ng-if="projectUser">
                 <a href="#/dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li >
+            <li ng-if="projectUser">
+                <a href="#/connections"><i class="fa fa-plug fa-fw"></i> My Connections</a>
+            </li >
             <li class="hidden-md hidden-lg" ng-if="projectUser">
                 <a href="#/profile"><i class="fa fa-user fa-fw"></i> My Profile</a>
             </li>
@@ -15,58 +18,10 @@
                 <a href="#/addConnection"><i class="fa fa-plus fa-fw"></i> New Connection</a>
                 <!-- /.nav-second-level -->
             </li>
-
-            <li ng-if="projectUser" ng-show="enabledConnections.length > 0">
-                <a href=""><i class="fa fa-plug fa-fw"></i> My Connections<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li ng-repeat="connection in enabledConnections">
-                        <a href="" ng-click="model.doConnect(connection._id)">{{connection.name}}</a>
-                    </li>
-                </ul>
-                <!-- /.nav-second-level -->
+            <li ng-if="projectUser" ng-show="isConnected === true">
+                <a href="#/user/{{projectUser.username}}/database/{{connectedTo.database}}"><i class="fa fa-table fa-fw"></i> My Collections</a>
             </li>
 
-            <li ng-if="isConnected === true">
-                <a ><i class="fa fa-database fa-fw"></i> Database<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li>
-                        <a href="#"><i class="fa fa-server"></i>&nbsp;Schema-1<span class="fa arrow"></span></a>
-                        <ul class="nav nav-third-level">
-                            <li>
-                                <a href="#"><i class="fa fa-table"></i>&nbsp;Collection-1</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-table"></i>&nbsp;Collection-2</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                     <a href="#"><i class="fa fa-server"></i>&nbsp;Schema-2<span class="fa arrow"></span></a>
-                     <ul class="nav nav-third-level">
-                        <li>
-                            <a href="#"><i class="fa fa-table"></i>&nbsp;Collection-3</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-table"></i>&nbsp;Collection-4</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-server"></i>&nbsp;Schema-3<span class="fa arrow"></span></a>
-                    <ul class="nav nav-third-level">
-                        <li>
-                            <a href="#"><i class="fa fa-table"></i>&nbsp;Collection-5</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-table"></i>&nbsp;Collection-6</a>
-                        </li>
-                    </ul>
-                    <!-- /.nav-third-level -->
-
-                </ul>
-                <!-- /.nav-second-level -->
-            </li>
-        </li>
         <li class="hidden-md hidden-lg" ng-if="projectUser">
             <a href="javascript:void(0)" ng-click="model.logout(user)"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
         </li>

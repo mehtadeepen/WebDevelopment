@@ -5,7 +5,7 @@
         .module("SpiderMongo")
         .factory("CollectionService", CollectionService);
 
-    function CollectionService($http) {
+    function CollectionService($http, $rootScope) {
 
 
         var api = {
@@ -17,10 +17,15 @@
             insertDocumentInCollectionForUser: insertDocumentInCollectionForUser,
             getDocumentFromCollectionForUser: getDocumentFromCollectionForUser,
             updateDocumentInCollectionForUser: updateDocumentInCollectionForUser,
-            deleteDocumentFromCollectionForUser: deleteDocumentFromCollectionForUser
+            deleteDocumentFromCollectionForUser: deleteDocumentFromCollectionForUser,
+            setDatabase: setDatabase
         };
 
         return api;
+
+        function setDatabase(database) {
+            $rootScope.database = database;
+        }
 
         function findAllCollectionsForUser(username) {
             console.log("In client :: Collection Service :: findAllCollectionsForUser",username);

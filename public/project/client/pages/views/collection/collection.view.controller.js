@@ -3,7 +3,7 @@
         .module("SpiderMongo")
         .controller("CollectionViewController", CollectionViewController);
 
-    function CollectionViewController(CollectionService, $routeParams, $location, UserService) {
+    function CollectionViewController(CollectionService, $routeParams, $location, UserService, sweet) {
 
         var vm = this;
         vm.find = find;
@@ -18,12 +18,22 @@
             vm.$location = $location;
             console.log($routeParams.name);
             vm.collectionName = $routeParams.name;
+            vm.database = $routeParams.databaseName;
             getAllDocumentsForDatabase($routeParams.name);
 
         }
         init();
 
         function deleteDocument(documentId) {
+            sweet.show({
+                title: 'Delete this document ?',
+                text: 'It cannot be reverted.',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: 'Yes, delete it!',
+                closeOnConfirm: true
+            }, function() {
             UserService.getCurrentUser().then(
                 function(response){
                     var currentUser = response.data;
@@ -34,11 +44,14 @@
                             }
                         }, function (error) {
                             console.log(error);
+                            sweet.show('Oops...', error.data.message , 'error');
                         }
                     );
                 }, function(error){
                     console.log(error);
+                    sweet.show('Oops...', error.data.message , 'error');
                 });
+            });
         }
 
         function find(search,collectionName) {
@@ -115,6 +128,7 @@
                 return list;
             }, []);
         }
+
 
 
     }

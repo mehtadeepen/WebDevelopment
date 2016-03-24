@@ -3,8 +3,7 @@
     <div class="col-lg-12">
         <ol class="breadcrumb">
   <li><a href="#/connection">Connection</a></li>
-  <li><a href="#/database">Database</a></li>
-   <li class="active">Collections</li>
+   <li class="active">{{database}}</li>
 </ol>
 
     </div>
@@ -18,7 +17,7 @@
             <tr>
                 
 
-                <td colspan="2">
+                <td>
                             <input type="text" ng-model="model.collectionName" class="form-control text" placeholder="Collection Name">
                         </td>
                        <td >
@@ -26,7 +25,7 @@
                         </td>
                         <td>
                             <a class="btn btn-primary btn-sm" href="javascript:void(0);" ng-click="model.createCollection(model.collectionName)">
-                        <span class="fa fa-plus" aria-hidden="true"> Create</span>
+                        <span class="fa fa-plus" aria-hidden="true"> Create Collection</span>
                     </a>
                         </td>
             </tr>
@@ -41,13 +40,9 @@
                 <td>{{$index+1}}</td>
                 <td>{{collection.name}}</td>
                 <td>
-                    <a href="#/collection/{{collection.name}}" class="btn btn-success btn-xs">
+                    <a href="#/collection/{{collection.name}}/database/{{model.database}}" class="btn btn-success btn-xs">
                         <span class="fa fa-sign-in" aria-hidden="true"> Open&nbsp;</span>
                     </a>
-                    <a class="btn btn-warning btn-xs">
-                        <span class="fa fa-code-fork" aria-hidden="true">&nbsp;Export</span>
-                    </a>
-                    
                 </td>
             </tr>
         </tbody>

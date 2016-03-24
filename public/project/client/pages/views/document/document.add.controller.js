@@ -9,6 +9,7 @@
         vm.localAdd = localAdd;
         vm.localDelete = localDelete;
         vm.commit = commit;
+        vm.database = $routeParams.databaseName;
         console.log("In DocumentAddController ");
 
         function init() {
@@ -28,7 +29,7 @@
                     CollectionService.insertDocumentInCollectionForUser(currentUser.username,vm.collectionName,document).then(
                         function (response) {
                             if(response.data) {
-                                $location.url("/collection/"+vm.collectionName);
+                                $location.url("/collection/"+vm.collectionName+"/database/"+vm.database);
                             }
                         }, function (error) {
                             console.log(error);

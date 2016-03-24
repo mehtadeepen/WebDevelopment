@@ -2,14 +2,11 @@
 	<div class="row" style="padding-top: 7px;">
 		<div class="col-lg-12">
 			<ol class="breadcrumb">
-				<li><a href="#/connection">Connection</a></li>
-				<li><a href="#/database">Database</a></li>
-				<li><a href="#/database">Collections</a></li>
-				<li class="active">Collection</li>
+				<li><a href="#/connections">Connection</a></li>
+				<li><a href="#/user/{{projectUser.username}}/database/{{model.database}}">{{model.database}}</a></li>
+				<li class="active">{{model.collectionName}}</li>
 			</ol>
-
 		</div>
-
 	</div>
 
 	<div class="row">
@@ -30,8 +27,8 @@
 				<button ng-click="model.find(model.search,model.collectionName)" class="form-control btn btn-success btn-block hidden-lg hidden-md hidden-sm">Search</button>
 			</div>
 				<div class="form-group">
-				<a  href="#/addDocument/{{model.collectionName}}" class="form-control btn btn-primary hidden-xs">Add Document</a>
-				<a  href="#/addDocument/{{model.collectionName}}" class="form-control btn btn-primary btn-block hidden-lg hidden-md hidden-sm">Add Document</a>
+				<a  href="#/addDocument/{{model.collectionName}}/database/{{model.database}}" class="form-control btn btn-primary hidden-xs">Add Document</a>
+				<a  href="#/addDocument/{{model.collectionName}}/database/{{model.database}}" class="form-control btn btn-primary btn-block hidden-lg hidden-md hidden-sm">Add Document</a>
 			</div>
 			</form>
 		</div>
@@ -42,7 +39,7 @@
 					<pretty-json json="document"></pretty-json>
 			</div>
 			<div class="panel-footer">
-				<a href="#/editDocument/{{model.collectionName}}/document/{{document._id}}" class="btn btn-warning btn-xs">
+				<a href="#/editDocument/{{model.collectionName}}/document/{{document._id}}/database/{{model.database}}" class="btn btn-warning btn-xs">
 					<span class="fa fa-pencil" aria-hidden="true"> Edit&nbsp;</span>
 				</a>
 				<a ng-click="model.deleteDocument(document._id)" class="btn btn-danger btn-xs">

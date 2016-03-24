@@ -25,7 +25,9 @@ module.exports = function(db, mongoose) {
         disConnectById: disConnectById,
         disableConnectionById: disableConnectionById,
         enableConnectionById: enableConnectionById,
-        deleteConnectionById: deleteConnectionById
+        deleteConnectionById: deleteConnectionById,
+        disConnectAllFlag: disConnectAllFlag,
+        findConnectedConnectionForUser:findConnectedConnectionForUser
     };
     return api;
 
@@ -39,6 +41,27 @@ module.exports = function(db, mongoose) {
                 deferred.reject(err);
             } else {
                 // resolve promise
+                deferred.resolve(doc);
+            }
+        });
+        // return a promise
+        return deferred.promise;
+    }
+
+    function findConnectedConnectionForUser(userId) {
+        console.log("In project :: Connection Meta Model :: findConnectionForUser",userId);
+        var deferred = q.defer();
+        var doc = null;
+        ConnectionMetaModel.find({userId : userId}, function (err, docs) {
+            if (err) {
+                // reject promise if error
+                deferred.reject(err);
+            } else {
+                for(var d in docs) {
+                    if(docs[d].connected === true) {
+                        doc = docs[d];
+                    }
+                }
                 deferred.resolve(doc);
             }
         });
@@ -256,5 +279,27 @@ module.exports = function(db, mongoose) {
 
         return deferred.promise;
     }
+
+    function disConnectAllFlag(userId) {
+        console.log("In project :: Connection Meta Model :: disConnectAllFlag",userId);
+        var deferred = q.defer();
+
+
+        ConnectionMetaModel.update({userId:userId}, { connected : false}, {multi :true},
+            function (err, doc) {
+
+                if (err) {
+                    // reject promise if error
+                    deferred.reject(err);
+                } else {
+                    deferred.resolve(doc);
+                }
+
+
+            });
+
+        return deferred.promise;
+    }
+
 
 }

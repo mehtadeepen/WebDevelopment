@@ -5,7 +5,7 @@
         .controller("ConnectionAddController", ConnectionAddController)
         .controller("ConnectionEditController", ConnectionEditController);
 
-    function ConnectionEditController ($location, ConnectionService, $routeParams) {
+    function ConnectionEditController ($location, ConnectionService, $routeParams, sweet) {
 
         console.log("In Edit Connection Controller");
         var vm = this;
@@ -65,7 +65,7 @@
         }
     }
 
-	function ConnectionController($location, ConnectionService, UserService, $rootScope) {
+	function ConnectionController($location, ConnectionService, UserService, $rootScope, sweet) {
 
         console.log("In Connection Controller");
 		var vm = this;
@@ -111,13 +111,21 @@
             ConnectionService.doConnectionById(connectionID).then(
                 function(response) {
                     if(response.data) {
-                        $rootScope.isConnected = true;
+                        ConnectionService.setConnected(true);
                         $rootScope.connectedTo = response.data;
                         console.log("connection successful");
+                        sweet.show({
+                            title: 'Amazing',
+                            text: 'You\'re now connected.',
+                            timer: 3000,
+                            type: 'success',
+                            showConfirmButton: false
+                        });
                         getConnectionsForUser();
                     }
                 }, function (error) {
                     console.log(error);
+                    sweet.show('Oops...', error.data.message , 'error');
                 }
             );
 
@@ -129,30 +137,44 @@
             ConnectionService.doDisConnectById(connectionID).then(
                 function (response) {
                     if(response.data) {
-                        $rootScope.isConnected = false;
-                        $rootScope.connectedTo = null;
+                        ConnectionService.setConnected(false);
                         console.log("dis connection successful");
                         getConnectionsForUser();
+                        sweet.show('Byee', 'You\'re now disconnected', 'success');
                     }
                 }, function (error) {
                     console.log(error);
+                    sweet.show('Oops...', error.data.message , 'error');
                 }
             );
         }
 
         function deleteConnection(connectionID) {
-            console.log(connectionID);
-            ConnectionService.deleteConnectionById(connectionID).then(
-                function (response) {
-                    if(response.data) {
-                        console.log(response.data);
-                        console.log("deleting successful");
-                        getConnectionsForUser();
+            sweet.show({
+                title: 'Confirm',
+                text: 'Delete this connection?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: 'Yes, delete it!',
+                closeOnConfirm: true
+            }, function() {
+                console.log(connectionID);
+                ConnectionService.deleteConnectionById(connectionID).then(
+                    function (response) {
+                        if(response.data) {
+                            console.log(response.data);
+                            console.log("deleting successful");
+                            sweet.show('Deleted!', 'The connection has been deleted.', 'success');
+                            getConnectionsForUser();
+                        }
+                    }, function (error) {
+                        console.log(error);
+                        sweet.show('Oops...', error.data.message , 'error');
                     }
-                }, function (error) {
-                    console.log(error);
-                }
-            );
+                );
+
+            });
         }
 
         function disableConnection(connectionID) {
@@ -166,6 +188,7 @@
                     }
                 }, function (error) {
                     console.log(error);
+                    sweet.show('Oops...', error.data.message , 'error');
                 }
             );
         }
@@ -181,6 +204,7 @@
                     }
                 }, function (error) {
                     console.log(error);
+                    sweet.show('Oops...', error.data.message , 'error');
                 }
             );
         }

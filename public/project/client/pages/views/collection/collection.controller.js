@@ -3,7 +3,7 @@
 		.module("SpiderMongo")
 		.controller("CollectionController", CollectionController);
 
-	function CollectionController(CollectionService, $routeParams, $location, UserService) {
+	function CollectionController(CollectionService, $routeParams, $location, UserService, sweet) {
 
 		var vm = this;
 		vm.notSystem = notSystem;
@@ -12,7 +12,9 @@
 
 		function init() {
 			vm.$location = $location;
+			vm.database = $routeParams.databaseName;
 			getCollectionsForUser();
+			CollectionService.setDatabase(vm.database);
 		}
 		init();
 
@@ -24,11 +26,20 @@
 						function(response) {
 							console.log(response.data);
 							vm.collections = response.data;
+							sweet.show({
+								title: 'Amazing',
+								text: 'Collection created Successfully.',
+								timer: 3000,
+								type: 'success',
+								showConfirmButton: false
+							});
 						}, function (error) {
 							console.log(error);
+							sweet.show('Oops...', error.data.message , 'error');
 						});
 				}, function(error){
 					console.log(error);
+					sweet.show('Oops...', error.data.message , 'error');
 				});
 		}
 
@@ -49,6 +60,7 @@
 							vm.database = $routeParams.databaseName;
 						}, function (error) {
 							console.log(error);
+							sweet.show('Oops...', 'Problem fetching list of collection' , 'error');
 						});
 				}, function(error){
 					console.log(error);

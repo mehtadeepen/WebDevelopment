@@ -41,7 +41,7 @@
                     <a ng-if="connection.connected === false" class="btn btn-warning btn-xs" href="#/editConnection/{{connection._id}}">
                         <span class="fa fa-pencil" aria-hidden="true"> </span>
                     </a>
-                    <a ng-if="connection.enabled === true && connection.connected === false && (!isConnected || isConnected === false)" class="btn btn-success btn-xs" href="" ng-click="model.doConnect(connection._id)">
+                    <a ng-if="connection.enabled === true && connection.connected === false && isConnected === false" class="btn btn-success btn-xs" href="" ng-click="model.doConnect(connection._id)">
                         <span class="fa fa-bolt" aria-hidden="true"> Connect</span>
                     </a>
                     <a ng-if="connection.enabled === true && connection.connected === true" class="btn btn-danger btn-xs" href="" ng-click="model.doDisonnect(connection._id)">

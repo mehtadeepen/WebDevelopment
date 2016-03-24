@@ -28,24 +28,17 @@
                 controller: "DashBoardController",
                 controllerAs: "model",
                 resolve: {
-                    checkLoggedIn: checkLoggedIn
+                    checkLoggedIn: checkLoggedIn,
+                    checkConnected: checkConnected
                 }
-            })
-            .when("/database", {
-                templateUrl: "views/database/database.view.html",
-                controller: "DatabaseController",
-                controllerAs: "model",
-                resolve: {
-                    checkLoggedIn: checkLoggedIn
-                }
-                
             })
             .when("/connections", {
                 templateUrl: "views/connection/connections.view.html",
                 controller: "ConnectionController",
                 controllerAs: "model",
                 resolve: {
-                    checkLoggedIn: checkLoggedIn
+                    checkLoggedIn: checkLoggedIn,
+                    checkConnected: checkConnected
                 }
                 
             })
@@ -55,6 +48,7 @@
                 controllerAs: "model",
                 resolve: {
                     checkLoggedIn: checkLoggedIn
+
                 }
                 
             })
@@ -72,34 +66,38 @@
                 controller: "CollectionController",
                 controllerAs: "model",
                 resolve: {
-                    checkLoggedIn: checkLoggedIn
+                    checkLoggedIn: checkLoggedIn,
+                    checkConnectionExist: checkConnectionExist
                 }
                 
             })
-            .when("/collection/:name", {
+            .when("/collection/:name/database/:databaseName", {
                 templateUrl: "views/collection/collection.view.html",
                 controller: "CollectionViewController",
                 controllerAs: "model",
                 resolve: {
-                    checkLoggedIn: checkLoggedIn
+                    checkLoggedIn: checkLoggedIn,
+                    checkConnectionExist: checkConnectionExist
                 }
                 
             })
-            .when("/addDocument/:collectionName", {
+            .when("/addDocument/:collectionName/database/:databaseName", {
                 templateUrl: "views/document/document.add.view.html",
                 controller: "DocumentAddController",
                 controllerAs: "model",
                 resolve: {
-                    checkLoggedIn: checkLoggedIn
+                    checkLoggedIn: checkLoggedIn,
+                    checkConnectionExist: checkConnectionExist
                 }
                 
             })
-            .when("/editDocument/:collectionName/document/:id", {
+            .when("/editDocument/:collectionName/document/:id/database/:databaseName", {
                 templateUrl: "views/document/document.edit.view.html",
                 controller: "DocumentEditController",
                 controllerAs: "model",
                 resolve: {
-                    checkLoggedIn: checkLoggedIn
+                    checkLoggedIn: checkLoggedIn,
+                    checkConnectionExist: checkConnectionExist
                 }
                 
             })
@@ -108,15 +106,68 @@
             });
     }
 
-    function getLoggedIn(UserService, $q) {
+    function checkConnected(UserService, $q, ConnectionService, $location) {
         var deferred = $q.defer();
 
-        UserService
-            .getCurrentUser()
-            .then(function(response){
+        UserService.getCurrentUser().then(
+            function(response) {
                 var currentUser = response.data;
                 UserService.setCurrentUser(currentUser);
-                deferred.resolve();
+                ConnectionService.checkConnected(currentUser.username).then(
+                    function (response) {
+                        if(response.data) {
+                            console.log("Connection Found Setting isConnected to true");
+                            ConnectionService.setConnected(true);
+                            console.log(response.data);
+                            ConnectionService.setConnectedTo(response.data);
+                            deferred.resolve();
+                        } else {
+                            console.log("Connection Not Found Setting isConnected to false");
+                            ConnectionService.setConnected(false);
+                            deferred.resolve();
+                        }
+                    }, function(error) {
+                        console.log(error);
+                    }
+                );
+
+            }, function (error){
+                deferred.reject();
+                $location.url("/login");
+            });
+
+        return deferred.promise;
+    }
+
+    function checkConnectionExist (UserService, $q, ConnectionService, $location) {
+        var deferred = $q.defer();
+
+        UserService.getCurrentUser().then(
+            function(response) {
+                var currentUser = response.data;
+                UserService.setCurrentUser(currentUser);
+                ConnectionService.checkConnected(currentUser.username).then(
+                    function (response) {
+                        if(response.data) {
+                            console.log("Connection Found Setting isConnected to true");
+                            ConnectionService.setConnected(true);
+                            console.log(response.data);
+                            ConnectionService.setConnectedTo(response.data);
+                            deferred.resolve();
+                        } else {
+                            console.log("Connection Not Found Setting isConnected to false");
+                            ConnectionService.setConnected(false);
+                            deferred.resolve();
+                            $location.url("/connections");
+                        }
+                    }, function(error) {
+                        console.log(error);
+                    }
+                );
+
+            }, function (error){
+                deferred.reject();
+                $location.url("/login");
             });
 
         return deferred.promise;

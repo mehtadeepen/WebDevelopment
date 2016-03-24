@@ -233,10 +233,10 @@
                     <tr class="theadrow">
                         <th>#</th>
                        <!-- <th><span></span> Host Address</th> -->
-                        <th><span></span> Connection Name</th>
+                        <th><span></span>Enabled Connection Name</th>
                        <!-- <th><span class="caret"></span> Username</th>
                         <th><span class="caret"></span> Password</th> -->
-                        <th class="th-action">Action</th>
+                        <th class="th-action">Database</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -246,21 +246,14 @@
                         <td>{{connection.name}}</td>
                         
                         <td>
-                            <a ng-if="connection.connected === false" href="" class="btn btn-info btn-xs" ng-click="model.doConnect(connection._id)">
-                                <span class="fa fa-bolt" aria-hidden="true"> Connect</span>
-                            </a>
-                            <a ng-if="connection.connected === true" href="" class="btn btn-danger btn-xs" ng-click="model.doDisonnect(connection._id)">
-                                <span class="fa fa-bolt" aria-hidden="true"> Disconnect</span>
-                            </a>
+                            {{connection.database}}
                         </td>
                     </tr>
                     <tr ng-if="model.connections.length == 0">
                         <td colspan="3">No Connection found</td>
 
                     </tr>
-                    
                     </tbody>
                 </table>
             </div>
         </div>
-{{model.renderSiderbar()}}

@@ -9,6 +9,7 @@
         vm.localAdd = localAdd;
         vm.localDelete = localDelete;
         vm.update = update;
+        vm.database = $routeParams.databaseName;
         console.log("In DocumentEditController ");
 
         function init() {
@@ -30,7 +31,7 @@
                         vm.collectionName,document,documentId).then(
                         function (response) {
                             if(response.data) {
-                                $location.url("/collection/"+vm.collectionName);
+                                $location.url("/collection/"+vm.collectionName+"/database/"+vm.database);
                             }
                         }, function (error) {
                             console.log(error);

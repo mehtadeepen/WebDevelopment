@@ -4,6 +4,7 @@
 "use strict";
 module.exports = function(app, userModel, connectionMetaModel, externalConnectorModel,liveConnection, collectionsMap) {
     app.post("/api/spidermongo/connectionmeta/connections/add/:username",addConnectionMeta);
+    app.get("/api/spidermongo/checkconnected/connections/user/:username",checkConnected);
     app.get("/api/spidermongo/connectionmeta/connections/user/:username",findConnectionForUser);
     app.get("/api/spidermongo/connectionmeta/connection/connect/:connectionId",doConnectionById);
     app.get("/api/spidermongo/connectionmeta/connection/disconnect/:connectionId",doDisConnectById);
@@ -12,6 +13,36 @@ module.exports = function(app, userModel, connectionMetaModel, externalConnector
     app.get("/api/spidermongo/connectionmeta/connection/delete/:connectionId",deleteConnectionById);
     app.get("/api/spidermongo/connectionmeta/connection/:connectionId",findConnectionById);
     app.put("/api/spidermongo/connectionmeta/connections/update/",updateConnectionById);
+
+
+    function checkConnected(req, res) {
+        var userId = req.params.username;
+        console.log("In project :: Connection Meta Service :: checkConnected",userId);
+        if(liveConnection.get(userId)) {
+            console.log("Connection found for user");
+            connectionMetaModel.findConnectedConnectionForUser(userId).then(
+                function(connection) {
+                    if(connection) {
+                        res.json(connection);
+                    } else {
+                        liveConnection.remove(userId);
+                        res.send(null);
+                    }
+                }, function (error) {
+                    res.status(400).send(error);
+                }
+            );
+        } else {
+            console.log("No live Connection found for user");
+            connectionMetaModel.disConnectAllFlag(userId).then(
+                function(response) {
+                    res.send(null);
+                }, function (error) {
+                    res.status(400).send(error);
+                }
+            );
+        }
+    }
 
     function deleteConnectionById(req, res) {
         var connectionId = req.params.connectionId;

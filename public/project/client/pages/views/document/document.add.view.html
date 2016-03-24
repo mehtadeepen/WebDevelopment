@@ -1,11 +1,10 @@
 	<div class="row" style="padding-top: 7px;">
 		<div class="col-lg-12">
 			<ol class="breadcrumb">
-				<li><a href="#/connection">Connection</a></li>
-				<li><a href="#/database">Database</a></li>
-				<li><a href="#/database">Collections</a></li>
-				<li><a href="#/collection">Collections</a></li>
-				<li class="active hidden-xs hidden-sm">Add Document</li>
+                <li><a href="#/connections">Connection</a></li>
+                <li><a href="#/user/{{projectUser.username}}/database/{{model.database}}">{{model.database}}</a></li>
+                <li><a href="#/collection/{{model.collectionName}}/database/{{model.database}}">{{model.collectionName}}</a></li>
+				<li class="active hidden-xs hidden-sm">Add</li>
 			</ol>
 
 		</div>
@@ -50,7 +49,7 @@
                     <tr>
                         
                         <td colspan="3">
-                        	<a class="btn btn-success btn-block" ng-click="model.commit(model.document)"><i class="fa fa-save"></i> Commit</a>
+                        	<a class="btn btn-success btn-block" ng-click="model.commit(model.document)" href="javascript:void(0);"><i class="fa fa-save"></i> Commit</a>
                         </td>
                         
                         

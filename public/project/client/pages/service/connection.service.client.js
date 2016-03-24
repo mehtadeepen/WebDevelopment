@@ -19,10 +19,31 @@
             doConnectionById : doConnectionById,
             doDisConnectById: doDisConnectById,
             disableConnectionById: disableConnectionById,
-            enableConnectionById: enableConnectionById
+            enableConnectionById: enableConnectionById,
+            checkConnected: checkConnected,
+            setConnected: setConnected,
+            setConnectedTo: setConnectedTo,
+            getConnectedTo: getConnectedTo
         };
 
         return api;
+
+        function getConnectedTo() {
+            return $rootScope.connectedTo;
+        }
+
+        function setConnectedTo(connection) {
+            $rootScope.connectedTo = connection;
+        }
+
+        function setConnected(val) {
+            $rootScope.isConnected = val;
+        }
+
+        function checkConnected(username) {
+            console.log("In client :: Connection Service :: checkConnected",username);
+            return $http.get("/api/spidermongo/checkconnected/connections/user/"+username);
+        }
 
         function deleteConnectionById(connectionId) {
             console.log("In client :: Connection Service :: deleteConnectionById",connectionId);
