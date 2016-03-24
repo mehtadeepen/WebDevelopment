@@ -1,4 +1,4 @@
 (function(){
     angular
-        .module("SpiderMongo", ["ngRoute"]);
+        .module("SpiderMongo", ["ngRoute","ngPrettyJson","ngAnimate","ui.bootstrap"]);
 })();

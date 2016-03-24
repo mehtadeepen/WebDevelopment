@@ -14,6 +14,7 @@ module.exports = function(app,db,mongoose,mongojs) {
 
     //HashMap of live connection
     var liveConnection = new HashMap();
+    var collectionsMap = new HashMap();
 
     //models
     var userModel    = require("./models/user.model.server.js")(db,mongoose);
@@ -23,6 +24,6 @@ module.exports = function(app,db,mongoose,mongojs) {
 
     //services
     var userService  = require("./services/user.service.server.js")(app, userModel);
-    var connectionMetaService = require("./services/connection.service.server.js")(app,userModel,connectionMetaModel,externalConnectorModel,liveConnection);
-
+    var connectionMetaService = require("./services/connection.service.server.js")(app,userModel,connectionMetaModel,externalConnectorModel,liveConnection,collectionsMap);
+    var externalCollectionService = require("./services/external.collection.service.server.js")(app,liveConnection,collectionsMap, externalConnectorModel);
 }

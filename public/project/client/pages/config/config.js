@@ -67,17 +67,19 @@
                 }
                 
             })
-            .when("/collections", {
+            .when("/user/:userId/database/:databaseName", {
                 templateUrl: "views/collection/collections.view.html",
                 controller: "CollectionController",
+                controllerAs: "model",
                 resolve: {
                     checkLoggedIn: checkLoggedIn
                 }
                 
             })
-            .when("/collection", {
+            .when("/collection/:name", {
                 templateUrl: "views/collection/collection.view.html",
-                controller: "CollectionController",
+                controller: "CollectionViewController",
+                controllerAs: "model",
                 resolve: {
                     checkLoggedIn: checkLoggedIn
                 }

@@ -2,7 +2,7 @@
  * Created by dmehta on 3/18/16.
  */
 "use strict";
-module.exports = function(app, userModel, connectionMetaModel, externalConnectorModel,liveConnection) {
+module.exports = function(app, userModel, connectionMetaModel, externalConnectorModel,liveConnection, collectionsMap) {
     app.post("/api/spidermongo/connectionmeta/connections/add/:username",addConnectionMeta);
     app.get("/api/spidermongo/connectionmeta/connections/user/:username",findConnectionForUser);
     app.get("/api/spidermongo/connectionmeta/connection/connect/:connectionId",doConnectionById);
@@ -55,7 +55,12 @@ module.exports = function(app, userModel, connectionMetaModel, externalConnector
         connectionMetaModel.disConnectById(connectionId).then(
             function (userId) {
                 res.send(200);
+                var db = liveConnection.get(userId);
+                if(db) {
+                    db.close();
+                }
                 liveConnection.remove(userId);
+                collectionsMap.remove(userId);
             }, function (error) {
                 res.status(400).send(error);
         }
@@ -73,10 +78,15 @@ module.exports = function(app, userModel, connectionMetaModel, externalConnector
                         console.log("I am here 3");
                         var userID = connection.userId;
                         liveConnection.set(userID,db);
-                        // Just to test
+                        // Setting list of colletions to test
                         var getDb = liveConnection.get(userID);
-                        getDb.getCollectionNames(function(err,doc) {
-                            console.log(doc);
+                        getDb.listCollections().toArray(function(err, items) {
+                            if(!err) {
+                                collectionsMap.set(userID,items);
+                            } else {
+                                console.log("Error In fetching list of collections");
+                                res.status(400).send(err);
+                            }
                         });
                         connectionMetaModel.setConnected(connectionId).then(
                             function (connect) {
@@ -88,6 +98,7 @@ module.exports = function(app, userModel, connectionMetaModel, externalConnector
                             }
                         );
                     }, function (error) {
+                        console.log(error);
                         res.status(400).send(error);
                     }
                 );

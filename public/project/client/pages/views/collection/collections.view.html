@@ -19,13 +19,13 @@
                 
 
                 <td colspan="2">
-                            <input type="text" class="form-control text" placeholder="Collection Name">
+                            <input type="text" ng-model="model.collectionName" class="form-control text" placeholder="Collection Name">
                         </td>
                        <td >
-                            <input readonly type="text" class="form-control text" value="Users" placeholder="Database">
+                            <input readonly type="text" class="form-control text" ng-model="model.database" placeholder="Database">
                         </td>
                         <td>
-                            <a class="btn btn-primary btn-sm" href="#/collections">
+                            <a class="btn btn-primary btn-sm" href="javascript:void(0);" ng-click="model.createCollection(model.collectionName)">
                         <span class="fa fa-plus" aria-hidden="true"> Create</span>
                     </a>
                         </td>
@@ -33,20 +33,18 @@
             <tr>
                 <th>#</th>
                 <th>Collection</th>
-                <th>Documents</th>
                 <th>Connect</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>Userdetails</td>
-                <td>20</td>
+            <tr ng-repeat="collection in model.collections | filter : model.notSystem">
+                <td>{{$index+1}}</td>
+                <td>{{collection.name}}</td>
                 <td>
-                    <a href="#/collection" class="btn btn-success btn-xs">
+                    <a href="#/collection/{{collection.name}}" class="btn btn-success btn-xs">
                         <span class="fa fa-sign-in" aria-hidden="true"> Open&nbsp;</span>
                     </a>
-                    <a href="#/collection" class="btn btn-warning btn-xs">
+                    <a class="btn btn-warning btn-xs">
                         <span class="fa fa-code-fork" aria-hidden="true">&nbsp;Export</span>
                     </a>
                     

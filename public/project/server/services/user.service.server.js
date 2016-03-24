@@ -1,7 +1,7 @@
-module.exports = function(app, userModel) {
+module.exports = function(app, userModel, liveConnection,collectionsMap ) {
     app.post("/api/project/user", register);
     app.post("/api/project/user/login", login);
-    app.get("/api/project/user/logout", logout);
+    app.post("/api/project/user/logout",logout);
     app.get("/api/project/user/loggedin",loggedin);
     app.get("/api/project/user/check/:username", checkUserName);
     app.get("/api/project/user/:username", profile);

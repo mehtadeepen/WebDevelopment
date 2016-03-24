@@ -5,7 +5,7 @@
         .module("SpiderMongo")
         .controller("HeaderController", HeaderController);
 
-    function HeaderController($location, $rootScope){
+    function HeaderController($location, UserService){
 
         console.log("In Header Controller");
         var vm = this;
@@ -26,11 +26,11 @@
         }
 
         function logout(user) {
-
-        	delete $rootScope.user;
-            delete $rootScope.isConnected;
-            delete $rootScope.connectedTo;
-        	$location.url("/")
+            UserService.logout(user).then(function(response){
+                if(response) {
+                    $location.url("/login");
+                }
+            });
         }
 
     }

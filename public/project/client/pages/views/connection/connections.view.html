@@ -50,7 +50,7 @@
                     <a ng-if="connection.connected === false" class="btn btn-danger btn-xs" href="" ng-click="model.deleteConnection(connection._id)">
                         <span class="fa fa-trash" aria-hidden="true"></span>
                     </a>
-                    <a ng-if="connection.connected === true" class="btn btn-success btn-xs" href="#/database/{{projectUser.username}}" >
+                    <a ng-if="connection.connected === true" class="btn btn-success btn-xs" href="#/user/{{projectUser.username}}/database/{{connection.database}}" >
                         <span class="fa fa-sign-in" aria-hidden="true"> Open</span>
                     </a>
                     <a ng-if="connection.enabled === true && connection.connected === false" class="btn btn-info btn-xs"href="" ng-click="model.disableConnection(connection._id)">

@@ -13,7 +13,8 @@
             updateUser : updateUser,
             findUserByUsername : findUserByUsername,
             setCurrentUser: setCurrentUser,
-            getCurrentUser: getCurrentUser
+            getCurrentUser: getCurrentUser,
+            logout: logout
 
         };
 
@@ -51,6 +52,11 @@
         function updateUser (username, user) {
             console.log("In project client :: User Service :: updateUser :: ");
             return $http.put("/api/project/user/"+username,user);
+        }
+
+        function logout(user) {
+            delete $rootScope.projectUser;
+            return $http.post("/api/project/user/logout",user);
         }
 
     }
