@@ -11,9 +11,33 @@ module.exports = function(mongojs) {
     var api = {
         getDBConnection : getDBConnection,
         createCollectionForUser: createCollectionForUser,
-        getAllDocumentsForDatabase : getAllDocumentsForDatabase
+        getAllDocumentsForDatabase : getAllDocumentsForDatabase,
+        findDocumentsFromCollectionForUser: findDocumentsFromCollectionForUser
     };
     return api;
+
+    function findDocumentsFromCollectionForUser(db,search) {
+        console.log("In project :: External Connector Model :: getAllDocumentsForDatabase",search.collectionName);
+        var deferred = q.defer();
+
+        var collection = db.collection(search.collectionName);
+
+        var query = {
+
+        };
+        query[search.key] = search.val;
+
+        console.log("Find Query ......" , query);
+        collection.find(query).toArray(function(err, docs) {
+            if(!err) {
+                deferred.resolve(docs);
+            } else {
+                deferred.reject(err);
+            }
+        });
+
+        return deferred.promise;
+    }
 
     function getAllDocumentsForDatabase(db,collectionName) {
         console.log("In project :: External Connector Model :: getAllDocumentsForDatabase",collectionName);

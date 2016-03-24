@@ -17,22 +17,18 @@
 			<form class="form-inline">
 				<div class="form-group">
 					<label class="sr-only">Email address</label>
-					<select class="form-control">
-						<option>Key</option>
-						<option>1</option>
-						<option>2</option>
-						<option>3</option>
-						<option>4</option>
-						<option>5</option>
+					<select class="form-control" ng-model="model.search.key">
+						<option ng-repeat="key in model.searchKeys" value="{{key}}">{{key}}</option>
+						<option value="all">Get all</option>
 					</select>
 				</div>
 				<div class="form-group">
-					<label class="sr-only" for="exampleInputPassword3">Value</label>
-					<input type="password" class="form-control" id="exampleInputPassword3" placeholder="Value">
+					<label class="sr-only" for="val">Value</label>
+					<input type="text" class="form-control" id="val" ng-model="model.search.val" placeholder="Value">
 				</div>
 				<div class="form-group">
-				<button  class="form-control btn btn-success hidden-xs">Search</button>
-				<button  class="form-control btn btn-success btn-block hidden-lg hidden-md hidden-sm">Search</button>
+				<button ng-click="model.find(model.search,model.collectionName)" class="form-control btn btn-success hidden-xs">Search</button>
+				<button ng-click="model.find(model.search,model.collectionName)" class="form-control btn btn-success btn-block hidden-lg hidden-md hidden-sm">Search</button>
 			</div>
 				<div class="form-group">
 				<a  href="#/addDocument" class="form-control btn btn-primary hidden-xs">Add Document</a>
