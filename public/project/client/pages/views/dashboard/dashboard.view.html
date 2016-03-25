@@ -1,259 +1,242 @@
 <div class="row hidden-xs hidden-sm hidden-md">
-                <div class="col-lg-12">
-                    <h2 class="page-header"> My Dashboard</h2>
-
-                </div>
-                
-                <!-- /.col-lg-12 -->
-            </div>
-
-
-            <div class="row hidden-lg" style="padding-top: 7px;">
     <div class="col-lg-12">
-        <ol class="breadcrumb">
-  <li class="active"> My Dashboard</li>
- 
-  
-</ol>
+        <h2 class="page-header">Dashboard <a ng-click="model.loadDashboard()"><i class="fa fa-refresh"></i></a></h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 hidden-lg">
+        <h3 class="header">Dashboard <a ng-click="model.loadDashboard()"><i class="fa fa-refresh"></i></a></h3>
+        <hr>
+    </div>
+</div>
+
+<!-- /.row -->
+<div class="row hidden-lg">
+    <div class="col-lg-12">
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-plug"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+
+                        <div>Connections: {{model.dashboard.c}}</div>
+                    </div>
+                </div>
+            </div>
+            <a href="#/connections">
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
 
     </div>
 
+    <!-- /.col-lg-12 -->
 </div>
-            <!-- /.row -->
-            <div class="row hidden-lg">
-                <div class="col-lg-12">
-                    <div class="panel panel-green">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-plug"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    
-                                    <div>Connections: 2</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#/connections">
-                            <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
 
-                </div>
-                
-                <!-- /.col-lg-12 -->
-            </div>
-
-            <div class="row hidden-lg">
-                <div class="col-lg-12">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-database"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    
-                                    <div>Databases: 10</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#/connections">
-                            <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-
-                </div>
-                
-                <!-- /.col-lg-12 -->
-            </div>
-
-
-            <div class="row hidden-lg">
-                <div class="col-lg-12">
-                    <div class="panel panel-yellow">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-table"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    
-                                    <div>Collections: 12</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#/connections">
-                            <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-
-                </div>
-                
-                <!-- /.col-lg-12 -->
-            </div>
-
-
-            <div class="row hidden-lg">
-                <div class="col-lg-12">
-                    <div class="panel panel-red">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-exclamation-triangle"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    
-                                    <div>Failed Connection: 0</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#/connections">
-                            <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-
-                </div>
-                
-                <!-- /.col-lg-12 -->
-            </div>
-
-
-
-            <div class="row hidden-xs hidden-sm hidden-md">
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-green">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-plug fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">2</div>
-                                    <div>Connections</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#/connections">
-                            <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-database fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">26</div>
-                                    <div>Databases</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#/connections">
-                            <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-yellow">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-table fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">12</div>
-                                    <div>Collections</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#/connections">
-                            <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-red">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-exclamation-triangle fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">0</div>
-                                    <div>Failed Connection</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#/connections">
-                            <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
+<div class="row hidden-lg">
+    <div class="col-lg-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
                 <div class="row">
-                <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                    <tr class="theadrow">
-                        <th>#</th>
-                       <!-- <th><span></span> Host Address</th> -->
-                        <th><span></span>Enabled Connection Name</th>
-                       <!-- <th><span class="caret"></span> Username</th>
-                        <th><span class="caret"></span> Password</th> -->
-                        <th class="th-action">Database</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    
-                    <tr ng-repeat="connection in model.allConnections | filter : model.enabledConnection">
-                       <td>{{$index + 1}}</td>
-                        <td>{{connection.name}}</td>
-                        
-                        <td>
-                            {{connection.database}}
-                        </td>
-                    </tr>
-                    <tr ng-if="model.connections.length == 0">
-                        <td colspan="3">No Connection found</td>
+                    <div class="col-xs-3">
+                        <i class="fa fa-database"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
 
-                    </tr>
-                    </tbody>
-                </table>
+                        <div>Databases: {{model.dashboard.c}}</div>
+                    </div>
+                </div>
             </div>
+            <a href="#/connections">
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
         </div>
+
+    </div>
+
+    <!-- /.col-lg-12 -->
+</div>
+
+
+<div class="row hidden-lg">
+    <div class="col-lg-12">
+        <div class="panel panel-yellow">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-table"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div>Collections: {{model.dashboard.n}}</div>
+                    </div>
+                </div>
+            </div>
+            <a>
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+
+<div class="row hidden-lg">
+    <div class="col-lg-12">
+        <div class="panel panel-red">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+
+                        <div>Failed Connection: {{model.dashboard.f}}</div>
+                    </div>
+                </div>
+            </div>
+            <a href="#/connections">
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- /.col-lg-12 -->
+</div>
+
+
+
+<div class="row hidden-xs hidden-sm hidden-md">
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-plug fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{model.dashboard.c}}</div>
+                        <div>Connections</div>
+                    </div>
+                </div>
+            </div>
+            <a href="#/connections">
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-database fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{model.dashboard.c}}</div>
+                        <div>Databases</div>
+                    </div>
+                </div>
+            </div>
+            <a href="#/connections">
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-yellow">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-table fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{model.dashboard.n}}</div>
+                        <div>Collections</div>
+                    </div>
+                </div>
+            </div>
+            <a>
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-red">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-exclamation-triangle fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{model.dashboard.f}}</div>
+                        <div>Failed Connection</div>
+                    </div>
+                </div>
+            </div>
+            <a href="#/connections">
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+            <tr class="theadrow">
+                <th>#</th>
+                <th><span></span>Enabled Connection Name</th>
+                <th class="th-action">Database</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="connection in model.allConnections | filter : model.enabledConnection">
+                <td>{{$index + 1}}</td>
+                <td>{{connection.name}}</td>
+                <td>
+                    {{connection.database}}
+                </td>
+            </tr>
+            <tr ng-if="model.connections.length == 0">
+                <td colspan="3">No Connection found</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

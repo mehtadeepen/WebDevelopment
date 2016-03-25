@@ -52,8 +52,8 @@ module.exports = function(mongojs) {
         collection.findOneAndReplace( {"_id": new ObjectId(meta.oid._id)}, meta.document,function(err, r) {
 
             if(!err) {
-                    console.log("Replace Successful");
-                    deferred.resolve(r);
+                console.log("Replace Successful");
+                deferred.resolve(r);
             } else {
                 deferred.reject(err);
             }
@@ -163,7 +163,7 @@ module.exports = function(mongojs) {
                 deferred.reject(err);
             }
         });
-            return deferred.promise;
+        return deferred.promise;
     }
 
 
@@ -184,77 +184,79 @@ module.exports = function(mongojs) {
     }
 
     function loadDashboard(connectionStrings) {
-        console.log("In project :: External Connector Model :: loadDashboard",connectionStrings);
+        console.log("In project :: External Connector Model :: loadDashboard", connectionStrings);
 
 
-        var numOfCollection = 0;
-        var numOfConnection = connectionStrings.length;
-        var numOfFailedConnection = 0;
+        var promises = [];
 
-        var promiseArray = [];
-        var result = [];
-
-        for(var s in connectionStrings) {
-            var connectionString = connectionStrings[s];
-            var MongoClient = require('mongodb').MongoClient
-                , assert = require('assert');
-
-            console.log("Connecting .....",connectionString);
-
-            promiseArray.push(
-                (
-                function() {
-
-                    var deferred  = q.defer();
-                    MongoClient.connect(connectionString, function(err, db) {
-                        if(!err) {
-                            db.listCollections().toArray(function(error, items) {
-                                if(!error) {
-                                    var collection = {
-                                        c : 1,
-                                        n : items.length,
-                                        f: 0
-                                    };
-                                    deferred.resolve(collection);
-                                    db.close();
-                                } else {
-                                    console.log("Error In fetching list of collections for dashboard");
-                                    var collection = {
-                                        c : 1,
-                                        n : 0,
-                                        f: 0
-                                    };
-                                    deferred.resolve(collection);
-                                    db.close();
-                                }
-                            });
-                        } else {
-                            var collection = {
-                                c : 0,
-                                n : 0,
-                                f: 1
-                            };
-                            console.log(err);
-                            deferred.resolve(collection);
-                        }
-                    });
-
-
-                }
-                ).then(function (res) {
-                    result.push(res);
-                })
-
-            );
-
-
+        for (var s in connectionStrings) {
+            promises.push(getDBStats(connectionStrings[s]));
         }
 
+        var deferred = q.defer();
 
+        q.allSettled(promises)
+            .then(function (results) {
+                var numOfConnection = 0;
+                var numOfCollection = 0;
+                var numOfFailedConnection = 0;
+                results.forEach(function (result) {
+                    if (result.state === "fulfilled") {
+                        var obj = result.value;
+                        numOfConnection += obj.c;
+                        numOfCollection += obj.n;
+                        numOfFailedConnection += obj.f;
+                    }
+                });
+                var dashboard = {
+                    c: numOfConnection,
+                    n : numOfCollection,
+                    f: numOfFailedConnection,
+                };
+                console.log("Dashboard Statistics .... ",dashboard);
+                deferred.resolve(dashboard);
+            });
+        return deferred.promise;
 
-        q.all(promiseArray).then(function(){
-            console.log(result);
-            return result;
-        });
     }
+
+    function getDBStats(connectionString) {
+        var deferred = q.defer();
+        var MongoClient = require('mongodb').MongoClient
+            , assert = require('assert');
+
+        MongoClient.connect(connectionString, function(err, db) {
+            if(!err) {
+                db.listCollections().toArray(function(error, items) {
+                    if(!error) {
+                        var stat = {
+                            c: 1,
+                            n : items.length,
+                            f: 0,
+                        };
+                        deferred.resolve(stat);
+                        db.close();
+                    } else {
+                        console.log("Error In fetching list of collections");
+                        var stat = {
+                            c: 0,
+                            n : 0,
+                            f: 1,
+                        };
+                        deferred.resolve(stat);
+                        db.close();
+                    }
+                });
+            } else {
+                var stat = {
+                    c: 0,
+                    n : 0,
+                    f: 1
+                };
+                deferred.resolve(stat);
+            }
+        });
+        return deferred.promise;
+    }
+
 }

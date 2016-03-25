@@ -20,12 +20,11 @@
         init();
 
         function login(username, password) {
-            console.log("login... " + username)
+            console.log("login... " + username);
             UserService.findUserByCredentials(username, password).then(function(response){
                 if(response.data) {
                     UserService.setCurrentUser(response.data);
-
-                    $location.url("/dashboard");
+                    $location.url("/dashboard/true");
                 }
             },function(error){
                 console.log(error);

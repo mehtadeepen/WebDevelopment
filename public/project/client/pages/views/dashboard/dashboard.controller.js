@@ -3,17 +3,20 @@
 		.module("SpiderMongo")
 		.controller("DashBoardController", DashBoardController);
 
-	function DashBoardController(DashBoardService,ConnectionService, $location, $rootScope, UserService, sweet) {
+	function DashBoardController(DashBoardService,ConnectionService, $location, $routeParams, UserService, sweet) {
 
 		console.log("In Dashboard Controller");
 		var vm = this;
         vm.enabledConnection = enabledConnection;
         vm.renderSiderbar = renderSiderbar;
+        vm.loadDashboard = loadDashboard;
 
 		function init() {
 			vm.$location = $location;
             getConnectionsForUser();
-            //loadDashboard();
+            if($routeParams.refreshPlease === "true") {
+                loadDashboard();
+            }
         }
         init();
 

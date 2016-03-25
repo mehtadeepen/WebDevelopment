@@ -32,6 +32,15 @@
                     checkConnected: checkConnected
                 }
             })
+            .when("/dashboard/:refreshPlease", {
+                templateUrl: "views/dashboard/dashboard.view.html",
+                controller: "DashBoardController",
+                controllerAs: "model",
+                resolve: {
+                    checkLoggedIn: checkLoggedIn,
+                    checkConnected: checkConnected
+                }
+            })
             .when("/connections", {
                 templateUrl: "views/connection/connections.view.html",
                 controller: "ConnectionController",

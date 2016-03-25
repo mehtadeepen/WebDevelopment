@@ -12,11 +12,16 @@ module.exports = function (app,connectionMetaModel, externalConnectorModel) {
             function (connections) {
                 var connectionStrings = [];
                 for(var c in connections) {
-                    var str = connectionMetaModel.getConnectionString(connections[c]);
-                    connectionStrings.push(str);
+                    if(connections[c].enabled === true) {
+                        var str = connectionMetaModel.getConnectionString(connections[c]);
+                        connectionStrings.push(str);
+                    }
                 }
-                var dashboard = externalConnectorModel.loadDashboard(connectionStrings);
-                res.json(dashboard);
+                externalConnectorModel.loadDashboard(connectionStrings).then(
+                    function (dashboard) {
+                        res.json(dashboard);
+                    }
+                );
             }, function (error) {
                 console.log(error);
                 res.status(400).send(error);
