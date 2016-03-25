@@ -3,7 +3,7 @@
 		.module("SpiderMongo")
 		.controller("SideBarController", SideBarController);
 
-	function SideBarController(ConnectionService, CollectionService, $location, $rootScope) {
+	function SideBarController(ConnectionService, CollectionService, UserService, $location, $rootScope) {
 
         console.log("In Sidebar Controller");
         var vm = this;
@@ -18,7 +18,11 @@
             delete $rootScope.user;
             delete $rootScope.isConnected;
             delete $rootScope.connectedTo;
-            $location.url("/login")
+            UserService.logout(user).then(function(response){
+                if(response) {
+                    $location.url("/login");
+                }
+            });
         }
 
 	}
