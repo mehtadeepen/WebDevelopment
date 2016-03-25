@@ -3,7 +3,7 @@
 		.module("SpiderMongo")
 		.controller("DashBoardController", DashBoardController);
 
-	function DashBoardController(ConnectionService, $location, $rootScope, UserService, sweet) {
+	function DashBoardController(DashBoardService,ConnectionService, $location, $rootScope, UserService, sweet) {
 
 		console.log("In Dashboard Controller");
 		var vm = this;
@@ -13,8 +13,25 @@
 		function init() {
 			vm.$location = $location;
             getConnectionsForUser();
+            //loadDashboard();
         }
         init();
+
+        function loadDashboard(){
+            UserService.getCurrentUser().then(
+                function(response){
+                    var currentUser = response.data;
+                    DashBoardService.loadDashboard(currentUser.username).then(
+                        function(response) {
+                            vm.dashboard = response.data;
+                            console.log(vm.dashboard);
+                        }, function (error) {
+                            console.log(error);
+                        });
+                }, function(error){
+                    console.log(error);
+                });
+        }
 
         function getConnectionsForUser() {
             UserService.getCurrentUser().then(

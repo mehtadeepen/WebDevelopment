@@ -6,12 +6,6 @@ var HashMap = require('hashmap');
 
 module.exports = function(app,db,mongoose,mongojs) {
 
-    //var mongoJSDB = mongojs('mongodb://admin:admin@ds015869.mlab.com:15869/spidermongo');
-    //
-    //mongoJSDB.getCollectionNames(function(err,doc) {
-    //    console.log(doc);
-    //});
-
     //HashMap of live connection
     var liveConnection = new HashMap();
     var collectionsMap = new HashMap();
@@ -26,4 +20,5 @@ module.exports = function(app,db,mongoose,mongojs) {
     var userService  = require("./services/user.service.server.js")(app, userModel);
     var connectionMetaService = require("./services/connection.service.server.js")(app,userModel,connectionMetaModel,externalConnectorModel,liveConnection,collectionsMap);
     var externalCollectionService = require("./services/external.collection.service.server.js")(app,liveConnection,collectionsMap, externalConnectorModel);
+    var dashboardService = require("./services/dashboard.service.server")(app, connectionMetaModel, externalConnectorModel);
 }

@@ -16,7 +16,8 @@ module.exports = function(mongojs) {
         insertDocumentInCollectionForUser : insertDocumentInCollectionForUser,
         getDocumentFromCollectionForUser: getDocumentFromCollectionForUser,
         updateDocumentInCollectionForUser : updateDocumentInCollectionForUser,
-        deleteDocumentFromCollectionForUser: deleteDocumentFromCollectionForUser
+        deleteDocumentFromCollectionForUser: deleteDocumentFromCollectionForUser,
+        loadDashboard: loadDashboard
     };
     return api;
 
@@ -151,7 +152,7 @@ module.exports = function(mongojs) {
             if (!err) {
                 db.listCollections().toArray(function(error, items) {
                     if(!error) {
-                        deferred.resolve(items)
+                        deferred.resolve(items);
                     } else {
                         console.log("Error In fetching list of collections");
                         deferred.reject(error);
@@ -169,18 +170,9 @@ module.exports = function(mongojs) {
     function getDBConnection(connectionString,userId) {
         console.log("In project :: External Connector Model :: getDBConnection",connectionString,userId);
         var deferred = q.defer();
-       // var mongoJSDB = mongojs(connectionString);
-
-        //mongoJSDB.stats(function (err , doc) {
-        //    console.log(err);
-        //    console.log(doc);
-        //});
-
         var MongoClient = require('mongodb').MongoClient
             , assert = require('assert');
 
-
-        // Use connect method to connect to the Server
         MongoClient.connect(connectionString, function(err, db) {
             if(!err) {
                 deferred.resolve(db);
@@ -189,7 +181,80 @@ module.exports = function(mongojs) {
             }
         });
         return deferred.promise;
+    }
+
+    function loadDashboard(connectionStrings) {
+        console.log("In project :: External Connector Model :: loadDashboard",connectionStrings);
 
 
+        var numOfCollection = 0;
+        var numOfConnection = connectionStrings.length;
+        var numOfFailedConnection = 0;
+
+        var promiseArray = [];
+        var result = [];
+
+        for(var s in connectionStrings) {
+            var connectionString = connectionStrings[s];
+            var MongoClient = require('mongodb').MongoClient
+                , assert = require('assert');
+
+            console.log("Connecting .....",connectionString);
+
+            promiseArray.push(
+                (
+                function() {
+
+                    var deferred  = q.defer();
+                    MongoClient.connect(connectionString, function(err, db) {
+                        if(!err) {
+                            db.listCollections().toArray(function(error, items) {
+                                if(!error) {
+                                    var collection = {
+                                        c : 1,
+                                        n : items.length,
+                                        f: 0
+                                    };
+                                    deferred.resolve(collection);
+                                    db.close();
+                                } else {
+                                    console.log("Error In fetching list of collections for dashboard");
+                                    var collection = {
+                                        c : 1,
+                                        n : 0,
+                                        f: 0
+                                    };
+                                    deferred.resolve(collection);
+                                    db.close();
+                                }
+                            });
+                        } else {
+                            var collection = {
+                                c : 0,
+                                n : 0,
+                                f: 1
+                            };
+                            console.log(err);
+                            deferred.resolve(collection);
+                        }
+                    });
+
+
+                }
+                ).then(function (res) {
+                    result.push(res);
+                })
+
+            );
+
+
+        }
+
+
+
+        q.all(promiseArray).then(function(){
+            console.log(result);
+            return result;
+        });
     }
 }

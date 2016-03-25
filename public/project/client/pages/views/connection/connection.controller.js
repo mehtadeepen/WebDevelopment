@@ -115,7 +115,7 @@
                         $rootScope.connectedTo = response.data;
                         console.log("connection successful");
                         sweet.show({
-                            title: 'Amazing',
+                            title: 'Bingo !!',
                             text: 'You\'re now connected.',
                             timer: 3000,
                             type: 'success',
