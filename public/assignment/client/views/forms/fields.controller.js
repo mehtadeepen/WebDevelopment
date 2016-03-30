@@ -16,7 +16,8 @@
             if($routeParams.formId) {
                 FieldService.findAllFieldsForForm($routeParams.formId).then(function(response){
                     if(response.data) {
-                        vm.fields = response.data;
+                        console.log(response.data);
+                        vm.fields = response.data.fields;
                     }
                 });
 
@@ -34,23 +35,6 @@
                     vm.user = currentUser;
                 });
 
-            //$("#sortable" ).sortable({
-            //    placeholder: "ui-sortable-placeholder",
-            //    update: function( event, ui ) {
-            //        console.log(vm.fields);
-            //        var start = ui.item.data('start'),
-            //            end = ui.item.index();
-            //        vm.fields.splice(end, 0,
-            //            vm.fields.splice(start, 1)[0]);
-            //        FieldService.reorderFields(vm.fields,vm.form._id).then(function(response){
-            //            if(response.data) {
-            //                vm.fields = response.data;
-            //            }
-            //        });
-            //    }
-            //});
-
-
         }
 
         init();
@@ -64,22 +48,22 @@
         function refreshField() {
             FieldService.findAllFieldsForForm(vm.form._id).then(function(response){
                 if(response.data) {
-                    vm.fields = response.data;
+                    console.log(response.data);
+                    vm.fields = response.data.fields;
                 }
             });
         }
 
         function addField(fieldType) {
-            if(fieldType > 5 || fieldType < 0) {
-                return;
-            } else {
+
                 FieldService.addField(fieldType, vm.form._id, vm.user._id).then(function(response){
-                    if(response.data) {
-                        vm.fields = response.data;
+                    if(response) {
+                        console.log(response);
                         vm.fieldType = -1;
+                        refreshField();
                     }
                 });
-            }
+
 
         }
 

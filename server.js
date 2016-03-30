@@ -27,30 +27,11 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
 // connect to the database
 var db = mongoose.connect(connectionString);
 
-//var dbase = mongoose.connection;
-//var colls = {};
-//dbase.on('open',function(ref){
-//    console.log('Connected to mongo server.');
-//    dbase.db.listCollections().toArray(function(err, names) {
-//        if (err) {
-//            console.log(err);
-//        }
-//        else {
-//            colls = names;
-//            names.forEach(function(e,i,a) {
-//                console.log("--->>", e.name);
-//            });
-//        }
-//    });
-//});
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer());
 app.use(session({ secret: "dpm"}));
-app.use(cookieParser())
-
-
+app.use(cookieParser());
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res) {

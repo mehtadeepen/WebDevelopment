@@ -1,5 +1,9 @@
-var mock = require("./user.mock.json");
+
 module.exports = function(db,mongoose) {
+
+    var UserSchema = require("./user.schema.server.js")();
+    var UserModel = mongoose.model("UserModel", UserSchema);
+
     var api = {
         findUserByCredentials: findUserByCredentials,
         findUserByUsername: findUserByUsername,
@@ -13,75 +17,44 @@ module.exports = function(db,mongoose) {
 
     function findAllUsers() {
         console.log("In server :: User Model :: findAllUsers :: ");
-        return mock;
+        return UserModel.find();
     }
 
     function findUserById(id) {
         console.log("In server :: User Model :: findUserById :: ");
-        for(var u in mock) {
-            if( mock[u]._id === id ) {
-                return mock[u];
-            }
-        }
-        return null;
+        return UserModel.findById(id);
     }
 
     function deleteUserById(id) {
         console.log("In server :: User Model :: deleteUserById :: "+id);
-        var index = -1;
-        for(var u in mock) {
-            if( mock[u]._id === id ) {
-                index = u;
-                break;
-            }
-        }
-        if(index != -1) {
-            mock.splice(index,1);
-        }
-        return mock;
+        return UserModel.remove({_id: id});
     }
 
 
     function updateUserById(id,user) {
         console.log("In server :: User Model :: updateUserById :: "+id);
-        for(var u in mock) {
-            if( mock[u]._id == id ) {
-                console.log("User Found");
-                mock[u].firstName = user.firstName;
-                mock[u].lastName = user.lastName;
-                mock[u].username = user.username;
-                mock[u].password = user.password;
-                break;
-            }
-        }
-        return mock;
+        delete user._id;
+        return UserModel.update({_id: id}, {$set: user},{runValidators: true});
     }
 
     function findUserByUsername(username) {
         console.log("In server :: User Model :: findUserByUsername :: "+username);
-        for(var u in mock) {
-            if( mock[u].username === username ) {
-                return mock[u];
-            }
-        }
-        return null;
+        return UserModel.findOne({username: username});
     }
 
     function createUser(user) {
         console.log("In server :: User Model :: createUser :: ");
-        user._id = (new Date()).getTime();
-        mock.push(user);
-        return user;
+        user.roles = ["student"];
+        return UserModel.create(user);
     }
 
     function findUserByCredentials(credentials) {
         console.log("In server :: User Model :: findUserByCredentials :: ");
-        for(var u in mock) {
-            if( mock[u].username === credentials.username &&
-                mock[u].password === credentials.password) {
-                return mock[u];
+        return UserModel.findOne(
+            {
+                username: credentials.username,
+                password: credentials.password
             }
-        }
-        return null;
+        );
     }
 }

@@ -30,9 +30,8 @@
         function addField(fieldType, formId, userId) {
             console.log("In client :: FieldService :: addField :: "+fieldType);
             var field = {
-                "fieldType" : fieldType,
-                "userId": userId
-            }
+                "type" : fieldType
+            };
             return $http.post("/api/assignment/form/"+formId+"/field", field);
         }
 

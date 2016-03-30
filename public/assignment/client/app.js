@@ -1,5 +1,5 @@
 "use strict";
 (function(){
     angular
-        .module("FormBuilderApp", ["ngRoute","divSortable"]);
+        .module("FormBuilderApp", ["ngRoute","divSortable","hSweetAlert"]);
 })();

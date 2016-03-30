@@ -148,7 +148,7 @@ module.exports = function(mongojs) {
         console.log("In project :: External Connector Model :: createCollectionForUser",collectionName);
         var deferred = q.defer();
 
-        db.createCollection(collectionName, {capped:true, size:10000, max:1000}, function(err, collection) {
+        db.createCollection(collectionName, {capped:false, size:10000, max:1000}, function(err, collection) {
             if (!err) {
                 db.listCollections().toArray(function(error, items) {
                     if(!error) {

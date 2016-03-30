@@ -11,16 +11,33 @@ module.exports = function(app, formModel, userModel) {
     function profile(req,res) {
         console.log("In server :: User Service :: profile");
         var id = req.params.id;
-        var user = userModel.findUserById(id);
+        userModel.findUserById(id).then(
+            function (user) {
+                res.json(user);
+            }, function (error) {
+                res.status(400).send(error);
+            }
+        );
         res.json(user);
     }
 
     function register(req, res) {
         console.log("In server :: User Service :: register");
         var user = req.body;
-        user = userModel.createUser(user);
-        req.session.currentUser = user;
-        res.json(user);
+        userModel.createUser(user).then(
+            function (user) {
+                console.log(user);
+                if(user) {
+                    req.session.currentUser = user;
+                    res.json(user);
+                } else {
+
+                    res.status(400).send("Invalid User");
+                }
+            }, function (error) {
+                res.status(400).send(error);
+            }
+        );
     }
 
     function findAllUsers(req, res) {
@@ -35,17 +52,33 @@ module.exports = function(app, formModel, userModel) {
                 "username": username,
                 "password": password
             };
-            var user = userModel.findUserByCredentials(credentials);
-            req.session.currentUser = user;
-            res.json(user);
+            userModel.findUserByCredentials(credentials).then(
+                function (user) {
+                    req.session.currentUser = user;
+                    res.json(user);
+                }, function (error) {
+                    res.status(400).send(error);
+                }
+            );
+
         } else if (username != undefined && password == undefined) {
             console.log("In findUserByUsername");
-            var user = userModel.findUserByUsername(username);
-            res.json(user);
+            userModel.findUserByUsername(username).then(
+                function (user) {
+                    res.json(user);
+                }, function (error) {
+                    res.status(400).send(error);
+                }
+            );
         } else {
             console.log("In findAllUsers");
-            var users = userModel.findAllUsers();
-            res.json(users);
+            userModel.findAllUsers().then(
+                function (users) {
+                    res.json(users);
+                }, function (error) {
+                    res.status(400).send(error);
+                }
+            );
         }
     }
 
@@ -53,15 +86,30 @@ module.exports = function(app, formModel, userModel) {
         console.log("In server :: User Service :: updateUser");
         var user = req.body;
         var id = req.params.id;
-        var users = userModel.updateUserById(id,user);
-        res.json(users);
+        console.log(user);
+        userModel.updateUserById(id,user).then(
+            function (success) {
+                console.log(success);
+                if(success.n == 1) {
+                    res.json(user);
+                } else res.status(400).send("There was a problem with update");
+            },
+            function (error) {
+                res.status(400).send(error);
+            }
+        );
     }
 
     function deleteUser(req, res) {
         console.log("In server :: User Service :: deleteUser");
         var id = req.params.id;
-        var users = userModel.deleteUserById(id);
-        res.json(users);
+        userModel.deleteUserById(id).then(
+            function (success) {
+                res.send(200);
+            }, function (error) {
+                res.status(400).send(error);
+            }
+        );
     }
 
     function logout(req, res) {

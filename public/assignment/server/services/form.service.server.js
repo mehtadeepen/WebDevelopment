@@ -12,50 +12,77 @@ module.exports = function(app, formModel, userModel, uuid) {
     function findAllFormsForUser(req, res) {
         console.log("In server :: Form Service :: findAllFormsForUser");
         var userId = req.params.userId;
-        var forms = formModel.findAllFormsForUser(userId);
-        res.json(forms);
+        formModel.findAllFormsForUser(userId).then(
+            function (forms) {
+                res.json(forms);
+            }, function (error) {
+                res.status(400).send(error);
+            }
+        );
+
     }
 
     function findFormById(req, res) {
         console.log("In server :: Form Service :: findFormById");
         var formId = req.params.formId;
-        var form = formModel.findFormById(formId);
-        res.json(form);
+        formModel.findFormById(formId).then(
+            function (form) {
+                res.json(form);
+            }, function (error) {
+                res.status(400).send(error);
+            }
+        );
     }
 
     function deleteFormById(req, res) {
         console.log("In server :: Form Service :: deleteFormById");
         var formId = req.params.formId;
-        var forms = formModel.deleteFormById(formId);
-        res.json(forms);
+        formModel.deleteFormById(formId).then(
+            function (stats) {
+                res.json(stats);
+            },  function (error) {
+                res.status(400).send(error);
+            }
+        );
     }
 
     function createFormForUser(req, res) {
         console.log("In server :: Form Service :: createFormForUser");
         var userId = req.params.userId;
-        var newFormId = uuid.v4();
         var form = req.body;
-        var forms = formModel.createFormForUser(userId,newFormId,form);
-        res.json(forms);
-
-
+        formModel.createFormForUser(userId,form).then(
+            function (form) {
+                res.json(form);
+            },  function (error) {
+                res.status(400).send(error);
+            }
+        );
     }
 
     function updateFormById(req, res) {
         console.log("In server :: Form Service :: updateFormById");
         var formId = req.params.formId;
         var form = req.body;
-        var forms = formModel.updateFormById(formId,form);
-        res.json(forms);
+        formModel.updateFormById(formId,form).then(
+            function (stats) {
+                res.json(stats);
+            },  function (error) {
+                res.status(400).send(error);
+            }
+        );
     }
 
     function findAllFormsForUserByName(req, res) {
         console.log("In server :: Form Service :: findAllFormsForUserByName");
         var title = req.params.title;
         var userId = req.params.userId;
-        var form = formModel.findAllFormsForUserByName(title,userId);
-        res.json(form);
-
+        formModel.findAllFormsForUserByName(title,userId).then(
+            function(form) {
+                res.json(form);
+            }
+        ,  function (error) {
+            res.status(400).send(error);
+        });
     }
 
 
