@@ -14,26 +14,35 @@
             vm.fieldType = -1;
             vm.form={};
             if($routeParams.formId) {
-                FieldService.findAllFieldsForForm($routeParams.formId).then(function(response){
-                    if(response.data) {
-                        console.log(response.data);
-                        vm.fields = response.data.fields;
-                    }
-                });
+                FieldService.findAllFieldsForForm($routeParams.formId).then(
+                    function(response){
+                        if(response.data) {
+                            console.log(response.data);
+                            vm.fields = response.data.fields;
+                        }
+                    }, function (error) {
+                        console.log(error);
+                    });
 
-                FormService.findFormById($routeParams.formId).then(function(response){
-                    if(response.data) {
-                        vm.form = response.data;
+                FormService.findFormById($routeParams.formId).then(
+                    function(response){
+                        if(response.data) {
+                            vm.form = response.data;
+                        }
+                    }, function (error) {
+                        console.log(error);
                     }
-                });
+                );
             }
 
-            UserService
-                .getCurrentUser()
-                .then(function(response) {
+            UserService.getCurrentUser().then(
+                function(response) {
                     var currentUser = response.data;
                     vm.user = currentUser;
-                });
+                }, function (error) {
+                    console.log(error);
+                }
+            );
 
         }
 
@@ -46,43 +55,59 @@
         vm.refreshField = refreshField;
 
         function refreshField() {
-            FieldService.findAllFieldsForForm(vm.form._id).then(function(response){
-                if(response.data) {
-                    console.log(response.data);
-                    vm.fields = response.data.fields;
+            FieldService.findAllFieldsForForm(vm.form._id).then(
+                function(response){
+                    if(response) {
+                        console.log(response.data);
+                        vm.fields = response.data.fields;
+                    }
+                }, function (error) {
+                    console.log(error);
                 }
-            });
+            );
         }
 
         function addField(fieldType) {
 
-                FieldService.addField(fieldType, vm.form._id, vm.user._id).then(function(response){
+            FieldService.addField(fieldType, vm.form._id, vm.user._id).then(
+                function(response){
                     if(response) {
                         console.log(response);
                         vm.fieldType = -1;
                         refreshField();
                     }
-                });
+                }, function (error) {
+                    console.log(error);
+                }
+            );
 
 
         }
 
         function removeField(fieldId) {
-            FieldService.deleteField(fieldId,vm.form._id).then(function(response){
-                if(response.data) {
-                    vm.fields = response.data;
+            FieldService.deleteField(fieldId,vm.form._id).then(
+                function(response){
+                    console.log(response)
+                    if(response) {
+                        refreshField();
+                    }
+                }, function (error) {
+                    console.log(error);
                 }
-            });
+            );
 
         }
 
         function cloneField(field) {
             if(field) {
                 FieldService.cloneField(field,vm.form._id).then(function(response){
-                   if(response.data) {
-                       vm.fields = response.data;
-                   }
-                });
+                        if(response) {
+                            refreshField();
+                        }
+                    }, function (error) {
+                        console.log(error);
+                    }
+                );
             }
         }
 
@@ -105,7 +130,7 @@
             var arrayOptions = [];
             var opt ="";
             for(var u in options) {
-                 opt = options[u].label+":"+options[u].value;
+                opt = options[u].label+":"+options[u].value;
                 arrayOptions.push(opt);
             }
             return arrayOptions;
@@ -116,9 +141,11 @@
                 if(arrayOptions){
                     var options = convertArraytoJSON(arrayOptions);
                     field.options = options;
+                    console.log(field.options);
                     FieldService.updateField(field,vm.form._id).then(function(response){
                         if(response.data) {
                             vm.fields = response.data;
+                            refreshField();
                             $("#myModal").modal('hide');
                         }
                     });

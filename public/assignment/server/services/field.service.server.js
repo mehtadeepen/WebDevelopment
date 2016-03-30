@@ -20,13 +20,13 @@ module.exports = function(app, fieldModel) {
     }
 
     function deleteFieldForFormById(req, res) {
-        console.log("In server :: Field Service :: deleteFieldForFormById");
         var formId = req.params.formId;
         var fieldId = req.params.fieldId;
+        console.log("In server :: Field Service :: deleteFieldForFormById",formId,fieldId);
         fieldModel.deleteFieldById(fieldId,formId).then(
-            function (stats) {
-                console.log(stat);
-                res.json(200);
+            function (form) {
+                console.log(form);
+                res.json(form);
             },
             function (error) {
                 res.status(400).send(error);

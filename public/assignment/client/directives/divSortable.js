@@ -22,7 +22,7 @@
                         if(response.data) {
                                 console.log("Reordering Successful ...");
                                 console.log(response.data);
-                            scope.model.fields = response.data;
+                            scope.model.fields = response.data.fields;
                         }
                     });
                 }

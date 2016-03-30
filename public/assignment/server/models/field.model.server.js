@@ -38,7 +38,7 @@ module.exports = function(formModel,mongoose) {
     }
 
     function deleteFieldById(fieldId,formId) {
-        console.log("In server :: Form Model :: deleteFieldById");
+        console.log("In server :: Field Model :: deleteFieldById");
         return FormModel.findById(formId).then(
                 function(form){
                     form.fields.id(fieldId).remove();
@@ -48,14 +48,14 @@ module.exports = function(formModel,mongoose) {
     }
 
     function updateFieldForFormById(fieldId,formId, field) {
-        console.log("In server :: Form Model :: updateFieldForFormById");
+        console.log("In server :: Form Model :: updateFieldForFormById",field);
 
         return FormModel
             .findById(formId)
             .then(
                 function(form){
-                    var fieldObj  = form.fields.id(fieldId);
-                    fieldObj = field;
+                    form.fields.id(fieldId).remove();
+                    form.fields.push(field);
                     return form.save();
                 }
             );
@@ -88,6 +88,7 @@ module.exports = function(formModel,mongoose) {
         return FormModel.findById(formId)
             .then(
                 function(form) {
+                    delete field._id;
                     form.fields.push(field);
                     return form.save();
                 }
