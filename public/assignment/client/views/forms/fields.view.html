@@ -39,6 +39,12 @@
                 <div class="col-xs-6 col-sm-7" ng-switch-when="TEXTAREA">
                     <textarea class="form-control" rows="2" placeholder="{{field.placeholder}}"></textarea>
                 </div>
+                <div class="col-xs-6 col-sm-7" ng-switch-when="PASSWORD">
+                    <input type="password"  class="form-control" placeholder="{{field.placeholder}}">
+                </div>
+                <div class="col-xs-6 col-sm-7" ng-switch-when="EMAIL">
+                    <input type="email"  class="form-control" placeholder="{{field.placeholder}}">
+                </div>
                 <div class="col-xs-6 col-sm-7" ng-switch-default>
                     <input type="text" id="" class="form-control" placeholder="{{field.placeholder}}">
                 </div>
@@ -68,6 +74,8 @@
                 <option value="CHECKBOXES">Checkboxes</option>
                 <option value="RADIOS">Radio Buttons</option>
                 <option value="TEXTAREA">Paragraph Text Field</option>
+                <option value="PASSWORD">Password</option>
+                <option value="EMAIL">Email</option>
             </select>
         </div>
         <div class="col-xs-6 col-sm-5">
@@ -105,6 +113,16 @@
                                ng-model="model.modal.label"/>
                     </div>
                     <div class="form-group" ng-if="model.modal.type == 'TEXT'">
+                        <label>Placeholder</label>
+                        <input type="text" class="form-control"
+                               ng-model="model.modal.placeholder"/>
+                    </div>
+                    <div class="form-group" ng-if="model.modal.type == 'PASSWORD'">
+                        <label>Placeholder</label>
+                        <input type="text" class="form-control"
+                               ng-model="model.modal.placeholder"/>
+                    </div>
+                    <div class="form-group" ng-if="model.modal.type == 'EMAIL'">
                         <label>Placeholder</label>
                         <input type="text" class="form-control"
                                ng-model="model.modal.placeholder"/>

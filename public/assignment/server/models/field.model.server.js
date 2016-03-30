@@ -76,7 +76,10 @@ module.exports = function(formModel,mongoose) {
 
     function getCustomField(field) {
         if(field.type === "OPTIONS" || field.type === "CHECKBOXES" || field.type === "RADIOS") {
-            field.options = [{ label : "OPTION A", value: "OPTION A"}];
+            field.options = [
+                { label : "OPTION A", value: "OPTION A"},
+                { label : "OPTION B", value: "OPTION B"},
+                { label : "OPTION C", value: "OPTION C"}];
         } else {
             field.placeholder = "Default Placeholder";
         }
