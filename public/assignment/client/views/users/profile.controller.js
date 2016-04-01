@@ -68,7 +68,13 @@
                                 AlertService.displayUserFormError(error.data.errors);
                             });
                     } else {
-                        $location.url("/login");
+                        UserService.logout().then(function (response) {
+                                $location.url("/login");
+                            }, function (error) {
+                                $location.url("/login");
+                            }
+                        );
+                      
                     }
                 }, function (error) {
                     console.log(error);
