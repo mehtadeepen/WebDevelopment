@@ -15,7 +15,7 @@ module.exports = function () {
 
     var validatePhone = function(phone) {
         console.log(/\d{3}-\d{3}-\d{4}/.test(phone));
-        return /\d{3}-\d{3}-\d{4}/.test(phone);
+        return /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(phone);
     };
 
     var validateUsername = function(username) {
@@ -43,12 +43,12 @@ module.exports = function () {
             required: 'Password is required',
             validate: [validatePassword,  'Password should contain Minimum 8 characters at least 1 Alphabet, 1 Number and 1 Special Character']
             },
-        email: {
+        email: [{
             type: String,
             required: 'Email address is required',
             validate: [validateEmail, 'Please fill a valid email address'],
             match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
-            },
+            }],
         firstName: {
             type: String,
             validate: [validateName,  'FirstName should have only letters']
@@ -60,10 +60,10 @@ module.exports = function () {
         roles: [{
             type: String
         }],
-        phone:{
+        phone:[{
             type: String,
             validate: [validatePhone,  'Phone number should be like 123-456-7890']
-            }
+            }]
     }, {collection: 'assignment.user'});
     return UserSchema;
 

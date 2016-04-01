@@ -18,7 +18,13 @@
                         UserService.findUserByUsername(currentUser.username).then(
                             function(res){
                                 if(res.data) {
+                                    var email = res.data.email.join();
+                                    var phone = res.data.phone.join();
                                     vm.puser = res.data;
+                                    delete vm.puser.email;
+                                    delete vm.puser.phone;
+                                    vm.puser["email"] = email;
+                                    vm.puser["phone"] = phone;
                                     console.log(vm.puser);
                                     console.log("IN profilecontroller INIT"+ vm.puser);
                                     console.log(vm.puser);

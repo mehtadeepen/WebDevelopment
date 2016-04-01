@@ -18,13 +18,12 @@
 
         function displayUserFormError(error) {
             console.log(error);
-            if (error.username) alertError("Username", error.username.message);
-            else if (error.password) alertError("Password", error.password.message);
-            else if (error.email) alertError("Email", error.email.message);
-            else if (error.firstName) alertError("FirstName", error.firstName.message);
-            else if (error.lastName) alertError("LastName", error.lastName.message);
-            else if (error.phone) alertError("Phone Number", error.phone.message);
-            else alertError("Oops", "Something went wrong");
+            if(error) {
+                for (var key in error) {
+                    alertError("Invalid Input", error[key].message);
+                    break;
+                }
+            }
         }
 
         function alertError(header, message) {

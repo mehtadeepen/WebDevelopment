@@ -4,7 +4,7 @@
         .module("FormBuilderApp")
         .controller("FieldController", FieldController);
 
-    function FieldController($location, FormService, FieldService, $routeParams, UserService) {
+    function FieldController($location, AlertService, FormService, FieldService, $routeParams, UserService) {
 
         var vm = this;
 
@@ -93,6 +93,7 @@
                     }
                 }, function (error) {
                     console.log(error);
+
                 }
             );
 
@@ -142,13 +143,17 @@
                     var options = convertArraytoJSON(arrayOptions);
                     field.options = options;
                     console.log(field.options);
-                    FieldService.updateField(field,vm.form._id).then(function(response){
-                        if(response.data) {
-                            vm.fields = response.data;
-                            refreshField();
-                            $("#myModal").modal('hide');
-                        }
-                    });
+                    FieldService.updateField(field,vm.form._id).then(
+                        function(response){
+                            if(response.data) {
+                                vm.fields = response.data;
+                                refreshField();
+                                $("#myModal").modal('hide');
+                            }
+                        }, function (error) {
+                            console.log(error);
+                            AlertService.alertError("Oops",'Label is required','error');
+                        });
                 } else {
                     FieldService.updateField(field,vm.form._id).then(function(response){
                         if(response.data) {

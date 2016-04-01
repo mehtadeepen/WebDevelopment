@@ -34,6 +34,12 @@ module.exports = function(db,mongoose) {
     function updateUserById(id,user) {
         console.log("In server :: User Model :: updateUserById :: "+id);
         delete user._id;
+        var emails = user.email.toString().split(",");
+        delete user.email;
+        user["email"] = emails;
+        var phones = user.phone.toString().split(",");
+        delete user.phone;
+        user["phone"] = phones;
         return UserModel.update({_id: id}, {$set: user},{runValidators: true});
     }
 
@@ -45,6 +51,9 @@ module.exports = function(db,mongoose) {
     function createUser(user) {
         console.log("In server :: User Model :: createUser :: ");
         user.roles = ["student"];
+        var emails = user.email.split(",");
+        delete user.email;
+        user["email"] = emails;
         return UserModel.create(user);
     }
 

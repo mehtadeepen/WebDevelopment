@@ -54,8 +54,11 @@ module.exports = function(formModel,mongoose) {
             .findById(formId)
             .then(
                 function(form){
-                    form.fields.id(fieldId).remove();
-                    form.fields.push(field);
+                    var fieldDb = form.fields.id(fieldId);
+                    fieldDb.label = field.label;
+                    if(field.placeholder || field.placeholder === "") fieldDb.placeholder = field.placeholder;
+                    fieldDb.options = field.options;
+
                     return form.save();
                 }
             );
@@ -92,6 +95,7 @@ module.exports = function(formModel,mongoose) {
             .then(
                 function(form) {
                     delete field._id;
+                    delete field.options.forEach(function(v){ delete v._id });
                     form.fields.push(field);
                     return form.save();
                 }
