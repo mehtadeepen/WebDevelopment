@@ -74,7 +74,7 @@
                                 $location.url("/login");
                             }
                         );
-                      
+
                     }
                 }, function (error) {
                     console.log(error);

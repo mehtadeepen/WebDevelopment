@@ -4,7 +4,7 @@
         .module("FormBuilderApp")
         .controller("FormController", FormController);
 
-    function FormController($location, $rootScope, FormService, UserService){
+    function FormController($location, $rootScope, FormService, UserService, AlertService){
 
         var vm = this;
         var userId = -1;
@@ -47,7 +47,7 @@
 
             FormService.findAllFormsForUserByName(userId, form).then(function(response){
                 if(response.data) {
-                    alert("Form already exits");
+                    AlertService.alertError('Error',"Form already exits");
                 } else {
                     FormService.createFormForUser(userId,form).then(function(response){
                         if(response.data) {
