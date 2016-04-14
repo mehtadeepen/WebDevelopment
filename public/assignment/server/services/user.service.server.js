@@ -187,17 +187,17 @@ module.exports = function(app, formModel, userModel) {
         user.password = bcrypt.hashSync(user.password);
         userModel.createUser(user).then(
             function (user) {
-                console.log(user);
+                console.log("User created ...",user);
                 if(user) {
+                    console.log("Inside If ... ",user);
                     req.login(user,function (error) {
-                        if(err) {
+                        if(error) {
                             res.status(400).send(error);
                         } else {
                             res.json(user);
                         }
-                    })
+                    });
                 } else {
-
                     res.status(400).send("Invalid User");
                 }
             }, function (error) {
