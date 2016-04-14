@@ -11,7 +11,8 @@ module.exports = function(db,mongoose) {
         findUserById: findUserById,
         updateUserById: updateUserById,
         deleteUserById: deleteUserById,
-        findAllUsers: findAllUsers
+        findAllUsers: findAllUsers,
+        createUserForAdmin:createUserForAdmin
     };
     return api;
 
@@ -54,6 +55,12 @@ module.exports = function(db,mongoose) {
         var emails = user.email.split(",");
         delete user.email;
         user["email"] = emails;
+        return UserModel.create(user);
+    }
+
+
+    function createUserForAdmin(user) {
+        console.log("In server :: User Model :: createUserForAdmin :: ");
         return UserModel.create(user);
     }
 

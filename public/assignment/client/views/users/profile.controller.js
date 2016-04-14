@@ -13,6 +13,7 @@
 
             UserService.getCurrentUser().then(
                 function(response){
+                    console.log(response);
                     if(response.data){
                         var currentUser = response.data;
                         UserService.findUserByUsername(currentUser.username).then(

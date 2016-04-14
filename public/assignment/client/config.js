@@ -27,8 +27,10 @@
             })
             .when("/admin", {
                 templateUrl: "views/admin/admin.view.html",
+                controller: "AdminController",
+                controllerAs: "model",
                 resolve: {
-                    checkLoggedIn: checkLoggedIn
+                    checkAdmin: checkAdmin
                 }
             })
             .when("/login", {
@@ -91,4 +93,31 @@
 
         return deferred.promise;
     }
+
+    function  checkAdmin ($q, UserService, $location)
+    {
+        var deferred = $q.defer();
+
+        UserService
+            .getCurrentUser()
+            .then(function(response) {
+                var currentUser = response.data;
+                if(currentUser) {
+                    if (currentUser && currentUser.roles.indexOf('admin') > -1)
+                    {
+                        UserService.setCurrentUser(currentUser);
+                        deferred.resolve();
+                    } else {
+                        deferred.reject();
+                        $location.url("/home");
+                    }
+                } else {
+                    deferred.reject();
+                    $location.url("/home");
+                }
+            });
+
+        return deferred.promise;
+    };
+
 })();

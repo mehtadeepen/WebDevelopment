@@ -6,6 +6,7 @@ var bodyParser    = require('body-parser');
 var multer        = require('multer');
 var cookieParser  = require('cookie-parser');
 var session       = require('express-session');
+var passport      = require('passport');
 var mongoose      = require('mongoose');
 var mongojs = require('mongojs');
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
@@ -30,8 +31,14 @@ var db = mongoose.connect(connectionString);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer());
-app.use(session({ secret: "dpm"}));
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true
+}));
 app.use(cookieParser());
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res) {
@@ -39,7 +46,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/hello', function(req, res){
-  res.send('hello world');
+    res.send('hello world');
 });
 
 var nodemailer = require('nodemailer');
@@ -48,10 +55,10 @@ var mg = require('nodemailer-mailgun-transport');
 function mailMe(req, res) {
 
     var auth = {
-      auth: {
-          api_key: 'key-c677dcdd00575919169154f293704b47',
-          domain: 'sandbox9efde8dec1264a6c993d2fa969836644.mailgun.org'
-      }
+        auth: {
+            api_key: 'key-c677dcdd00575919169154f293704b47',
+            domain: 'sandbox9efde8dec1264a6c993d2fa969836644.mailgun.org'
+        }
     };
 
     var transporter = nodemailer.createTransport(mg(auth));
@@ -84,3 +91,4 @@ require("./public/assignment/server/app.js")(app,uuid,db,mongoose);
 require("./public/project/server/app.js")(app,db,mongoose,mongojs);
 
 app.listen(port, ipaddress);
+

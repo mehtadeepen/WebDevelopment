@@ -6,59 +6,43 @@
                     <tr class="theadrow">
                         <th><span class="caret"></span> Username</th>
                         <th><span class="caret"></span> Password</th>
+                        <th><span class="caret"></span> First Name</th>
+                        <th><span class="caret"></span> Last Name</th>
                         <th><span class="caret"></span> Role</th>
                         <th class="th-action">Action</th>
                     </tr>
                     </thead>
                     <tr>
                         <td>
-                            <input type="text" class="form-control text" placeholder="username">
+                            <input type="text" ng-model="model.user.username" class="form-control text" placeholder="username">
                         </td>
                         <td>
-                            <input type="password" class="form-control" placeholder="password">
+                            <input type="password"  ng-model="model.user.password" class="form-control" placeholder="password">
                         </td>
                         <td>
-                            <input type="text" class="form-control" placeholder="role1,role2">
+                            <input type="text" ng-model="model.user.firstName" class="form-control text" placeholder="first name">
                         </td>
                         <td>
-                            <a href="#">
+                            <input type="text" ng-model="model.user.lastName" class="form-control text" placeholder="last name">
+                        </td>
+                        <td>
+                            <input type="text" ng-model="model.user.roles" class="form-control" placeholder="role1,role2">
+                        </td>
+                        <td>
+                            <a href="javascript:void(0);" ng-click="model.createUser(model.user)">
                                 <span class="glyphicon glyphicon-plus text-warning" aria-hidden="true"></span>
                             </a>
-                            <a href="#">
+                            <a href="javascript:void(0);">
                                 <span class="glyphicon glyphicon-ok pull-right text-success" aria-hidden="true"></span>
                             </a>
                         </td>
                     </tr>
-                    <tr>
-                        <td>alice</td>
-                        <td></td>
-                        <td>student</td>
-                        <td>
-                            <a href="#">
-                                <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
-                            </a>
-                            <a href="#">
-                                <span class="glyphicon glyphicon-pencil pull-right text-primary" aria-hidden="true"></span>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>bob</td>
-                        <td></td>
-                        <td>faculty | admin</td>
-                        <td>
-                            <a href="#">
-                                <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
-                            </a>
-                            <a href="#">
-                                <span class="glyphicon glyphicon-pencil pull-right text-primary" aria-hidden="true"></span>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>charlie</td>
-                        <td></td>
-                        <td></td>
+                    <tr ng-repeat="usr in model.users">
+                        <td>{{usr.username}}</td>
+                        <td>*******</td>
+                        <td>{{usr.firstName}}</td>
+                        <td>{{usr.lastName}}</td>
+                        <td>{{model.arrayToString(usr.roles)}}</td>
                         <td>
                             <a href="#">
                                 <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>

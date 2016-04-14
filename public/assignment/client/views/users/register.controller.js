@@ -29,6 +29,7 @@
                 } else {
                     UserService.createUser(user).then(
                         function (response) {
+                            console.log(response);
                             if (response.data) {
                                 UserService.setCurrentUser(response.data);
                                 AlertService.alertSuccess("Welcome","Registration Successful");
