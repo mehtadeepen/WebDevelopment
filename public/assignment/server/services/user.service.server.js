@@ -24,11 +24,11 @@ module.exports = function(app, formModel, userModel) {
     function updateUserByAdmin(req,res) {
         var newUser = req.body;
         if(isAdmin(req.user)) {
-            console.log("In server :: User Service :: updateUserByAdmin",user);
+            console.log("In server :: User Service :: updateUserByAdmin",newUser);
             if(typeof newUser.roles == "string") {
                 newUser.roles = newUser.roles.split(",");
             }
-            userModel.updateUserById(req.params.id,newUser)
+            userModel.updateUserByIdForAdmin(req.params.id,newUser)
                 .then(
                     function(user){
                         return userModel.findAllUsers();
@@ -50,7 +50,7 @@ module.exports = function(app, formModel, userModel) {
 
     function deleteUserByAdmin(req, res) {
         if(isAdmin(req.user)) {
-            console.log("In server :: User Service :: deleteUserByAdmin",user);
+            console.log("In server :: User Service :: deleteUserByAdmin",req.params.id);
             userModel.deleteUserById(req.params.id)
                 .then(
                     function(user){
@@ -187,9 +187,7 @@ module.exports = function(app, formModel, userModel) {
         user.password = bcrypt.hashSync(user.password);
         userModel.createUser(user).then(
             function (user) {
-                console.log("User created ...",user);
                 if(user) {
-                    console.log("Inside If ... ",user);
                     req.login(user,function (error) {
                         if(error) {
                             res.status(400).send(error);

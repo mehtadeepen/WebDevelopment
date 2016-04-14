@@ -12,7 +12,8 @@ module.exports = function(db,mongoose) {
         updateUserById: updateUserById,
         deleteUserById: deleteUserById,
         findAllUsers: findAllUsers,
-        createUserForAdmin:createUserForAdmin
+        createUserForAdmin:createUserForAdmin,
+        updateUserByIdForAdmin: updateUserByIdForAdmin
     };
     return api;
 
@@ -42,6 +43,12 @@ module.exports = function(db,mongoose) {
         delete user.phone;
         user["phone"] = phones;
         return UserModel.update({_id: id}, {$set: user},{runValidators: true});
+    }
+
+    function updateUserByIdForAdmin(id, user) {
+        console.log("In server :: User Model :: updateUserByIdForAdmin :: "+id);
+        delete user._id;
+        return UserModel.update({_id: id}, {$set: user});
     }
 
     function findUserByUsername(username) {
