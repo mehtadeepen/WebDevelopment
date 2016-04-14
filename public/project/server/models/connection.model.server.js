@@ -108,9 +108,10 @@ module.exports = function(db, mongoose) {
 
         console.log("In project :: Connection Meta Model :: updateConnectionById",connection);
         var deferred = q.defer();
-
+        var iD = connection._id;
+        delete connection._id;
         ConnectionMetaModel.update(
-            {_id: connection._id},
+            {_id: iD},
             {$set: connection},
             function (err, stats) {
                 if (!err) {

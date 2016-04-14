@@ -33,6 +33,7 @@
             ConnectionService.updateConnectionById(connection).then(
                 function (response) {
                     console.log("Edited Succesfully",response.data);
+                    sweet.show('Updated', "Connection updated" , 'success');
                     $location.url("/connections");
                 }, function (error) {
                     console.log(error);

@@ -113,7 +113,7 @@ module.exports = function(mongojs) {
         var query = {
 
         };
-        query[search.key] = search.val;
+        query[search.key] = {'$regex' : search.val, '$options' : 'i'};
 
         console.log("Find Query ......" , query);
         collection.find(query).toArray(function(err, docs) {
