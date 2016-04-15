@@ -20,7 +20,6 @@
             vm.collectionName = $routeParams.name;
             vm.database = $routeParams.databaseName;
             getAllDocumentsForDatabase($routeParams.name);
-
         }
         init();
 

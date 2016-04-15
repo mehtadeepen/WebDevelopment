@@ -1,59 +1,75 @@
+<div class="row" style="padding-top: 7px;">
+    <div class="col-lg-12">
+        <ol class="breadcrumb">
+            <li><a href="#/connections">Connection</a></li>
+            <li><a href="#/user/{{projectUser.username}}/database/{{model.database}}">{{model.database}}</a></li>
+            <li class="active">{{model.collectionName}}</li>
+        </ol>
+    </div>
+</div>
 
-	<div class="row" style="padding-top: 7px;">
-		<div class="col-lg-12">
-			<ol class="breadcrumb">
-				<li><a href="#/connections">Connection</a></li>
-				<li><a href="#/user/{{projectUser.username}}/database/{{model.database}}">{{model.database}}</a></li>
-				<li class="active">{{model.collectionName}}</li>
-			</ol>
-		</div>
-	</div>
+<div class="row">
+    <div class="col-xs-3 less-right-padding">
+        <div class="form-group">
+            <select class="form-control" ng-model="model.search.key">
+                <option value="">Search By</option>
+                <option ng-repeat="key in model.searchKeys" value="{{key}}">{{key}}</option>
+                <option value="all">Get all</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-xs-3 less-padding">
+        <div class="form-group">
+            <label class="sr-only" for="val">Value</label>
+            <input type="text" class="form-control" id="val" ng-model="model.search.val" placeholder="Search Value">
+        </div>
+    </div>
+    <div class="col-xs-2 col-sm-3 less-padding">
+        <div class="form-group">
+            <a ng-click="model.find(model.search,model.collectionName)"
+                    class="form-control btn btn-success btn-block hidden-xs">Search
+            </a>
+            <a ng-click="model.find(model.search,model.collectionName)"
+                    class="form-control btn btn-success visible-xs">
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
+    <div class="col-xs-4 col-sm-3 less-left-padding">
+        <div class="form-group">
+            <a href="#/addDocument/{{model.collectionName}}/database/{{model.database}}"
+               class="form-control btn btn-primary btn-block  hidden-xs">Add Document</a>
+            <a href="#/addDocument/{{model.collectionName}}/database/{{model.database}}"
+               class="form-control btn btn-primary visible-xs">
+                <i class="fa fa-plus" aria-hidden="true"> Document</i>
+            </a>
+        </div>
+    </div>
+</div>
 
-	<div class="row">
-		<div class="col-lg-12">
-			<form class="form-inline">
-				<div class="form-group">
-					<select class="form-control" ng-model="model.search.key">
-						<option ng-repeat="key in model.searchKeys" value="{{key}}">{{key}}</option>
-						<option value="all">Get all</option>
-					</select>
-				</div>
-				<div class="form-group">
-					<label class="sr-only" for="val">Value</label>
-					<input type="text" class="form-control" id="val" ng-model="model.search.val" placeholder="Value">
-				</div>
-				<div class="form-group">
-				<button ng-click="model.find(model.search,model.collectionName)" class="form-control btn btn-success hidden-xs">Search</button>
-				<button ng-click="model.find(model.search,model.collectionName)" class="form-control btn btn-success btn-block hidden-lg hidden-md hidden-sm">Search</button>
-			</div>
-				<div class="form-group">
-				<a  href="#/addDocument/{{model.collectionName}}/database/{{model.database}}" class="form-control btn btn-primary hidden-xs">Add Document</a>
-				<a  href="#/addDocument/{{model.collectionName}}/database/{{model.database}}" class="form-control btn btn-primary btn-block hidden-lg hidden-md hidden-sm">Add Document</a>
-			</div>
-			</form>
-		</div>
+<div class="row">
+    <div class="col-lg-12" style="padding-top: 7px;" ng-repeat="document in model.filteredDocuments track by $index">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <pretty-json json="document"></pretty-json>
+            </div>
+            <div class="panel-footer">
+                <a href="#/editDocument/{{model.collectionName}}/document/{{document._id}}/database/{{model.database}}"
+                   class="btn btn-warning btn-xs">
+                    <span class="fa fa-pencil" aria-hidden="true"> Edit&nbsp;</span>
+                </a>
+                <a ng-click="model.deleteDocument(document._id)" class="btn btn-danger btn-xs">
+                    <span class="fa fa-trash" aria-hidden="true">&nbsp;Delete</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12" style="padding-top: 7px;">
+        <uib-pager boundary-links="true"
+                   items-per-page="model.itemsPerPage"
+                   total-items="model.documents.length"
+                   ng-model="model.currentPage"
+                   ng-click="model.pageChanged()"></uib-pager>
+    </div>
 
-		<div class="col-lg-12" style="padding-top: 7px;" ng-repeat="document in model.filteredDocuments track by $index">
-			<div class="panel panel-default">
-				<div class="panel-body">
-					<pretty-json json="document"></pretty-json>
-			</div>
-			<div class="panel-footer">
-				<a href="#/editDocument/{{model.collectionName}}/document/{{document._id}}/database/{{model.database}}" class="btn btn-warning btn-xs">
-					<span class="fa fa-pencil" aria-hidden="true"> Edit&nbsp;</span>
-				</a>
-				<a ng-click="model.deleteDocument(document._id)" class="btn btn-danger btn-xs">
-					<span class="fa fa-trash" aria-hidden="true">&nbsp;Delete</span>
-				</a>
-			</div>
-		</div>
-	</div>
-		<div class="col-lg-12" style="padding-top: 7px;">
-			<uib-pager boundary-links="true"
-				   items-per-page="model.itemsPerPage"
-				   total-items="model.documents.length"
-				   ng-model="model.currentPage"
-				   ng-click="model.pageChanged()"></uib-pager>
-		</div>
-
-	</div><!-- /.row -->
+</div><!-- /.row -->

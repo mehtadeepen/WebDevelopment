@@ -104,6 +104,14 @@
             vm.showCross = false;
             vm.showTick = false;
         }
+
+        vm.predicate = 'username';
+        vm.reverse = true;
+        vm.order = function (predicate) {
+            vm.reverse = (vm.predicate === predicate) ? !vm.reverse : false;
+            vm.predicate = predicate;
+        };
+
     }
 
 
