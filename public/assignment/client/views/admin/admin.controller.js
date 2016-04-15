@@ -73,8 +73,8 @@
 
         }
 
-        function selectUser(index) {
-            var selectedUser = angular.copy(vm.users[index]);
+        function selectUser(user) {
+            var selectedUser = angular.copy(user);
             vm.user = selectedUser;
             vm.showPlus = false;
             vm.showCross = true;
