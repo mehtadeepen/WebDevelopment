@@ -11,6 +11,7 @@
 
         function init() {
             vm.$location = $location;
+            $('div.navbar-collapse').addClass('collapse');
         }
         init();
 

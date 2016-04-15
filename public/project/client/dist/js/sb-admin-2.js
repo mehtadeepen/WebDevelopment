@@ -1,6 +1,6 @@
 $(function() {
 
-    $('#side-menu').metisMenu();
+   //$('#side-menu').metisMenu();
 
 });
 
@@ -12,25 +12,42 @@ $(function() {
         topOffset = 50;
         width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
          if (width < 768) {
+             console.log("I am here in true");
              $('div.navbar-collapse').addClass('collapse');
              topOffset = 100; // 2-row-menu
-         } else {
+         }
+         else {
+             console.log("I am here in false");
              $('div.navbar-collapse').removeClass('collapse');
          }
 
-        height = ((this.window.innerHeight > 0) ? this.window.innerHeight : this.screen.height) - 1;
-        height = height - topOffset;
-        if (height < 1) height = 1;
-        if (height > topOffset) {
-            $("#page-wrapper").css("min-height", (height) + "px");
-        }
+
+        //height = ((this.window.innerHeight > 0) ? this.window.innerHeight : this.screen.height) - 1;
+        //height = height - topOffset;
+        //if (height < 1) height = 1;
+        //if (height > topOffset) {
+        //    $("#page-wrapper").css("min-height", (height) + "px");
+        //}
+
     });
 
-    // var url = window.location;
-    // var element = $('ul.nav a').filter(function() {
-    //     return this.href == url || url.href.indexOf(this.href) == 0;
-    // }).addClass('active').parent().parent().addClass('in').parent();
-    // if (element.is('li')) {
-    //     element.addClass('active');
-    // }
+     //var url = window.location;
+     //var element = $('ul.nav a').filter(function() {
+     //    return this.href == url || url.href.indexOf(this.href) == 0;
+     //}).addClass('active').parent().parent().addClass('in').parent();
+     //if (element.is('li')) {
+     //    element.addClass('active');
+     //}
+});
+
+
+$(document).on('click','.navbar-collapse.in',function(e) {
+    if( $(e.target).is('a') ) {
+        $(this).collapse('hide');
+    }
+});
+
+$(document).ready(function() {
+    $('div.navbar-collapse').addClass('collapse');
+    console.log( "ready!" );
 });
