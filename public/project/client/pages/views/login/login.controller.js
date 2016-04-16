@@ -3,7 +3,7 @@
         .module("SpiderMongo")
         .controller("LoginController", LoginController);
 
-    function LoginController(UserService, $location) {
+    function LoginController(UserService, $location, sweet) {
 
         console.log("In Login Controller");
         var vm = this;
@@ -21,14 +21,21 @@
 
         function login(username, password) {
             console.log("login... " + username);
-            UserService.findUserByCredentials(username, password).then(function(response){
-                if(response.data) {
-                    UserService.setCurrentUser(response.data);
-                    $location.url("/dashboard/true");
-                }
-            },function(error){
-                console.log(error);
-            });
+            if(username && password) {
+                UserService.findUserByCredentials(username, password).then(function(response){
+                    if(response.data) {
+                        UserService.setCurrentUser(response.data);
+                        $location.url("/dashboard/true");
+                    } else {
+                        sweet.show('Oops...', 'Username or Password is incorrect', 'error');
+                    }
+                },function(error){
+                    console.log(error);
+                });
+            } else {
+                sweet.show('Please enter Username or Password');
+            }
+
         }
 
         function renderSiderbar() {

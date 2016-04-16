@@ -56,4 +56,16 @@ pre {
     padding-right: 5px;
 }
 
+.whiteBackground {
+    background-color: #ffffff;
+    overflow-y: hidden;
+    overflow-x: hidden;
+
+}
+
+.topp {
+    padding-top: 120px;
+
+}
+
 

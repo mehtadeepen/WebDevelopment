@@ -23,24 +23,40 @@
         <div class="form-bottom">
             <form role="form" action="" method="post" class="login-form">
                 <div class="form-group">
-                    <label class="sr-only" for="form-username">Username</label>
-                    <input ng-model="user.username" type="text" name="form-username" placeholder="Username" class="form-username form-control"
-                           id="form-username">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
+                        <input type="text" ng-model="user.username" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+                    </div>
+                    <!--<label class="sr-only" for="form-username">Username</label>-->
+                    <!--<input ng-model="user.username" type="text" name="form-username" placeholder="Username" class="form-username form-control"-->
+                           <!--id="form-username">-->
                 </div>
                 <div class="form-group">
-                    <label class="sr-only" for="form-password">Password</label>
-                    <input ng-model="user.password" type="password" name="form-password" placeholder="Password"
-                           class="form-password form-control" id="form-password">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
+                        <input type="password" ng-model="user.password" class="form-control" placeholder="Password" aria-describedby="basic-addon2">
+                    </div>
+                    <!--<label class="sr-only" for="form-password">Password</label>-->
+                    <!--<input ng-model="user.password" type="password" name="form-password" placeholder="Password"-->
+                           <!--class="form-password form-control" id="form-password">-->
                 </div>
                 <div class="form-group">
-                    <label class="sr-only" for="form-verify-password">Verify Password</label>
-                    <input ng-model="user.password" type="password" name="form-password" placeholder="Verify Password"
-                           class="form-password form-control" id="form-verify-password">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon3"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
+                        <input type="password" ng-model="model.vpassword" class="form-control" placeholder="Verify Password" aria-describedby="basic-addon3">
+                    </div>
+                    <!--<label class="sr-only" for="form-verify-password">Verify Password</label>-->
+                    <!--<input ng-model="user.password" type="password" name="form-password" placeholder="Verify Password"-->
+                           <!--class="form-password form-control" id="form-verify-password">-->
                 </div>
                 <div class="form-group">
-                    <label class="sr-only" for="form-email">Email</label>
-                    <input ng-model="user.email" type="email" name="form-password" placeholder="email@abc.com"
-                           class="form-password form-control" id="form-email">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon4"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></span>
+                        <input type="text" ng-model="user.email" class="form-control" placeholder="email@abc.com" aria-describedby="basic-addon4">
+                    </div>
+                    <!--<label class="sr-only" for="form-email">Email</label>-->
+                    <!--<input ng-model="user.email" type="email" name="form-password" placeholder="email@abc.com"-->
+                           <!--class="form-password form-control" id="form-email">-->
                 </div>
                 <a href="" ng-click="model.register(user)" role="button" class="btn btn-info btn-block">Register</a>
                 <a href="#/login" role="button" class="btn btn-primary btn-block">Already User ?</a>

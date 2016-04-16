@@ -24,15 +24,14 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="shortcut icon" href="../../../images/fav.ico" type="image/x-icon">
     <link rel="icon" href="../../../images/fav.ico" type="image/x-icon">
-
 </head>
 
-<body>
+<body ng-class='{whiteBackground : projectUser == null}'>
 
     <div id="wrapper">
 
 
-         <ng-include src="'views/header/header.view.html'"></ng-include>
+         <ng-include  src="'views/header/header.view.html'"></ng-include>
 
 
             <ng-include src="'views/sidebar/sidebar.view.html'"></ng-include>
@@ -41,8 +40,9 @@
             <!-- /.navbar-static-side -->
        
 
-        <div id="page-wrapper" ng-view>
-           
+        <div ng-if="!projectUser" style="margin: 0 0 0 0; padding-top: 60px;"  id="page-wrapper" ng-view>
+        </div>
+        <div ng-if="projectUser" id="page-wrapper" ng-view>
         </div>
         <!-- /#page-wrapper -->
 
@@ -78,11 +78,8 @@
     <script src="views/document/document.edit.controller.js"></script>
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
-
     <script type="text/javascript" src="../dist/js/sweetalert.min.js"></script>
     <script type="text/javascript" src="../dist/js/ngSweetAlert.js"></script>
-
-
     <script src="../dist/js/sb-admin-2.js"></script>
 
     <!--[if lt IE 10]>
