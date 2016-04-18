@@ -4,7 +4,7 @@
         .module("SpiderMongo")
         .controller("ProfileController", ProfileController);
 
-    function ProfileController($location, UserService) {
+    function ProfileController($location, UserService, AlertService) {
 
         var vm = this;
         function init() {
@@ -49,6 +49,7 @@
                                 if(res.data) {
                                     vm.puser = res.data;
                                     UserService.setCurrentUser(res.data);
+                                    AlertService.alertSuccess("Profile","Updated Successfully");
                                 }
                             },function(error){
                                 console.log(error);

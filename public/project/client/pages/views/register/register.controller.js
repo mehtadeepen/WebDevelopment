@@ -19,7 +19,7 @@
 
 
         function register(user) {
-           if(user.username && user.password && vm.vpassword && user.email) {
+           if(user.username && user.password && vm.vpassword) {
                if(user.password !== vm.vpassword) {
                    sweet.show('Oops...', "Password don't match", 'error');
                    return;

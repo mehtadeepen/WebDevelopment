@@ -43,7 +43,7 @@
 
         <div ng-if="!projectUser" style="margin: 0 0 0 0; padding-top: 40px"  id="page-wrapper" ng-view>
         </div>
-        <div ng-if="projectUser" id="page-wrapper" ng-view>
+        <div ng-if="projectUser" style="min-height: 749px" id="page-wrapper" ng-view>
         </div>
         <!-- /#page-wrapper -->
 
@@ -66,6 +66,7 @@
     <script src="service/user.service.client.js"></script>
     <script src="service/collection.service.client.js"></script>
     <script src="service/dashboard.service.client.js"></script>
+    <script src="service/alert.service.client.js"></script>
     <script src="views/sidebar/sidebar.controller.js"></script>
     <script src="views/login/login.controller.js"></script>
     <script src="views/register/register.controller.js"></script>

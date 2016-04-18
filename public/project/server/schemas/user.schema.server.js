@@ -13,7 +13,7 @@ module.exports = function(mongoose) {
         email: String,
         app: {
             type: String,
-            defualt : "project"
+            default : "spidermongo"
         }
     }, {collection: 'spidermongo.user'});
     return UserSchema;
