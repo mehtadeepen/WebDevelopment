@@ -10,7 +10,11 @@ module.exports = function(mongoose) {
         password: String,
         firstName: String,
         lastName: String,
-        email: String
+        email: String,
+        app: {
+            type: String,
+            defualt : "project"
+        }
     }, {collection: 'spidermongo.user'});
     return UserSchema;
 };

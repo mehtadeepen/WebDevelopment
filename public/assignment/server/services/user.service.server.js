@@ -1,9 +1,13 @@
-var passport      = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require("bcrypt-nodejs");
 
-module.exports = function(app, formModel, userModel) {
+module.exports = function(app, formModel, userModel, securityService) {
+
+    //security
+    //var securityService = require("../../../security/security.js")();
+
     var auth = authorized;
+    var passport = securityService.getPassport();
+
     app.post("/api/assignment/admin/user", auth, createUser);
     app.get("/api/assignment/admin/user",findAllUsersForAdmin);
     app.get("/api/assignment/admin/user/:id",findUserForAdmin);
@@ -16,10 +20,10 @@ module.exports = function(app, formModel, userModel) {
     app.get("/api/assignment/user/:id", profile);
     app.put("/api/assignment/user/:id", auth,updateUser);
     app.delete("/api/assignment/user/:id", auth, deleteUser);
-    app.post('/api/assignment/login', passport.authenticate('local'), logon);
-    passport.use(new LocalStrategy(localStrategy));
-    passport.serializeUser(serializeUser);
-    passport.deserializeUser(deserializeUser);
+    app.post('/api/assignment/login', passport.authenticate('assignment'), logon);
+
+
+
 
     function updateUserByAdmin(req,res) {
         var newUser = req.body;
@@ -116,29 +120,29 @@ module.exports = function(app, formModel, userModel) {
         } else res.status(403);
     }
 
-    function localStrategy(username, password, done) {
-        console.log("In server :: User Service :: localStrategy");
-        // lookup developer by username only. cant compare password since it's encrypted
-        userModel
-            .findUserByUsername(username)
-            .then(
-                function(user) {
-                    // if the user exists, compare passwords with bcrypt.compareSync
-                    console.log("User Found ....",user);
-                    console.log(user.password);
-                    console.log(password);
-                    if(user && bcrypt.compareSync(password, user.password)) {
-                        console.log("User Authenticated ....")
-                        return done(null, user);
-                    } else {
-                        return done(null, false);
-                    }
-                },
-                function(err) {
-                    if (err) { return done(err); }
-                }
-            );
-    }
+    //function localStrategy(username, password, done) {
+    //    console.log("In server :: User Service :: localStrategy");
+    //    // lookup developer by username only. cant compare password since it's encrypted
+    //    userModel
+    //        .findUserByUsername(username)
+    //        .then(
+    //            function(user) {
+    //                // if the user exists, compare passwords with bcrypt.compareSync
+    //                console.log("User Found ....",user);
+    //                console.log(user.password);
+    //                console.log(password);
+    //                if(user && bcrypt.compareSync(password, user.password)) {
+    //                    console.log("User Authenticated ....")
+    //                    return done(null, user);
+    //                } else {
+    //                    return done(null, false);
+    //                }
+    //            },
+    //            function(err) {
+    //                if (err) { return done(err); }
+    //            }
+    //        );
+    //}
 
     function authorized (req, res, next) {
         console.log("In server :: User Service :: authorized");
@@ -149,24 +153,24 @@ module.exports = function(app, formModel, userModel) {
         }
     };
 
-    function serializeUser(user, done) {
-        delete user.password;
-        done(null, user);
-    }
+    //function serializeUser(user, done) {
+    //    delete user.password;
+    //    done(null, user);
+    //}
 
-    function deserializeUser(user, done) {
-        userModel
-            .findUserById(user._id)
-            .then(
-                function(user){
-                    delete user.password;
-                    done(null, user);
-                },
-                function(err){
-                    done(err, null);
-                }
-            );
-    }
+    //function deserializeUser(user, done) {
+    //    userModel
+    //        .findUserById(user._id)
+    //        .then(
+    //            function(user){
+    //                delete user.password;
+    //                done(null, user);
+    //            },
+    //            function(err){
+    //                done(err, null);
+    //            }
+    //        );
+    //}
 
 
     function profile(req,res) {

@@ -87,8 +87,12 @@ app.get("/api/check", function(req,res){
     res.json(colls);
 });
 
-require("./public/assignment/server/app.js")(app,uuid,db,mongoose);
-require("./public/project/server/app.js")(app,db,mongoose,mongojs);
+var userModelAssignment = require("./public/assignment/server/models/user.model.server")(db,mongoose);
+var userModelProject = require("./public/project/server/models/user.model.server")(db,mongoose);
+
+var securityService = require("./public/security/security.js")(userModelAssignment,userModelProject);
+require("./public/assignment/server/app.js")(app,uuid,db,mongoose,userModelAssignment,securityService);
+require("./public/project/server/app.js")(app,db,mongoose,mongojs,userModelProject, securityService);
 
 app.listen(port, ipaddress);
 

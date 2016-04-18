@@ -57,6 +57,10 @@ module.exports = function () {
         roles: [{
             type: String
         }],
+        app: {
+            type: String,
+            default: "assignment"
+        },
         phone:[{
             type: String,
             validate: [validatePhone,  'Phone number should be like 123-456-7890']
