@@ -289,7 +289,7 @@ module.exports = function(app, formModel, userModel, securityService) {
 
     function loggedin(req, res) {
         console.log("In server :: User Service :: loggedin");
-        res.send(req.isAuthenticated() ? req.user : null);
+        res.send(req.isAuthenticated() && req.user.app === "assignment" ? req.user : null);
     }
 
     function logon(req, res){

@@ -95,6 +95,6 @@ module.exports = function(app, userModel, securityService) {
 
     function loggedin(req, res) {
         console.log("In server :: User Service :: loggedin");
-        res.send(req.isAuthenticated() ? req.user : null);
+        res.send(req.isAuthenticated() && req.user.app === "spidermongo" ? req.user : null);
     }
 }
