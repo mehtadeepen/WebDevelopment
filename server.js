@@ -54,6 +54,8 @@ var mg = require('nodemailer-mailgun-transport');
 
 function mailMe(req, res) {
 
+    var form = req.body;
+    console.log(form);
     var auth = {
         auth: {
             api_key: 'key-c677dcdd00575919169154f293704b47',
@@ -64,11 +66,11 @@ function mailMe(req, res) {
     var transporter = nodemailer.createTransport(mg(auth));
 
     var mailOptions = {
-        from: 'Support <webdevelopment.mehtadeepen@gmail.com>',
-        to: 'Support <deepenmehta27@gmail.com>',
-        subject: 'The subject',
+        from: 'Deepen <webdevelopment.mehtadeepen@gmail.com>',
+        to: form.name+'<'+form.email+'>',
+        subject: 'Thank you for your message',
         text: 'Message in plain text', // plaintext body
-        html: '<b>Hello</b>' // html body
+        html: '<p>Please find your message below</p><br/><br/><b><i>'+form.message+'</i></b>' // html body
     };
 
     // send mail with defined transport object
@@ -76,16 +78,15 @@ function mailMe(req, res) {
         if(error){
             console.log(error);
         }else{
-            console.log('Message sent: ' + info.response);
-            res.json({yo: info.response});
+            console.log('Message sent: ', info);
+            //res.json({yo: info.response});
+            res.redirect(req.header('Referer')+'#three');
         }
     });
 }
 
-app.get('/sayHello', mailMe);
-app.get("/api/check", function(req,res){
-    res.json(colls);
-});
+app.post('/api/sayHello', mailMe);
+
 
 var userModelAssignment = require("./public/assignment/server/models/user.model.server")(db,mongoose);
 var userModelProject = require("./public/project/server/models/user.model.server")(db,mongoose);
