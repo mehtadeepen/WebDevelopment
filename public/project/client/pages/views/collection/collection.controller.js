@@ -18,11 +18,16 @@
 		}
 		init();
 
-		function createCollection(collectioName) {
+		function createCollection(collectionName) {
 			UserService.getCurrentUser().then(
 				function(response){
+					if(checkCollectionExist(collectionName)) {
+						sweet.show("Collection Already Exists !!",'error');
+						vm.collectionName = "";
+						return;
+					}
 					var currentUser = response.data;
-					CollectionService.createCollectionForUSer(currentUser.username,collectioName).then(
+					CollectionService.createCollectionForUSer(currentUser.username,collectionName).then(
 						function(response) {
 							console.log(response.data);
 							vm.collections = response.data;
@@ -33,6 +38,7 @@
 								type: 'success',
 								showConfirmButton: false
 							});
+							vm.collectionName = "";
 						}, function (error) {
 							console.log(error);
 							sweet.show('Oops...', error.data.message , 'error');
@@ -65,6 +71,15 @@
 				}, function(error){
 					console.log(error);
 				});
+		}
+
+		function checkCollectionExist(collectionName) {
+			for(var i in vm.collections) {
+				if (vm.collections[i].name === collectionName) {
+					return true;
+				}
+			}
+			return false;
 		}
 	}
 })();

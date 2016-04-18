@@ -159,6 +159,7 @@ module.exports = function (app,liveConnection,collectionsMap, externalConnectorM
             externalConnectorModel.createCollectionForUser(db,name.collection).then(
                 function (collections) {
                     res.json(collections);
+                    collectionsMap.set(userId,collections);
                 }, function (error) {
                     console.log("Error in creating collection",error);
                     res.status(400).send(error);
