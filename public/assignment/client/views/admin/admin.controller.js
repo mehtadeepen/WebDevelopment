@@ -4,7 +4,7 @@
         .module("FormBuilderApp")
         .controller("AdminController", AdminController);
 
-    function AdminController($location, AdminService) {
+    function AdminController($location, AdminService, UserService, AlertService, sweet) {
 
         var vm = this;
         vm.createUser = createUser;
@@ -18,6 +18,8 @@
             vm.showPlus = true;
             vm.showCross = false;
             vm.showTick = false;
+            vm.doDisable = false;
+
             findAllUsers();
             }
             init();
@@ -48,6 +50,7 @@
                         vm.showPlus = true;
                         vm.showCross = false;
                         vm.showTick = false;
+                        vm.doDisable = false;
                     }
                 }, function (error) {
                     console.log("error");
@@ -56,21 +59,35 @@
         }
 
         function createUser (user) {
-            AdminService.createUser(user).then(
+            if(!user) return;
+            if(user.username.trim() === "") return;
+            UserService.findUserByUsername(user.username).then(
                 function (response) {
-                    console.log(response);
-                    if(response.data) {
-                        findAllUsers();
-                        vm.user ={};
-                        vm.showPlus = true;
-                        vm.showCross = false;
-                        vm.showTick = false;
+                    if(response) {
+                        console.log("User Already Exists");
+                        AlertService.alertError("Username","User Already Exists");
+                        return;
+                    } else {
+                        AdminService.createUser(user).then(
+                            function (response) {
+                                console.log(response);
+                                if(response.data) {
+                                    findAllUsers();
+                                    vm.user ={};
+                                    vm.showPlus = true;
+                                    vm.showCross = false;
+                                    vm.showTick = false;
+                                    vm.doDisable = false;
+                                }
+                            }, function (error) {
+                                console.log(error);
+                            }
+                        );
                     }
-                }, function (error) {
-                    console.log(error);
-                }
-            );
 
+                }, function (error) {
+
+                });
         }
 
         function selectUser(user) {
@@ -79,6 +96,7 @@
             vm.showPlus = false;
             vm.showCross = true;
             vm.showTick = true;
+            vm.doDisable = true;
         }
 
         function updateUser(userId,newUser) {
@@ -90,6 +108,7 @@
                     vm.showPlus = true;
                     vm.showCross = false;
                     vm.showTick = false;
+                    vm.doDisable = false;
                 }, function (error) {
 
                 }
