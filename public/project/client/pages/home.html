@@ -24,11 +24,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="shortcut icon" href="../../../images/fav.ico" type="image/x-icon">
     <link rel="icon" href="../../../images/fav.ico" type="image/x-icon">
+    <link href=' http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
 </head>
 
 <body ng-class='{whiteBackground : projectUser == null}'>
 
-    <div id="wrapper">
+    <div id="wrapper" class="droid-serif-font">
 
 
          <ng-include  src="'views/header/header.view.html'"></ng-include>
@@ -40,7 +41,7 @@
             <!-- /.navbar-static-side -->
        
 
-        <div ng-if="!projectUser" style="margin: 0 0 0 0; padding-top: 60px;"  id="page-wrapper" ng-view>
+        <div ng-if="!projectUser" style="margin: 0 0 0 0; padding-top: 40px"  id="page-wrapper" ng-view>
         </div>
         <div ng-if="projectUser" id="page-wrapper" ng-view>
         </div>

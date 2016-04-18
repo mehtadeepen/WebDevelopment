@@ -58,15 +58,20 @@ module.exports = function(userModelAssignment,userModelProject) {
             .then(
                 function(user) {
                     // if the user exists, compare passwords with bcrypt.compareSync
-                    console.log("User Found ....",user);
-                    console.log(user.password);
-                    console.log(password);
-                    if(user && (password === user.password)) {
-                        console.log("User Authenticated For Project....")
-                        return done(null, user);
+                    if(user) {
+                        console.log("User Found ....",user);
+                        console.log(user.password);
+                        console.log(password);
+                        if(user && (password === user.password)) {
+                            console.log("User Authenticated For Project....")
+                            return done(null, user);
+                        } else {
+                            return done(null, false);
+                        }
                     } else {
                         return done(null, false);
                     }
+
                 },
                 function(err) {
                     if (err) { return done(err); }

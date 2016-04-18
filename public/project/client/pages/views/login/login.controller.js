@@ -31,6 +31,7 @@
                     }
                 },function(error){
                     console.log(error);
+                    sweet.show('Oops...', 'Username or Password is incorrect', 'error');
                 });
             } else {
                 sweet.show('Please enter Username or Password');

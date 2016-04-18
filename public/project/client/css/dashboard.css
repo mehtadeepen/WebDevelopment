@@ -68,4 +68,31 @@ pre {
 
 }
 
+.no-pad {
+    padding: 0px 0px;
+}
+
+.logo {
+    margin-top: 5px;
+    height: 80%;
+    margin-left: 10px;
+}
+
+.text-align-center {
+    text-align: center;
+}
+
+.display-block-inline {
+    display: inline-block;
+}
+
+.droid-serif-font {
+    font-family: Droid Serif;
+}
+
+.wall-image {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
 
