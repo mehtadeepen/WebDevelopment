@@ -2,15 +2,12 @@ var bcrypt = require("bcrypt-nodejs");
 
 module.exports = function(app, formModel, userModel, securityService) {
 
-    //security
-    //var securityService = require("../../../security/security.js")();
-
     var auth = authorized;
     var passport = securityService.getPassport();
 
     app.post("/api/assignment/admin/user", auth, createUser);
-    app.get("/api/assignment/admin/user",findAllUsersForAdmin);
-    app.get("/api/assignment/admin/user/:id",findUserForAdmin);
+    app.get("/api/assignment/admin/user", auth,findAllUsersForAdmin);
+    app.get("/api/assignment/admin/user/:id",auth,findUserForAdmin);
     app.delete("/api/assignment/admin/user/:id",auth,deleteUserByAdmin);
     app.put("/api/assignment/admin/user/:id",auth,updateUserByAdmin);
     app.post("/api/assignment/user", register);
